@@ -60,6 +60,25 @@ test('theme word on the wrong path is not accepted', () => {
   assert.equal(state, start);
 });
 
+test('already-found theme word on decoy path returns already-found with unchanged state', () => {
+  const p = makePuzzle();
+  let s = newGameState(p, 'x');
+  // Find CATS on the correct path [0, 1, 2, 3]
+  ({ state: s } = submitWord(s, p, [0, 1, 2, 3], DICT));
+  assert.equal(s.found.length, 1);
+  const before = s;
+
+  // Try to submit CATS on decoy path [24, 25, 26, 27] with dict containing 'CATS'
+  const dictWithCats = new Set(['CATS']);
+  const { state: after, result } = submitWord(s, p, [24, 25, 26, 27], dictWithCats);
+
+  assert.equal(result.type, 'already-found');
+  assert.equal(result.word, 'CATS');
+  assert.equal(after, before, 'state object reference should be unchanged');
+  assert.deepEqual(after.bonusWords, []);
+  assert.equal(after.hintMeter, 0);
+});
+
 test('short words and non-words are rejected', () => {
   const p = makePuzzle();
   const s = newGameState(p, 'x');

@@ -52,6 +52,8 @@ export function submitWord(state, puzzle, path, dictionary) {
     return { state: next, result: { type: answer.isSpangram ? 'spangram' : 'theme', word } };
   }
 
+  if (answer) return { state, result: { type: 'already-found', word } };
+
   if (word.length < MIN_WORD_LENGTH) return { state, result: { type: 'too-short', word } };
   if (state.bonusWords.includes(word)) return { state, result: { type: 'already-found', word } };
   if (!dictionary || !dictionary.has(word)) return { state, result: { type: 'not-a-word', word } };
