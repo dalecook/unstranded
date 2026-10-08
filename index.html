@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="An unlimited Strands-style word search. A shared daily puzzle, then as many more as you like.">
+  <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121212" media="(prefers-color-scheme: dark)">
+  <title>UnStranded</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script type="module" src="js/main.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <button id="stats-btn" class="icon-btn" type="button" aria-label="Statistics">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7" /></svg>
+    </button>
+    <h1>UnStranded</h1>
+    <button id="help-btn" class="icon-btn" type="button" aria-label="How to play">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.6.3-1 .9-1 1.6V14M12 17.5v.01" /></svg>
+    </button>
+  </header>
+
+  <main>
+    <section class="theme-card">
+      <p id="theme-label" class="theme-label">TODAY'S THEME</p>
+      <p id="clue" class="clue">&nbsp;</p>
+    </section>
+
+    <p id="current" class="current" aria-live="polite"></p>
+
+    <div id="grid" class="grid" aria-label="Letter grid"></div>
+
+    <p class="progress"><b id="found-count">0</b> of <b id="total-count">0</b> theme words found</p>
+    <p id="notice" class="notice" hidden>Word list unavailable, so hints are turned off.</p>
+
+    <div class="actions">
+      <button id="hint-btn" class="btn hint-btn" type="button" disabled>Hint</button>
+      <button id="new-btn" class="btn" type="button">New puzzle</button>
+      <button id="share-btn" class="btn primary" type="button" hidden>Share</button>
+    </div>
+  </main>
+
+  <div id="fatal" class="fatal" hidden>
+    <p>Couldn't load the puzzles.</p>
+    <button id="retry-btn" class="btn primary" type="button">Retry</button>
+  </div>
+
+  <dialog id="results-dialog">
+    <h2>Puzzle solved!</h2>
+    <pre id="results-summary" class="summary"></pre>
+    <div class="actions">
+      <button id="results-share" class="btn primary" type="button">Share</button>
+      <button id="results-new" class="btn" type="button">Play another</button>
+    </div>
+    <form method="dialog" class="close-row"><button class="link-btn">Close</button></form>
+  </dialog>
+
+  <dialog id="stats-dialog">
+    <h2>Statistics</h2>
+    <dl id="stats-list" class="stats"></dl>
+    <form method="dialog" class="close-row"><button class="btn">Close</button></form>
+  </dialog>
+
+  <dialog id="help-dialog">
+    <h2>How to play</h2>
+    <ul class="help">
+      <li>Find the theme words hidden in the grid. The clue tells you what they have in common.</li>
+      <li>Drag through letters, or tap them one at a time and tap the last letter again to submit. Letters can connect in any direction, including diagonally.</li>
+      <li>Theme words turn <span class="chip theme">blue</span>. The <span class="chip spangram">spangram</span> names the theme and stretches from one side of the board to the other.</li>
+      <li>Every letter is used exactly once.</li>
+      <li>Find 3 other words of 4+ letters to earn a hint.</li>
+      <li>The first puzzle each day is the same for everyone. After that, press <b>New puzzle</b> for as many as you like.</li>
+    </ul>
+    <form method="dialog" class="close-row"><button class="btn primary">Let's play</button></form>
+  </dialog>
+</body>
+</html>

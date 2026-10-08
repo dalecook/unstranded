@@ -1,0 +1,243 @@
+:root {
+  --bg: #ffffff;
+  --fg: #1a1a1a;
+  --muted: #6b6b6b;
+  --card: #f2f1ec;
+  --rule: #dddcd6;
+  --theme: #aedfee;
+  --spangram: #f8cd05;
+  --selected: #dbd8c5;
+  --hint: #1a1a1a;
+  --accent: #1a1a1a;
+  --accent-fg: #ffffff;
+  --shadow: rgba(0, 0, 0, 0.3);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121212;
+    --fg: #f1f1f1;
+    --muted: #a3a3a3;
+    --card: #1f1f1f;
+    --rule: #333333;
+    --theme: #3d7f96;
+    --spangram: #b8940a;
+    --selected: #57534a;
+    --hint: #f1f1f1;
+    --accent: #f1f1f1;
+    --accent-fg: #121212;
+    --shadow: rgba(0, 0, 0, 0.6);
+  }
+}
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+html, body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: env(safe-area-inset-top) 16px env(safe-area-inset-bottom);
+}
+
+.topbar {
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+h1 { margin: 0; font-size: 1.25rem; letter-spacing: 0.02em; }
+
+.icon-btn {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: none;
+  color: var(--fg);
+  cursor: pointer;
+}
+.icon-btn svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+
+main {
+  width: min(92vw, 420px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0 16px;
+}
+
+.theme-card {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: var(--card);
+  text-align: center;
+}
+.theme-label { margin: 0; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; color: var(--muted); }
+.clue { margin: 2px 0 0; font-size: 1.15rem; font-weight: 700; }
+
+.current {
+  margin: 0;
+  min-height: 1.6em;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-align: center;
+}
+.current.message { font-size: 1rem; letter-spacing: normal; color: var(--muted); }
+
+/* Grid has no gap so SVG line coordinates (col + 0.5, row + 0.5) land on tile centres. */
+.grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  width: 100%; /* fallback for browsers without dvh */
+  width: min(100%, calc((100dvh - 300px) * 0.75));
+  min-width: 240px;
+  aspect-ratio: 6 / 8;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+.lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.line { fill: none; stroke-width: 0.24; stroke-linecap: round; stroke-linejoin: round; }
+.line.theme { stroke: var(--theme); }
+.line.spangram { stroke: var(--spangram); }
+.line.selected { stroke: var(--selected); }
+.line.hint { stroke: var(--hint); stroke-width: 0.05; stroke-dasharray: 0.14 0.1; }
+
+.tile {
+  position: relative;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.tile span {
+  width: 78%;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: clamp(1rem, 5.2vw, 1.45rem);
+  font-weight: 600;
+  transition: background-color 0.12s;
+}
+.tile.selected span { background: var(--selected); }
+.tile.found { cursor: default; }
+.tile.found.theme span { background: var(--theme); }
+.tile.found.spangram span { background: var(--spangram); }
+.tile.hinted span { outline: 2px dashed var(--hint); outline-offset: -2px; }
+.tile.hint-start span { outline-style: solid; }
+
+.grid.shake { animation: shake 0.3s; }
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+.progress { margin: 0; color: var(--muted); }
+.progress b { color: var(--fg); }
+.notice { margin: 0; font-size: 0.8rem; color: var(--muted); text-align: center; }
+
+.actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+
+.btn {
+  min-height: 44px;
+  padding: 0 20px;
+  border: 1.5px solid var(--fg);
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--fg);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); }
+.btn:disabled { cursor: default; }
+
+.hint-btn {
+  background: linear-gradient(to right, var(--selected) calc(var(--meter, 0) * 100%), var(--bg) 0);
+}
+.hint-btn:disabled { color: var(--muted); border-color: var(--rule); }
+
+.link-btn { border: 0; background: none; color: var(--muted); font: inherit; text-decoration: underline; cursor: pointer; padding: 8px; }
+
+dialog {
+  width: min(92vw, 380px);
+  padding: 20px;
+  border: 0;
+  border-radius: 16px;
+  background: var(--bg);
+  color: var(--fg);
+  box-shadow: 0 10px 40px var(--shadow);
+}
+dialog::backdrop { background: rgba(0, 0, 0, 0.45); }
+dialog h2 { margin: 0 0 12px; text-align: center; }
+.close-row { display: flex; justify-content: center; margin: 12px 0 0; }
+
+.summary {
+  margin: 0 0 14px;
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--card);
+  font-family: inherit;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  text-align: center;
+  white-space: pre-wrap;
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(64px, 1fr));
+  gap: 8px;
+  margin: 0;
+  text-align: center;
+}
+.stats div { display: flex; flex-direction: column-reverse; }
+.stats dd { margin: 0; font-size: 1.6rem; font-weight: 700; }
+.stats dt { font-size: 0.75rem; color: var(--muted); }
+
+.help { margin: 0; padding-left: 1.2em; line-height: 1.45; }
+.help li + li { margin-top: 6px; }
+.chip { padding: 0 6px; border-radius: 999px; color: #1a1a1a; }
+.chip.theme { background: var(--theme); }
+.chip.spangram { background: var(--spangram); }
+
+.fatal {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  gap: 12px;
+  background: var(--bg);
+  text-align: center;
+}
