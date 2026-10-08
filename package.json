@@ -1,0 +1,12 @@
+{
+  "name": "unstranded",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "An unlimited Strands-style word search.",
+  "scripts": {
+    "test": "node --test",
+    "serve": "node tools/serve.mjs",
+    "build:dictionary": "node tools/build-dictionary.mjs"
+  }
+}
