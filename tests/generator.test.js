@@ -1,0 +1,86 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import { mulberry32 } from '../js/rng.js';
+import { CELLS } from '../js/grid.js';
+import { chooseWords, layoutWords, verifyPuzzle, generateForTheme, buildPuzzle } from '../js/generator.js';
+
+const UTENSILS = {
+  id: 'utensils',
+  clue: 'Drawer full of tools',
+  spangram: 'UTENSILS',
+  words: ['WHISK', 'LADLE', 'TONGS', 'SPATULA', 'GRATER', 'PEELER', 'SCOOP', 'MASHER', 'SKEWER', 'STRAINER', 'ZESTER', 'SPOON'],
+};
+const PLANETS = {
+  id: 'solarsystem',
+  clue: 'Space neighbours',
+  spangram: 'SOLARSYSTEM',
+  words: ['MERCURY', 'VENUS', 'EARTH', 'MARS', 'JUPITER', 'SATURN', 'URANUS', 'NEPTUNE', 'PLUTO', 'MOON', 'COMET'],
+};
+
+test('chooseWords fills the board exactly with 5-7 other words', () => {
+  for (let seed = 1; seed <= 50; seed++) {
+    const words = chooseWords(UTENSILS, mulberry32(seed));
+    assert.ok(words, `seed ${seed} found no subset`);
+    const total = words.reduce((sum, w) => sum + w.length, 0);
+    assert.equal(total + UTENSILS.spangram.length, CELLS);
+    assert.ok(words.length >= 5 && words.length <= 7);
+    assert.equal(new Set(words).size, words.length);
+  }
+});
+
+test('chooseWords is deterministic for a seed', () => {
+  assert.deepEqual(chooseWords(UTENSILS, mulberry32(9)), chooseWords(UTENSILS, mulberry32(9)));
+});
+
+test('chooseWords returns null when no subset can fill the board', () => {
+  const tiny = { id: 't', clue: 't', spangram: 'ABCDEF', words: ['ABCD', 'EFGH'] };
+  assert.equal(chooseWords(tiny, mulberry32(1)), null);
+});
+
+test('layoutWords produces a verified, fully covered grid', () => {
+  const rand = mulberry32(123);
+  const words = chooseWords(UTENSILS, rand);
+  const layout = layoutWords(UTENSILS.spangram, words, rand);
+  assert.ok(layout);
+  assert.equal(layout.grid.length, CELLS);
+  assert.ok(layout.grid.every((ch) => /^[A-Z]$/.test(ch)));
+  assert.equal(layout.answers[0].word, 'UTENSILS');
+  assert.equal(layout.answers[0].isSpangram, true);
+  assert.equal(layout.answers.filter((a) => a.isSpangram).length, 1);
+  assert.ok(verifyPuzzle(layout));
+});
+
+test('verifyPuzzle rejects a tampered grid', () => {
+  const rand = mulberry32(5);
+  const layout = layoutWords(UTENSILS.spangram, chooseWords(UTENSILS, rand), rand);
+  const cell = layout.answers[1].path[0];
+  const grid = [...layout.grid];
+  grid[cell] = grid[cell] === 'Q' ? 'Z' : 'Q';
+  assert.equal(verifyPuzzle({ ...layout, grid }), false);
+});
+
+test('generateForTheme carries theme metadata', () => {
+  const puzzle = generateForTheme(PLANETS, mulberry32(77));
+  assert.ok(puzzle);
+  assert.equal(puzzle.themeId, 'solarsystem');
+  assert.equal(puzzle.clue, 'Space neighbours');
+  assert.ok(verifyPuzzle(puzzle));
+});
+
+test('buildPuzzle is deterministic per seed', () => {
+  const themes = [UTENSILS, PLANETS];
+  assert.deepEqual(buildPuzzle(themes, 2026), buildPuzzle(themes, 2026));
+  assert.equal(buildPuzzle(themes, 2026).seed, 2026);
+});
+
+test('buildPuzzle gives different boards for different seeds', () => {
+  const themes = [UTENSILS, PLANETS];
+  const grids = new Set();
+  for (let seed = 1; seed <= 20; seed++) grids.add(buildPuzzle(themes, seed).grid.join(''));
+  assert.ok(grids.size >= 18);
+});
+
+test('buildPuzzle throws when no theme can be generated', () => {
+  const broken = { id: 'b', clue: 'b', spangram: 'ABCDEF', words: ['ABCD'] };
+  assert.throws(() => buildPuzzle([broken], 1), /Could not generate/);
+});
