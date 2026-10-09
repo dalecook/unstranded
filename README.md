@@ -6,6 +6,11 @@ A Strands-style word search with curated monthly puzzle drops that runs entirely
 - **More puzzles:** press **New puzzle** to play on through the released puzzles in the current collection. Every puzzle has a link (`?id=<id>`) you can share.
 - Works on phones and desktops. No accounts, no tracking. Progress and stats are stored in your browser.
 
+## Play
+
+- **itch.io:** https://dalecook.itch.io/unstranded
+- **Web:** https://dalecook.github.io/unstranded/
+
 ## Play locally
 
 ES modules need to be served over HTTP (opening `index.html` directly won't work):
@@ -34,7 +39,7 @@ Run `npm test` afterwards.
 
 **GitHub Pages:** push the repository, then in *Settings → Pages* choose "Deploy from a branch", branch `main`, folder `/ (root)`.
 
-**itch.io:** zip the project folder contents (`index.html` must be at the top level of the zip), create a new project with *Kind of project: HTML*, upload the zip and tick "This file will be played in the browser". A viewport of 420 × 820 works well, and enable "Mobile friendly".
+**itch.io:** the game is published at https://dalecook.itch.io/unstranded. Release builds are uploaded there directly and aren't kept in this repository.
 
 ## Credits
 
