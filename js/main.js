@@ -35,6 +35,7 @@ const app = {
 };
 
 let messageTimer = 0;
+let resultsTimer = 0;
 
 function render() {
   const { puzzle, state } = app;
@@ -87,7 +88,7 @@ function onSubmit(path) {
 
   if (state.completed && !wasCompleted) {
     saveStats(applyCompletion(loadStats(), state, app.isDaily ? app.today : null));
-    setTimeout(showResults, 600);
+    resultsTimer = setTimeout(showResults, 600);
   }
 }
 
@@ -113,6 +114,7 @@ async function doShare(button) {
 }
 
 function showResults() {
+  if (!app.state.completed) return;
   $('results-summary').textContent = currentShareText();
   const dialog = $('results-dialog');
   if (!dialog.open) dialog.showModal();
@@ -145,6 +147,8 @@ function showFatal() {
 }
 
 function startPuzzle(seed, isDaily) {
+  clearTimeout(resultsTimer);
+  clearTimeout(messageTimer);
   try {
     app.puzzle = buildPuzzle(app.themes, seed);
   } catch {
