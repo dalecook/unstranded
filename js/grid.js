@@ -48,3 +48,42 @@ export function touchesOppositeEdges(path) {
 export function samePath(a, b) {
   return a.length === b.length && a.every((v, i) => v === b[i]);
 }
+
+// Diagonal steps may not cross: the two diagonals of one 2x2 square are mutually exclusive.
+export function diagonalKey(a, b) {
+  const dRow = rowOf(b) - rowOf(a);
+  const dCol = colOf(b) - colOf(a);
+  if (dRow === 0 || dCol === 0) return null;
+  const square = Math.min(rowOf(a), rowOf(b)) * COLS + Math.min(colOf(a), colOf(b));
+  return { square, dir: dRow === dCol ? '\\' : '/' };
+}
+
+export function crossesLinks(a, b, squares) {
+  const key = diagonalKey(a, b);
+  if (!key) return false;
+  const other = squares.get(key.square);
+  return other !== undefined && other !== key.dir;
+}
+
+export function linkSquares(paths) {
+  const squares = new Map();
+  for (const path of paths) {
+    for (let k = 1; k < path.length; k++) {
+      const key = diagonalKey(path[k - 1], path[k]);
+      if (key) squares.set(key.square, key.dir);
+    }
+  }
+  return squares;
+}
+
+export function pathsCross(paths) {
+  const squares = new Map();
+  for (const path of paths) {
+    for (let k = 1; k < path.length; k++) {
+      if (crossesLinks(path[k - 1], path[k], squares)) return true;
+      const key = diagonalKey(path[k - 1], path[k]);
+      if (key) squares.set(key.square, key.dir);
+    }
+  }
+  return false;
+}

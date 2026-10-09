@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {
   COLS, ROWS, CELLS, rowOf, colOf, isAdjacent, neighbors,
   isValidPath, touchesOppositeEdges, samePath,
+  diagonalKey, crossesLinks, linkSquares, pathsCross,
 } from '../js/grid.js';
 
 test('grid dimensions', () => {
@@ -52,4 +53,32 @@ test('samePath', () => {
   assert.equal(samePath([1, 2, 3], [1, 2, 3]), true);
   assert.equal(samePath([1, 2, 3], [3, 2, 1]), false);
   assert.equal(samePath([1, 2], [1, 2, 3]), false);
+});
+
+test('diagonalKey is null for orthogonal steps and keys the 2x2 square otherwise', () => {
+  assert.equal(diagonalKey(0, 1), null);
+  assert.equal(diagonalKey(0, 6), null);
+  const down = diagonalKey(0, 7);
+  const up = diagonalKey(1, 6);
+  assert.equal(down.square, 0);
+  assert.equal(up.square, 0);
+  assert.notEqual(down.dir, up.dir);
+  assert.deepEqual(diagonalKey(7, 0), down);
+  assert.equal(diagonalKey(13, 20).square, 13);
+});
+
+test('crossesLinks detects the other diagonal of the same square', () => {
+  const squares = linkSquares([[0, 7]]);
+  assert.equal(crossesLinks(1, 6, squares), true);
+  assert.equal(crossesLinks(6, 1, squares), true);
+  assert.equal(crossesLinks(0, 7, squares), false);
+  assert.equal(crossesLinks(1, 2, squares), false);
+  assert.equal(crossesLinks(7, 14, squares), false);
+});
+
+test('pathsCross finds crossings between and within paths', () => {
+  assert.equal(pathsCross([[0, 7], [1, 6]]), true);
+  assert.equal(pathsCross([[0, 7, 6, 1]]), true);
+  assert.equal(pathsCross([[0, 7], [2, 9]]), false);
+  assert.equal(pathsCross([[0, 1, 2], [6, 7, 8]]), false);
 });
