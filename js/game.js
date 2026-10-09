@@ -1,5 +1,3 @@
-import { samePath } from './grid.js';
-
 export const MIN_WORD_LENGTH = 4;
 export const HINT_COST = 3;
 
@@ -27,10 +25,14 @@ export function isFound(state, word) {
   return state.found.some((f) => f.word === word);
 }
 
-// The unfound answer traced exactly along its intended path, or null. Answers never share
-// cells, so a full match can't be the start of a longer answer and is safe to auto-submit.
-export function answerOnPath(state, puzzle, path) {
-  return puzzle.answers.find((a) => !isFound(state, a.word) && samePath(a.path, path)) ?? null;
+// The unfound answer the selection spells, or null while it could still grow into a longer
+// unfound answer (e.g. BASS on the way to BASSOON). Safe to submit without waiting for release.
+export function completedAnswer(state, puzzle, path) {
+  const word = wordFromPath(puzzle, path);
+  const unfound = puzzle.answers.filter((a) => !isFound(state, a.word));
+  const answer = unfound.find((a) => a.word === word);
+  if (!answer || unfound.some((a) => a.word.length > word.length && a.word.startsWith(word))) return null;
+  return answer;
 }
 
 export function foundCells(state, puzzle) {
@@ -45,8 +47,9 @@ export function submitWord(state, puzzle, path, dictionary) {
   const word = wordFromPath(puzzle, path);
   const answer = puzzle.answers.find((a) => a.word === word);
 
+  // Any trace that spells an answer counts. Repeated letters can allow several traces, so the
+  // answer's own cells are locked (foundCells uses answer.path), leaving other answers solvable.
   if (answer && !isFound(state, word)) {
-    if (!samePath(answer.path, path)) return { state, result: { type: 'wrong-spot', word } };
     const found = [...state.found, { word, order: state.found.length + 1 }];
     const next = {
       ...state,

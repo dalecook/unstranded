@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  newGameState, wordFromPath, foundCells, submitWord, canHint, useHint, HINT_COST, answerOnPath,
+  newGameState, wordFromPath, foundCells, submitWord, canHint, useHint, HINT_COST, completedAnswer,
 } from '../js/game.js';
 
 // Hand-built puzzle: game logic does not require full coverage.
@@ -52,12 +52,12 @@ test('spangram is reported as spangram', () => {
   assert.deepEqual(state.log, ['S']);
 });
 
-test('theme word on the wrong path is not accepted', () => {
+test('theme word traced along other cells still counts and locks in its own cells', () => {
   const p = makePuzzle();
-  const start = newGameState(p, 'x');
-  const { state, result } = submitWord(start, p, [24, 25, 26, 27], DICT);
-  assert.deepEqual(result, { type: 'wrong-spot', word: 'CATS' });
-  assert.equal(state, start);
+  const { state, result } = submitWord(newGameState(p, 'x'), p, [24, 25, 26, 27], DICT);
+  assert.deepEqual(result, { type: 'theme', word: 'CATS' });
+  assert.deepEqual(state.found, [{ word: 'CATS', order: 1 }]);
+  assert.deepEqual([...foundCells(state, p)].sort((a, b) => a - b), [0, 1, 2, 3]);
 });
 
 test('already-found theme word on decoy path returns already-found with unchanged state', () => {
@@ -145,14 +145,33 @@ test('finding every answer completes the puzzle', () => {
   assert.equal(canHint({ ...s, hintMeter: HINT_COST }), false);
 });
 
-test('answerOnPath matches only an unfound answer traced on its exact path', () => {
+test('completedAnswer matches an unfound answer spelled along any path', () => {
   const p = makePuzzle();
   let s = newGameState(p, 'x');
-  assert.equal(answerOnPath(s, p, [0, 1, 2, 3]).word, 'CATS');
-  assert.equal(answerOnPath(s, p, [12, 13, 14, 15, 16, 17]).word, 'ANIMAL');
-  assert.equal(answerOnPath(s, p, [0, 1, 2]), null, 'prefix of an answer');
-  assert.equal(answerOnPath(s, p, [3, 2, 1, 0]), null, 'reversed path');
-  assert.equal(answerOnPath(s, p, [24, 25, 26, 27]), null, 'same word, wrong spot');
+  assert.equal(completedAnswer(s, p, [0, 1, 2, 3]).word, 'CATS');
+  assert.equal(completedAnswer(s, p, [24, 25, 26, 27]).word, 'CATS', 'same word, other cells');
+  assert.equal(completedAnswer(s, p, [12, 13, 14, 15, 16, 17]).word, 'ANIMAL');
+  assert.equal(completedAnswer(s, p, [0, 1, 2]), null, 'prefix of an answer');
+  assert.equal(completedAnswer(s, p, [3, 2, 1, 0]), null, 'reversed path');
   ({ state: s } = submitWord(s, p, [0, 1, 2, 3], DICT));
-  assert.equal(answerOnPath(s, p, [0, 1, 2, 3]), null, 'already found');
+  assert.equal(completedAnswer(s, p, [24, 25, 26, 27]), null, 'already found');
+});
+
+test('completedAnswer waits while the word could still grow into a longer unfound answer', () => {
+  const grid = new Array(48).fill('X');
+  'BASSOON'.split('').forEach((ch, i) => { grid[i] = ch; });
+  'BASS'.split('').forEach((ch, i) => { grid[6 + i] = ch; });
+  const p = {
+    seed: 1, themeId: 't', clue: 't', grid,
+    answers: [
+      { word: 'BASSOON', path: [0, 1, 2, 3, 4, 5, 11], isSpangram: true },
+      { word: 'BASS', path: [6, 7, 8, 9], isSpangram: false },
+    ],
+  };
+  p.grid[11] = 'N';
+  let s = newGameState(p, 'x');
+  assert.equal(completedAnswer(s, p, [0, 1, 2, 3]), null, 'BASS might become BASSOON');
+  assert.equal(completedAnswer(s, p, [0, 1, 2, 3, 4, 5, 11]).word, 'BASSOON');
+  ({ state: s } = submitWord(s, p, [0, 1, 2, 3, 4, 5, 11], DICT));
+  assert.equal(completedAnswer(s, p, [6, 7, 8, 9]).word, 'BASS', 'no longer ambiguous once BASSOON is found');
 });

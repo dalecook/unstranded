@@ -67,7 +67,7 @@ tests/*.test.js     node --test, no dependencies
    - **Attempt cap:** if the search exceeds a fixed step budget, derive the next seed (deterministically) and restart. Daily puzzles remain identical for all players.
 5. **Verify:** all 48 cells used exactly once, every path contiguous and self-avoiding, spangram touches opposite edges. Only verified puzzles are returned.
 
-**Path matching:** a theme word is only accepted when traced along its *intended* path. Accepting alternate paths could consume cells belonging to other answers and break full coverage.
+**Path matching (revised 2026-10-08):** repeated letters mean most answers can be traced more than one way (measured: no generated board was free of alternates). Any trace that spells an unfound answer is accepted, and the answer's *official* cells are locked — never the traced ones — so other answers always remain solvable. A unique-trace generator was assessed and rejected (only ~96% achievable on-device, with multi-second worst cases on phones).
 
 **Performance target:** < 100 ms per puzzle on a mid-range phone; verified by a test that generates thousands of seeds.
 
@@ -82,8 +82,8 @@ Uses Pointer Events (mouse, touch, pen via one code path). The grid has `touch-a
 - The in-progress word is shown above the grid.
 
 ### Submission outcomes (`game.js`)
-1. **Theme word on its intended path** → locked in: blue tiles (yellow for spangram) and a connecting line.
-2. **Theme word on a different path** → message "Right word, wrong spot!"; nothing locked.
+1. **Unfound theme word, traced along any path** → its official cells lock in: blue tiles (yellow for spangram) and a connecting line. It submits as soon as the selection spells it, unless it is the start of a longer unfound answer.
+2. *(Removed: "Right word, wrong spot!" — see Path matching.)*
 3. **Valid dictionary word, 4+ letters, not a theme word, not already found** → added to bonus words; hint meter +1 (of 3).
 4. **Already-found bonus word** → message "Already found".
 5. **Too short or not a word** → shake + message ("Too short" / "Not in word list").

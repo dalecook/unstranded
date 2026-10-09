@@ -1,5 +1,5 @@
 import { buildPuzzle } from './generator.js';
-import { newGameState, submitWord, useHint, canHint, foundCells, answerOnPath, HINT_COST } from './game.js';
+import { newGameState, submitWord, useHint, canHint, foundCells, completedAnswer, HINT_COST } from './game.js';
 import { dailySeed, dateKey, randomSeed } from './rng.js';
 import { createBoard, renderBoard } from './render.js';
 import { createSelection } from './input.js';
@@ -13,12 +13,11 @@ const $ = (id) => document.getElementById(id);
 
 const MESSAGES = {
   spangram: 'SPANGRAM!',
-  'wrong-spot': 'Right word, wrong spot!',
   'already-found': 'Already found',
   'too-short': 'Too short',
   'not-a-word': 'Not in word list',
 };
-const SHAKE_ON = new Set(['wrong-spot', 'already-found', 'too-short', 'not-a-word']);
+const SHAKE_ON = new Set(['already-found', 'too-short', 'not-a-word']);
 const MESSAGE_MS = 1800;
 
 const app = {
@@ -224,7 +223,7 @@ async function init() {
       render();
     },
     onSubmit,
-    shouldAutoSubmit: (path) => Boolean(app.state) && answerOnPath(app.state, app.puzzle, path) !== null,
+    shouldAutoSubmit: (path) => Boolean(app.state) && completedAnswer(app.state, app.puzzle, path) !== null,
   });
 
   $('hint-btn').addEventListener('click', onHint);
