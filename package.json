@@ -7,6 +7,7 @@
   "scripts": {
     "test": "node --test",
     "serve": "node tools/serve.mjs",
-    "build:dictionary": "node tools/build-dictionary.mjs"
+    "build:dictionary": "node tools/build-dictionary.mjs",
+    "build:drop": "node tools/build-drop.mjs"
   }
 }
