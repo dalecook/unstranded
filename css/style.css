@@ -188,7 +188,7 @@ main {
 }
 .hint-btn:disabled { color: var(--muted); border-color: var(--rule); }
 
-.link-btn { border: 0; background: none; color: var(--muted); font: inherit; text-decoration: underline; cursor: pointer; padding: 8px; }
+.link-btn { border: 0; background: none; color: var(--muted); font: inherit; text-decoration: underline; cursor: pointer; padding: 8px; min-height: 44px; }
 
 dialog {
   width: min(92vw, 380px);

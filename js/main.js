@@ -42,6 +42,7 @@ function render() {
   renderBoard(app.board, { puzzle, state, selection: app.selection });
   $('theme-label').textContent = app.isDaily ? "TODAY'S THEME" : `PUZZLE #${puzzle.seed}`;
   $('clue').textContent = puzzle.clue;
+  $('daily-btn').hidden = app.isDaily;
 
   const current = $('current');
   const showMessage = app.selection.length === 0 && Boolean(app.message);
@@ -172,6 +173,18 @@ function newPuzzle() {
   startPuzzle(seed, false);
 }
 
+function playDaily() {
+  history.replaceState(null, '', location.pathname);
+  startPuzzle(dailySeed(), true);
+}
+
+function checkDateRollover() {
+  const key = dateKey();
+  if (key === app.today) return;
+  app.today = key;
+  if (app.isDaily) startPuzzle(dailySeed(), true);
+}
+
 function parseSeedParam() {
   const raw = new URLSearchParams(location.search).get('p');
   if (!raw || !/^\d{1,10}$/.test(raw)) return null;
@@ -205,6 +218,7 @@ async function init() {
 
   $('hint-btn').addEventListener('click', onHint);
   $('new-btn').addEventListener('click', newPuzzle);
+  $('daily-btn').addEventListener('click', playDaily);
   $('share-btn').addEventListener('click', (e) => doShare(e.currentTarget));
   $('results-share').addEventListener('click', (e) => doShare(e.currentTarget));
   $('results-new').addEventListener('click', () => {
@@ -234,6 +248,11 @@ async function init() {
   } else {
     startPuzzle(seed, false);
   }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') checkDateRollover();
+  });
+  window.addEventListener('pageshow', checkDateRollover);
 
   if (isFirstVisit()) {
     markVisited();
