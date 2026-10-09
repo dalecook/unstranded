@@ -22,6 +22,7 @@ export function createSelection({ gridEl, isSelectable, onChange, onSubmit }) {
   let pressed = false;
   let dragged = false;
   let pendingSubmit = false;
+  let activePointer = null;
 
   const set = (next) => {
     path = next;
@@ -45,6 +46,8 @@ export function createSelection({ gridEl, isSelectable, onChange, onSubmit }) {
   };
 
   gridEl.addEventListener('pointerdown', (e) => {
+    if (e.button !== 0) return;
+    if (pressed && e.pointerId !== activePointer) return;
     const el = e.target.closest('.tile');
     if (!el) return;
     e.preventDefault();
@@ -54,6 +57,7 @@ export function createSelection({ gridEl, isSelectable, onChange, onSubmit }) {
       return;
     }
     pressed = true;
+    activePointer = e.pointerId;
     dragged = false;
     pendingSubmit = path.length > 0 && cell === path[path.length - 1];
     if (!pendingSubmit) set(stepTap(path, cell, isSelectable));
@@ -61,7 +65,7 @@ export function createSelection({ gridEl, isSelectable, onChange, onSubmit }) {
   });
 
   gridEl.addEventListener('pointermove', (e) => {
-    if (!pressed) return;
+    if (!pressed || e.pointerId !== activePointer) return;
     const cell = cellAt(e.clientX, e.clientY);
     if (cell === null || cell === path[path.length - 1]) return;
     const next = stepDrag(path, cell, isSelectable);
@@ -72,14 +76,15 @@ export function createSelection({ gridEl, isSelectable, onChange, onSubmit }) {
     }
   });
 
-  gridEl.addEventListener('pointerup', () => {
-    if (!pressed) return;
+  gridEl.addEventListener('pointerup', (e) => {
+    if (!pressed || e.pointerId !== activePointer) return;
     pressed = false;
     if (dragged || pendingSubmit) submit();
     pendingSubmit = false;
   });
 
-  gridEl.addEventListener('pointercancel', () => {
+  gridEl.addEventListener('pointercancel', (e) => {
+    if (e.pointerId !== activePointer) return;
     pressed = false;
     pendingSubmit = false;
   });
