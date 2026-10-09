@@ -77,6 +77,12 @@ test('a trace scrambled within one answer (not a contiguous run of its path) is 
   assert.deepEqual(offensiveWordsOn(grid, blockset, answers), ['SMUT']);
 });
 
+test('a trace that crosses itself is not a legal selection and is ignored', () => {
+  // S(0) M(7) U(6) T(1): the steps 0-7 and 6-1 are the two diagonals of one square.
+  const grid = gridOf(['STXXXX', 'UMXXXX', 'XXXXXX', 'XXXXXX', 'XXXXXX', 'XXXXXX', 'XXXXXX', 'XXXXXX']);
+  assert.deepEqual(offensiveWordsOn(grid, blockset, []), []);
+});
+
 test('curated list includes the review-added slur and profanity stems', async () => {
   const set = await loadBlocklist({ file: new URL('../content/blocklist.txt', import.meta.url) });
   for (const w of ['DICKHEAD', 'DOUCHEBAG', 'SHITHEAD', 'SHITTING', 'SHITTED', 'FAGGY', 'FAGOT', 'GYPPO', 'LEZZIE', 'JAPS', 'KAFFIR', 'KRAUT', 'HONKY', 'WOPS', 'REDSKIN', 'SQUAW', 'MONGOLOID', 'POOFTER', 'PAEDO', 'BITCHY', 'SLUTTY', 'WHORISH', 'PISSER']) {

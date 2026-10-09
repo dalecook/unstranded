@@ -97,7 +97,7 @@ test('meta snapshots the words the checks used', () => {
 test('themes already used in an existing drop are skipped', () => {
   const { drop } = result();
   assert.ok(!drop.puzzles.some((p) => p.themeId === 'gems'));
-  const alt = run({ existingDropThemeIds: ['birds'] });
+  const alt = run({ existingDropThemeIds: ['gems', 'birds'] });
   assert.equal(alt.drop, null);
   assert.match(alt.report, /FAILED/);
 });

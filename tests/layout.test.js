@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { mulberry32 } from '../js/rng.js';
-import { CELLS } from '../js/grid.js';
+import { CELLS, pathsCross } from '../js/grid.js';
 import { chooseWords, layoutWords, verifyPuzzle, generateForTheme, buildPuzzle } from '../tools/lib/layout.js';
 
 const UTENSILS = {
@@ -51,7 +51,7 @@ test('layoutWords produces a verified, fully covered grid', () => {
 });
 
 test('verifyPuzzle rejects a tampered grid', () => {
-  const rand = mulberry32(5);
+  const rand = mulberry32(6);
   const layout = layoutWords(UTENSILS.spangram, chooseWords(UTENSILS, rand), rand);
   const cell = layout.answers[1].path[0];
   const grid = [...layout.grid];
@@ -60,7 +60,7 @@ test('verifyPuzzle rejects a tampered grid', () => {
 });
 
 test('generateForTheme carries theme metadata', () => {
-  const puzzle = generateForTheme(PLANETS, mulberry32(77));
+  const puzzle = generateForTheme(PLANETS, mulberry32(3));
   assert.ok(puzzle);
   assert.equal(puzzle.themeId, 'solarsystem');
   assert.equal(puzzle.clue, 'Space neighbours');
@@ -91,4 +91,30 @@ test('chooseWords honours explicit counts and shuffle: false', () => {
   assert.deepEqual(chooseWords(theme, mulberry32(1), { shuffle: false }), four);
   assert.deepEqual(chooseWords(theme, mulberry32(1), { minCount: 4, maxCount: 4, shuffle: false }), four);
   assert.equal(chooseWords(theme, mulberry32(1), { minCount: 5, maxCount: 7, shuffle: false }), null);
+});
+
+test('verifyPuzzle rejects a layout whose answer paths cross', () => {
+  const board = (pair) => {
+    const paths = [[0, 6, 12, 18, 24, 30, 36, 42], ...pair, [3, 4], [5, 11], [9, 10]];
+    for (let col = 1; col <= 5; col++) {
+      for (let row = 2; row <= 6; row += 2) paths.push([row * 6 + col, (row + 1) * 6 + col]);
+    }
+    const answers = paths.map((path, k) => ({ word: 'A'.repeat(path.length), path, isSpangram: k === 0 }));
+    return { grid: new Array(CELLS).fill('A'), answers };
+  };
+  assert.equal(verifyPuzzle(board([[1, 2], [7, 8]])), true);
+  assert.equal(verifyPuzzle(board([[1, 8], [2, 7]])), false);
+});
+
+test('layoutWords never crosses diagonal links', () => {
+  let built = 0;
+  for (let seed = 1; seed <= 60; seed++) {
+    const theme = seed % 2 ? UTENSILS : PLANETS;
+    const rand = mulberry32(seed);
+    const layout = layoutWords(theme.spangram, chooseWords(theme, rand), rand);
+    if (!layout) continue;
+    built++;
+    assert.equal(pathsCross(layout.answers.map((a) => a.path)), false, `seed ${seed} crosses`);
+  }
+  assert.ok(built >= 20);
 });

@@ -1,7 +1,7 @@
-import { COLS, ROWS, CELLS, neighbors, rowOf, colOf, isValidPath, touchesOppositeEdges } from '../../js/grid.js';
+import { COLS, ROWS, CELLS, neighbors, rowOf, colOf, isValidPath, touchesOppositeEdges, diagonalKey, crossesLinks, pathsCross } from '../../js/grid.js';
 import { mulberry32, hashString, shuffle, randInt } from '../../js/rng.js';
 
-const STEP_BUDGET = 20000;
+const STEP_BUDGET = 50000;
 const ATTEMPTS_PER_THEME = 10;
 
 // Pick non-spangram words whose lengths exactly fill the rest of the board.
@@ -41,7 +41,7 @@ function subsetSums(lengths) {
   return sums;
 }
 
-function emptyRegionSizes(used) {
+function emptyRegionSizes(used, links) {
   const seen = new Array(CELLS).fill(false);
   const sizes = [];
   for (let i = 0; i < CELLS; i++) {
@@ -53,7 +53,7 @@ function emptyRegionSizes(used) {
       const cur = stack.pop();
       size++;
       for (const n of neighbors(cur)) {
-        if (!used[n] && !seen[n]) {
+        if (!used[n] && !seen[n] && !crossesLinks(cur, n, links)) {
           seen[n] = true;
           stack.push(n);
         }
@@ -64,15 +64,16 @@ function emptyRegionSizes(used) {
   return sizes;
 }
 
-// Every isolated empty region must be fillable by some of the remaining words.
-function regionsFit(used, remainingLengths) {
+// Empty cells joined only by a blocked (crossing) diagonal are separate regions; each must be fillable by some of the remaining words.
+function regionsFit(used, links, remainingLengths) {
   const sums = subsetSums(remainingLengths);
-  return emptyRegionSizes(used).every((size) => sums.has(size));
+  return emptyRegionSizes(used, links).every((size) => sums.has(size));
 }
 
 export function layoutWords(spangram, words, rand, budget = STEP_BUDGET) {
   const used = new Array(CELLS).fill(false);
   const placed = [];
+  const links = new Map();
   let steps = 0;
 
   function extend(path, length, prune, accept) {
@@ -80,12 +81,15 @@ export function layoutWords(spangram, words, rand, budget = STEP_BUDGET) {
     if (path.length === length) return accept(path);
     if (prune && prune(path)) return false;
     for (const n of shuffle(neighbors(path[path.length - 1]), rand)) {
-      if (used[n]) continue;
+      if (used[n] || crossesLinks(path[path.length - 1], n, links)) continue;
+      const key = diagonalKey(path[path.length - 1], n);
+      if (key) links.set(key.square, key.dir);
       used[n] = true;
       path.push(n);
       if (extend(path, length, prune, accept)) return true;
       path.pop();
       used[n] = false;
+      if (key) links.delete(key.square);
     }
     return false;
   }
@@ -101,7 +105,7 @@ export function layoutWords(spangram, words, rand, budget = STEP_BUDGET) {
       const restLengths = rest.map((w) => w.length);
       used[first] = true;
       const ok = extend([first], word.length, null, (path) => {
-        if (!regionsFit(used, restLengths)) return false;
+        if (!regionsFit(used, links, restLengths)) return false;
         placed.push({ word, path: [...path] });
         if (placeRest(rest)) return true;
         placed.pop();
@@ -133,7 +137,7 @@ export function layoutWords(spangram, words, rand, budget = STEP_BUDGET) {
     for (const start of shuffle(starts, rand)) {
       used[start] = true;
       const ok = extend([start], length, prune, (path) => {
-        if (!reachedFar(path) || !regionsFit(used, wordLengths)) return false;
+        if (!reachedFar(path) || !regionsFit(used, links, wordLengths)) return false;
         placed.push({ word: spangram, path: [...path] });
         if (placeRest(words)) return true;
         placed.pop();
@@ -169,6 +173,7 @@ export function verifyPuzzle({ grid, answers }) {
     }
   }
   const spangrams = answers.filter((a) => a.isSpangram);
+  if (pathsCross(answers.map((a) => a.path))) return false;
   return seen.size === CELLS && spangrams.length === 1 && touchesOppositeEdges(spangrams[0].path);
 }
 

@@ -1,6 +1,6 @@
 // Offensive-word blocklist: no board may spell one of these words across answers.
 import { readFile } from 'node:fs/promises';
-import { neighbors } from '../../js/grid.js';
+import { walkTraces } from './checks.js';
 
 export const BLOCKLIST_FILE = 'content/blocklist.txt';
 
@@ -25,18 +25,10 @@ export async function loadBlocklist({ file = BLOCKLIST_FILE } = {}) {
   return blockset;
 }
 
-// Every self-avoiding adjacent path spelling `word` (as arrays of cell indices).
+// Every legal trace spelling `word` (self-avoiding, no crossing diagonals), as cell-index arrays.
 function traces(grid, word) {
   const out = [];
-  const walk = (path) => {
-    if (path.length === word.length) { out.push([...path]); return; }
-    for (const next of neighbors(path[path.length - 1])) {
-      if (!path.includes(next) && grid[next] === word[path.length]) {
-        path.push(next); walk(path); path.pop();
-      }
-    }
-  };
-  for (let i = 0; i < grid.length; i++) if (grid[i] === word[0]) walk([i]);
+  walkTraces(grid, word, (path) => { out.push([...path]); });
   return out;
 }
 

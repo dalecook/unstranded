@@ -1,19 +1,32 @@
-import { neighbors, rowOf, colOf } from '../../js/grid.js';
+import { neighbors, rowOf, colOf, diagonalKey, crossesLinks, pathsCross } from '../../js/grid.js';
 import { verifyPuzzle } from './layout.js';
 
-// Number of self-avoiding adjacent paths spelling `word`, stopping early at `cap`.
+// Visit every legal trace of `word`: a self-avoiding adjacent path whose diagonal steps never
+// cross each other. `visit` receives the live path; return true to stop the walk.
+export function walkTraces(grid, word, visit) {
+  const links = new Map();
+  const walk = (path) => {
+    if (path.length === word.length) return visit(path);
+    const last = path[path.length - 1];
+    for (const next of neighbors(last)) {
+      if (path.includes(next) || grid[next] !== word[path.length] || crossesLinks(last, next, links)) continue;
+      const key = diagonalKey(last, next);
+      if (key) links.set(key.square, key.dir);
+      path.push(next);
+      const stop = walk(path);
+      path.pop();
+      if (key) links.delete(key.square);
+      if (stop) return true;
+    }
+    return false;
+  };
+  for (let i = 0; i < grid.length; i++) if (grid[i] === word[0] && walk([i])) return;
+}
+
+// Number of legal traces spelling `word`, stopping early at `cap`.
 export function countTraces(grid, word, cap = Infinity) {
   let n = 0;
-  const walk = (path) => {
-    if (n >= cap) return;
-    if (path.length === word.length) { n++; return; }
-    for (const next of neighbors(path[path.length - 1])) {
-      if (!path.includes(next) && grid[next] === word[path.length]) {
-        path.push(next); walk(path); path.pop();
-      }
-    }
-  };
-  for (let i = 0; i < grid.length && n < cap; i++) if (grid[i] === word[0]) walk([i]);
+  walkTraces(grid, word, () => ++n >= cap);
   return n;
 }
 
@@ -42,6 +55,7 @@ export function checkPuzzle(layout, theme) {
   const steppingStones = [...new Set(theme.recognized)]
     .filter((w) => w.length >= 4 && w.length <= 5 && !chosen.has(w) && isTraceable(grid, w))
     .sort();
+  if (pathsCross(answers.map((a) => a.path))) return { ok: false, reason: 'crossing', steppingStones };
   if (!verifyPuzzle(layout)) return { ok: false, reason: 'invalid', steppingStones };
   if (answers.some((a) => countTraces(grid, a.word, 2) !== 1)) {
     return { ok: false, reason: 'ambiguous', steppingStones };

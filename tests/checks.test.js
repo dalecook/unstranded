@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { mulberry32 } from '../js/rng.js';
-import { CELLS, neighbors } from '../js/grid.js';
+import { CELLS, neighbors, pathsCross } from '../js/grid.js';
 import { chooseWords, layoutWords, verifyPuzzle } from '../tools/lib/layout.js';
 import { countTraces, isTraceable, directionVariants, checkPuzzle, difficulty } from '../tools/lib/checks.js';
 
@@ -38,6 +38,14 @@ test('countTraces never reuses a cell', () => {
   assert.equal(countTraces(grid, 'ABA'), 0);
 });
 
+test('countTraces ignores a route that crosses itself', () => {
+  // A(0) B(7) C(6) D(1) steps 0-7 and 6-1 cross; D(12) is the legal ending.
+  const grid = gridWith({ 0: 'A', 7: 'B', 6: 'C', 1: 'D', 12: 'D' });
+  assert.equal(countTraces(grid, 'ABCD'), 1);
+  assert.equal(countTraces(gridWith({ 0: 'A', 7: 'B', 6: 'C', 1: 'D' }), 'ABCD'), 0);
+  assert.equal(isTraceable(gridWith({ 0: 'A', 7: 'B', 6: 'C', 1: 'D' }), 'ABCD'), false);
+});
+
 const THEME = {
   id: 'utensils',
   clue: 'Drawer full of tools',
@@ -57,7 +65,9 @@ function tracedWords(grid, length, visit) {
       visit(path.map((c) => grid[c]).join(''));
       return;
     }
-    for (const n of neighbors(path[path.length - 1])) if (!path.includes(n)) walk([...path, n]);
+    for (const n of neighbors(path[path.length - 1])) {
+      if (!path.includes(n) && !pathsCross([[...path, n]])) walk([...path, n]);
+    }
   };
   for (let i = 0; i < CELLS; i++) walk([i]);
 }
@@ -120,6 +130,15 @@ test('checkPuzzle reports invalid', () => {
   const grid = [...variant.grid];
   grid[0] = grid[0] === 'Q' ? 'Z' : 'Q';
   assert.equal(checkPuzzle({ grid, answers: variant.answers }, theme).reason, 'invalid');
+});
+
+test('checkPuzzle reports crossing before anything else', () => {
+  const grid = new Array(CELLS).fill('X');
+  const answers = [
+    { word: 'XX', path: [0, 7], isSpangram: true },
+    { word: 'XX', path: [1, 6], isSpangram: false },
+  ];
+  assert.equal(checkPuzzle({ grid, answers }, { answers: [], recognized: [] }).reason, 'crossing');
 });
 
 test('checkPuzzle reports ambiguous', () => {
