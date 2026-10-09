@@ -1,0 +1,8 @@
+{
+  "id": "currencies",
+  "clue": "Money talks, in many tongues",
+  "spangram": "CURRENCIES",
+  "obscure": false,
+  "answers": ["DOLLAR", "RUPIAH", "SHEKEL", "DIRHAM", "ROUBLE", "FORINT", "GUILDER", "DRACHMA", "ESCUDO", "PESETA", "SHILLING", "RINGGIT", "BOLIVAR"],
+  "recognized": ["RUBLE", "KRONA", "KRONE", "KRONOR", "ZLOTY", "DINAR", "RIYAL", "RIAL", "LIRA", "RAND", "BAHT", "YUAN", "EURO", "PESO", "POUND", "FRANC", "NAIRA", "CEDI", "REAL", "RUPEE", "KYAT", "TAKA", "TENGE", "KOPEK", "KWACHA", "RENMINBI", "CORDOBA", "LEMPIRA", "QUETZAL", "COLON", "CENTIME", "PFENNIG", "DOUBLOON", "DUCAT", "FLORIN", "SOVEREIGN", "GUINEA", "STERLING", "DENARIUS", "SESTERCE", "KORUNA", "HRYVNIA", "DEUTSCHMARK", "AFGHANI", "CENTAVO", "KROON", "MARKKA", "BOLIVIANO", "GUARANI", "DOBRA", "ARIARY", "OUGUIYA", "NGULTRUM", "TUGRIK", "SOMONI", "MANAT", "DRAM", "LARI", "LITAS", "LATS"]
+}

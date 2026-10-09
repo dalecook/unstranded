@@ -1,0 +1,9 @@
+{
+  "id": "stringed-instruments",
+  "clue": "Pluck and bow",
+  "spangram": "HIGHLYSTRUNG",
+  "obscure": false,
+  "answers": ["VIOLIN", "GUITAR", "MANDOLIN", "UKULELE", "ZITHER", "DULCIMER", "BALALAIKA", "FIDDLE", "BOUZOUKI", "DOUBLEBASS"],
+  "recognized": ["LYRE", "HARP", "LUTE", "SITAR", "BANJO", "CELLO", "VIOLA", "KOTO", "ERHU", "SAROD", "PIPA", "REBEC", "AUTOHARP", "VIOLONCELLO", "HARPSICHORD", "CONTRABASS", "SAMISEN", "SHAMISEN", "GUZHENG", "THEORBO", "CITTERN", "BANJOLELE", "CHARANGO", "DOBRO", "VIHUELA", "PSALTERY", "HURDYGURDY", "STEELGUITAR", "BASSGUITAR", "LAPSTEEL", "KANTELE", "KORA", "GUQIN", "ORPHARION", "VIOLADAGAMBA"],
+  "familiar": ["DOUBLEBASS"]
+}
