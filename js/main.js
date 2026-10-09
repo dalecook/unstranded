@@ -1,5 +1,5 @@
 import { buildPuzzle } from './generator.js';
-import { newGameState, submitWord, useHint, canHint, foundCells, HINT_COST } from './game.js';
+import { newGameState, submitWord, useHint, canHint, foundCells, answerOnPath, HINT_COST } from './game.js';
 import { dailySeed, dateKey, randomSeed } from './rng.js';
 import { createBoard, renderBoard } from './render.js';
 import { createSelection } from './input.js';
@@ -224,6 +224,7 @@ async function init() {
       render();
     },
     onSubmit,
+    shouldAutoSubmit: (path) => Boolean(app.state) && answerOnPath(app.state, app.puzzle, path) !== null,
   });
 
   $('hint-btn').addEventListener('click', onHint);

@@ -27,6 +27,12 @@ export function isFound(state, word) {
   return state.found.some((f) => f.word === word);
 }
 
+// The unfound answer traced exactly along its intended path, or null. Answers never share
+// cells, so a full match can't be the start of a longer answer and is safe to auto-submit.
+export function answerOnPath(state, puzzle, path) {
+  return puzzle.answers.find((a) => !isFound(state, a.word) && samePath(a.path, path)) ?? null;
+}
+
 export function foundCells(state, puzzle) {
   const cells = new Set();
   for (const answer of puzzle.answers) {

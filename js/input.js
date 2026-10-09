@@ -17,7 +17,7 @@ export function stepDrag(path, cell, isSelectable) {
   return path;
 }
 
-export function createSelection({ gridEl, isSelectable, onChange, onSubmit }) {
+export function createSelection({ gridEl, isSelectable, onChange, onSubmit, shouldAutoSubmit = () => false }) {
   let path = [];
   let pressed = false;
   let dragged = false;
@@ -27,6 +27,12 @@ export function createSelection({ gridEl, isSelectable, onChange, onSubmit }) {
   const set = (next) => {
     path = next;
     onChange(path);
+    // Submit mid-gesture once the selection is a complete answer; the rest of the
+    // drag (or the release) then sees an empty path and does nothing.
+    if (path.length > 1 && shouldAutoSubmit(path)) {
+      pendingSubmit = false;
+      submit();
+    }
   };
 
   const submit = () => {

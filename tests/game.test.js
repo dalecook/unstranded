@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  newGameState, wordFromPath, foundCells, submitWord, canHint, useHint, HINT_COST,
+  newGameState, wordFromPath, foundCells, submitWord, canHint, useHint, HINT_COST, answerOnPath,
 } from '../js/game.js';
 
 // Hand-built puzzle: game logic does not require full coverage.
@@ -143,4 +143,16 @@ test('finding every answer completes the puzzle', () => {
   for (const a of p.answers) ({ state: s } = submitWord(s, p, a.path, DICT));
   assert.equal(s.completed, true);
   assert.equal(canHint({ ...s, hintMeter: HINT_COST }), false);
+});
+
+test('answerOnPath matches only an unfound answer traced on its exact path', () => {
+  const p = makePuzzle();
+  let s = newGameState(p, 'x');
+  assert.equal(answerOnPath(s, p, [0, 1, 2, 3]).word, 'CATS');
+  assert.equal(answerOnPath(s, p, [12, 13, 14, 15, 16, 17]).word, 'ANIMAL');
+  assert.equal(answerOnPath(s, p, [0, 1, 2]), null, 'prefix of an answer');
+  assert.equal(answerOnPath(s, p, [3, 2, 1, 0]), null, 'reversed path');
+  assert.equal(answerOnPath(s, p, [24, 25, 26, 27]), null, 'same word, wrong spot');
+  ({ state: s } = submitWord(s, p, [0, 1, 2, 3], DICT));
+  assert.equal(answerOnPath(s, p, [0, 1, 2, 3]), null, 'already found');
 });
