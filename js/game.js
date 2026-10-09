@@ -1,10 +1,16 @@
 export const MIN_WORD_LENGTH = 4;
 export const HINT_COST = 3;
 
+// Identifies a puzzle's board, so saved progress is discarded if a drop is rebuilt.
+export function layoutKey(puzzle) {
+  return puzzle.grid.join('');
+}
+
 export function newGameState(puzzle, puzzleId, now = Date.now()) {
   return {
     puzzleId,
     themeId: puzzle.themeId,
+    layoutKey: layoutKey(puzzle),
     found: [],
     log: [],
     bonusWords: [],

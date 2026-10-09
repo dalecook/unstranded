@@ -45,8 +45,12 @@ export function dailyFor(drops, today) {
     if (id) return getPuzzle(drops, id);
   }
   const released = releasedPuzzles(drops, today);
-  if (released.length === 0) return null;
-  return released[hashString('daily-' + today) % released.length];
+  if (released.length > 0) return released[hashString('daily-' + today) % released.length];
+  // Nothing released yet (e.g. device clock before the first drop): serve the earliest daily.
+  const dates = drops.flatMap((drop) => Object.keys(drop.schedule).map((date) => [date, drop.schedule[date]]));
+  if (dates.length === 0) return null;
+  dates.sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
+  return getPuzzle(drops, dates[0][1]);
 }
 
 export function randomPuzzle(drops, today, { played, solved, excludeId }, rand = Math.random) {

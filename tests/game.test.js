@@ -27,7 +27,7 @@ const DICT = new Set(['STAC', 'BIRD', 'SGOD']);
 test('newGameState starts empty', () => {
   const s = newGameState(makePuzzle(), 'seed-1', 1000);
   assert.deepEqual(s, {
-    puzzleId: 'seed-1', themeId: 'pets', found: [], log: [], bonusWords: [],
+    puzzleId: 'seed-1', themeId: 'pets', layoutKey: makePuzzle().grid.join(''), found: [], log: [], bonusWords: [],
     stonesFound: [], bankedHints: 0, hintsUsed: 0, hintMeter: 0, activeHint: null, startedAt: 1000, completed: false,
   });
 });

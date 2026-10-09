@@ -121,3 +121,22 @@ test('randomPuzzle returns null with no candidates', () => {
   const drops = [{ id: 'x', puzzles: [mk('x1')], schedule: { '2026-10-08': 'x1' }, library: [] }];
   assert.equal(randomPuzzle(drops, TODAY, { played: none, solved: none, excludeId: null }), null);
 });
+
+test('dailyFor before any release falls back to the first scheduled puzzle', () => {
+  assert.equal(dailyFor(DROPS, '2026-08-31').id, 'a1');
+  const later = [DROPS[1], DROPS[0]]; // earliest by date, not index order
+  assert.equal(dailyFor(later, '2026-08-31').id, 'a1');
+});
+
+test('dailyFor returns null when there are no puzzles', () => {
+  assert.equal(dailyFor([], TODAY), null);
+  assert.equal(dailyFor([{ id: 'x', puzzles: [], schedule: {}, library: [] }], TODAY), null);
+});
+
+test('a drop with an empty schedule never releases its library and does not crash', () => {
+  const drops = [{ id: 'x', puzzles: [mk('x1'), mk('x2')], schedule: {}, library: ['x1', 'x2'] }];
+  assert.equal(isReleased(drops, 'x1', TODAY), false);
+  assert.deepEqual(releasedPuzzles(drops, TODAY), []);
+  assert.equal(randomPuzzle(drops, TODAY, { played: none, solved: none, excludeId: null }), null);
+  assert.doesNotThrow(() => dailyFor(drops, TODAY));
+});

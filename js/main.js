@@ -1,5 +1,5 @@
 import {
-  newGameState, submitWord, useHint, canHint, availableHints, foundCells, completedAnswer, HINT_COST,
+  newGameState, layoutKey, submitWord, useHint, canHint, availableHints, foundCells, completedAnswer, HINT_COST,
 } from './game.js';
 import { dateKey } from './rng.js';
 import { loadDrops, dailyFor, getPuzzle, isReleased, randomPuzzle } from './drops.js';
@@ -162,8 +162,9 @@ function startPuzzle(puzzle) {
   app.puzzle = puzzle;
   app.isDaily = dailyFor(app.drops, app.today)?.id === puzzle.id;
   let state = loadProgress(puzzle.id);
-  // Discard saved progress from another format or if the drop's theme changed underneath it.
-  if (!state || state.puzzleId !== puzzle.id || state.themeId !== puzzle.themeId) {
+  // Discard saved progress from another format or if the drop's theme or board changed underneath it.
+  if (!state || state.puzzleId !== puzzle.id || state.themeId !== puzzle.themeId
+    || state.layoutKey !== layoutKey(puzzle)) {
     state = newGameState(puzzle, puzzle.id);
     saveStats(applyStart(loadStats()));
     saveProgress(state);
@@ -185,7 +186,7 @@ function newPuzzle() {
     excludeId: app.puzzle?.id,
   });
   if (!next) {
-    flashMessage("That's every puzzle for now. New ones arrive with the next drop!");
+    flashMessage("You've seen them all! More soon.");
     return;
   }
   history.replaceState(null, '', `?id=${next.id}`);
@@ -201,10 +202,15 @@ function checkDateRollover() {
   const key = dateKey();
   if (key === app.today) return;
   app.today = key;
-  if (app.isDaily) {
-    const daily = dailyFor(app.drops, app.today);
-    if (daily) startPuzzle(daily);
+  const daily = dailyFor(app.drops, app.today);
+  if (app.isDaily && daily) {
+    history.replaceState(null, '', location.pathname);
+    startPuzzle(daily);
+    return;
   }
+  // The puzzle on screen may itself have just become today's daily.
+  app.isDaily = daily?.id === app.puzzle?.id;
+  render();
 }
 
 async function loadDictionary() {
