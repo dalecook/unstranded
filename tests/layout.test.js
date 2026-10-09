@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { mulberry32 } from '../js/rng.js';
 import { CELLS } from '../js/grid.js';
-import { chooseWords, layoutWords, verifyPuzzle, generateForTheme, buildPuzzle } from '../js/generator.js';
+import { chooseWords, layoutWords, verifyPuzzle, generateForTheme, buildPuzzle } from '../tools/lib/layout.js';
 
 const UTENSILS = {
   id: 'utensils',
@@ -83,4 +83,12 @@ test('buildPuzzle gives different boards for different seeds', () => {
 test('buildPuzzle throws when no theme can be generated', () => {
   const broken = { id: 'b', clue: 'b', spangram: 'ABCDEF', words: ['ABCD'] };
   assert.throws(() => buildPuzzle([broken], 1), /Could not generate/);
+});
+
+test('chooseWords honours explicit counts and shuffle: false', () => {
+  const theme = { id: 't', clue: 't', spangram: 'ABCDEFGH', words: ['AAAAAAAAAA', 'BBBBBBBBBB', 'CCCCCCCCCC', 'DDDDDDDDDD', 'EEEEEEEEEE'] };
+  const four = ['AAAAAAAAAA', 'BBBBBBBBBB', 'CCCCCCCCCC', 'DDDDDDDDDD'];
+  assert.deepEqual(chooseWords(theme, mulberry32(1), { shuffle: false }), four);
+  assert.deepEqual(chooseWords(theme, mulberry32(1), { minCount: 4, maxCount: 4, shuffle: false }), four);
+  assert.equal(chooseWords(theme, mulberry32(1), { minCount: 5, maxCount: 7, shuffle: false }), null);
 });
