@@ -392,7 +392,7 @@ Test `loadRanks` with a fake `fetchImpl` and a temp `cacheDir`: it parses the fi
 - **README:**
   - Content lives in `content/themes/`.
   - Build with `npm run build:drop -- --id YYYY-MM --start YYYY-MM-DD`. Drops are committed.
-  - The next drop must start the day after the previous drop's last daily (for 2026-10, that's 2026-11-08). Otherwise the date-hash fallback is used.
+  - The next drop must start the day after the previous drop's last daily (2026-10 starts 2026-10-08, so its last daily is 2026-11-06 and the next drop starts 2026-11-07). Otherwise the date-hash fallback is used.
   - Links use `?id=`.
 - Remove all runtime use of the generator and themes.json.
 

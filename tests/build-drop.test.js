@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { buildDrop } from '../tools/build-drop.mjs';
+import { buildDrop, parseArgs } from '../tools/build-drop.mjs';
 import { verifyPuzzle } from '../tools/lib/layout.js';
 import { checkPuzzle } from '../tools/lib/checks.js';
 
@@ -124,4 +124,18 @@ test('building is deterministic', () => {
   const again = run();
   assert.equal(JSON.stringify(again.drop), JSON.stringify(result().drop));
   assert.equal(JSON.stringify(again.meta), JSON.stringify(result().meta));
+});
+
+test('parseArgs reads ids and numeric options', () => {
+  const a = parseArgs(['--id', '2026-10', '--start', '2026-10-08', '--count', '40', '--seconds', '60']);
+  assert.equal(a.id, '2026-10');
+  assert.equal(a.count, 40);
+  assert.equal(a.seconds, 60);
+  assert.equal(a.attempts, 6000);
+});
+
+test('parseArgs rejects non-positive-integer numeric options with usage', () => {
+  for (const bad of ['abc', '0', '-5', '1.5', '']) {
+    assert.throws(() => parseArgs(['--id', 'x', '--start', '2026-10-08', '--count', bad]), /Usage/, bad);
+  }
 });

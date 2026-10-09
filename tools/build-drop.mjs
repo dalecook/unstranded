@@ -166,13 +166,16 @@ export function buildDrop({
 
 const USAGE = 'Usage: build-drop --id 2026-10 --start 2026-10-08 [--count 50] [--attempts 6000] [--seconds 300] [--content dir]';
 
-function parseArgs(argv) {
+export function parseArgs(argv) {
   const args = { count: 50, attempts: 6000, seconds: 300, content: 'content/themes' };
   const numeric = ['count', 'attempts', 'seconds'];
   for (let i = 0; i < argv.length; i += 2) {
     const key = argv[i].replace(/^--/, '');
     if (![...numeric, 'id', 'start', 'content'].includes(key) || argv[i + 1] === undefined) {
       throw new Error(`Unknown or incomplete argument: ${argv[i]}\n${USAGE}`);
+    }
+    if (numeric.includes(key) && !/^[1-9]\d*$/.test(argv[i + 1])) {
+      throw new Error(`--${key} must be a positive integer, got "${argv[i + 1]}"\n${USAGE}`);
     }
     args[key] = numeric.includes(key) ? Number(argv[i + 1]) : argv[i + 1];
   }
