@@ -28,7 +28,6 @@ const app = {
   puzzle: null,
   state: null,
   isDaily: false,
-  playedMarked: false,
   today: dateKey(),
   selection: [],
   message: '',
@@ -85,10 +84,6 @@ function onSubmit(path) {
   const { state, result } = submitWord(app.state, app.puzzle, path, app.dictionary);
   app.state = state;
   saveProgress(state);
-  if (!app.playedMarked) {
-    markPlayed(state.puzzleId);
-    app.playedMarked = true;
-  }
   if (SHAKE_ON.has(result.type)) shake();
   if (result.type === 'stepping-stone') flashMessage(`On theme: ${result.word}. +1 hint`);
   else if (result.type === 'bonus') flashMessage(`Bonus word! (${state.hintMeter}/${HINT_COST} toward a hint)`);
@@ -174,7 +169,8 @@ function startPuzzle(puzzle) {
     saveProgress(state);
   }
   app.state = state;
-  app.playedMarked = state.log.length > 0 || state.bonusWords.length > 0;
+  // Shown counts as played, so "New puzzle" serves unseen puzzles before ones the player skipped.
+  markPlayed(puzzle.id);
   if (!state.completed && $('results-dialog').open) $('results-dialog').close();
   app.message = '';
   app.selector.clear();
