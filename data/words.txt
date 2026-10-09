@@ -6719,7 +6719,6 @@ anuria
 anurias
 anuric
 anurous
-anuses
 anvil
 anviled
 anviling
@@ -13639,7 +13638,6 @@ besteading
 besteads
 bested
 bestial
-bestialities
 bestialize
 bestialized
 bestializes
@@ -14912,7 +14910,6 @@ bisulfites
 bitable
 bitartrate
 bitartrates
-bitched
 bitcheries
 bitchery
 bitchier
@@ -14920,7 +14917,6 @@ bitchiest
 bitchily
 bitchiness
 bitchinesses
-bitching
 bitchy
 bite
 biteable
@@ -24401,14 +24397,10 @@ chine
 chined
 chines
 chining
-chink
 chinkapin
 chinkapins
-chinked
 chinkier
 chinkiest
-chinking
-chinks
 chinky
 chinless
 chinned
@@ -26406,7 +26398,6 @@ clitoric
 clitoridectomies
 clitoridectomy
 clitorides
-clitorises
 clivers
 clivia
 clivias
@@ -27145,8 +27136,6 @@ cockshuts
 cockshy
 cockspur
 cockspurs
-cocksucker
-cocksuckers
 cocksure
 cocksurely
 cocksureness
@@ -34819,7 +34808,6 @@ cunner
 cunners
 cunnilinctus
 cunnilinctuses
-cunnilinguses
 cunning
 cunninger
 cunningest
@@ -35831,11 +35819,8 @@ daggles
 daggling
 daglock
 daglocks
-dago
 dagoba
 dagobas
-dagoes
-dagos
 dags
 daguerreotype
 daguerreotyped
@@ -40993,7 +40978,6 @@ dilatorinesses
 dilators
 dilatory
 dildoe
-dildoes
 dilemma
 dilemmas
 dilemmatic
@@ -45706,11 +45690,7 @@ dyewood
 dyewoods
 dying
 dyings
-dyke
-dyked
-dykes
 dykey
-dyking
 dynamic
 dynamical
 dynamically
@@ -46728,10 +46708,6 @@ eisteddfods
 eiswein
 eisweins
 either
-ejaculate
-ejaculated
-ejaculates
-ejaculating
 ejaculator
 ejaculators
 ejaculatory
@@ -53027,9 +53003,6 @@ faeries
 faery
 fagged
 fagging
-faggoted
-faggoting
-faggotings
 faggotries
 faggotry
 faggoty
@@ -54095,10 +54068,6 @@ fellaheen
 fellahin
 fellahs
 fellas
-fellate
-fellated
-fellates
-fellating
 fellation
 fellations
 fellator
@@ -58963,9 +58932,6 @@ fuchsine
 fuchsines
 fuchsins
 fuci
-fucked
-fucker
-fuckers
 fuckup
 fuckups
 fucoid
@@ -62581,14 +62547,8 @@ gobs
 goby
 godchild
 godchildren
-goddam
 goddammed
 goddamming
-goddamn
-goddamned
-goddamning
-goddamns
-goddams
 goddaughter
 goddaughters
 godded
@@ -62864,8 +62824,6 @@ googolplexes
 googols
 gooier
 gooiest
-gook
-gooks
 gooky
 goombah
 goombahs
@@ -69000,7 +68958,6 @@ hommock
 hommocks
 hommos
 hommoses
-homo
 homocercal
 homoeroticism
 homoeroticisms
@@ -69104,7 +69061,6 @@ homopolymers
 homopteran
 homopterans
 homopterous
-homos
 homoscedastic
 homoscedasticities
 homoscedasticity
@@ -88270,7 +88226,6 @@ mastoiditis
 mastoiditises
 mastoids
 masts
-masturbated
 masturbator
 masturbators
 masturbatory
@@ -102184,7 +102139,6 @@ orgiac
 orgiastic
 orgiastically
 orgic
-orgies
 orgone
 orgones
 orgulous
@@ -108983,7 +108937,6 @@ penile
 peninsula
 peninsular
 peninsulas
-penises
 penitence
 penitences
 penitent
@@ -112310,13 +112263,10 @@ pisolite
 pisolites
 pisolitic
 pisos
-piss
 pissant
 pissants
-pissed
 pisser
 pissers
-pisses
 pissoir
 pissoirs
 pistache
@@ -120158,7 +120108,6 @@ puslike
 puss
 pusses
 pussier
-pussies
 pussiest
 pussley
 pussleys
@@ -122094,7 +122043,6 @@ rapaciousness
 rapaciousnesses
 rapacities
 rapacity
-raped
 raper
 rapers
 rapeseed
@@ -128348,18 +128296,14 @@ retape
 retaped
 retapes
 retaping
-retard
 retardant
 retardants
 retardate
 retardates
 retardation
 retardations
-retarded
 retarder
 retarders
-retarding
-retards
 retarget
 retargeted
 retargeting
@@ -139848,8 +139792,6 @@ smeek
 smeeked
 smeeking
 smeeks
-smegma
-smegmas
 smell
 smelled
 smeller
@@ -140757,15 +140699,10 @@ sodic
 sodium
 sodiums
 sodom
-sodomies
 sodomist
 sodomists
-sodomite
-sodomites
 sodomitic
 sodomitical
-sodomized
-sodomizing
 sodoms
 sods
 soever
@@ -142038,7 +141975,6 @@ spay
 spayed
 spaying
 spays
-spaz
 spazzes
 speak
 speakable
@@ -142487,20 +142423,17 @@ spiccatos
 spice
 spicebush
 spicebushes
-spiced
 spiceless
 spicer
 spiceries
 spicers
 spicery
-spices
 spicey
 spicier
 spiciest
 spicily
 spiciness
 spicinesses
-spicing
 spick
 spicks
 spicula
@@ -143406,7 +143339,6 @@ spumous
 spumy
 spun
 spunbonded
-spunked
 spunkie
 spunkier
 spunkies
@@ -143414,7 +143346,6 @@ spunkiest
 spunkily
 spunkiness
 spunkinesses
-spunking
 spunky
 spur
 spurgall
@@ -168763,7 +168694,6 @@ whopper
 whoppers
 whopping
 whops
-whored
 whoredom
 whoredoms
 whorehouse
@@ -168774,7 +168704,6 @@ whoremonger
 whoremongers
 whoreson
 whoresons
-whoring
 whorish
 whorl
 whorled

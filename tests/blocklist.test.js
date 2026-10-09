@@ -64,3 +64,15 @@ test('one nested trace does not excuse another that spans answers', () => {
   ];
   assert.deepEqual(offensiveWordsOn(grid, blockset, answers), ['SMUT']);
 });
+
+test('a trace that is a contiguous run of one answer path, reversed, is allowed', () => {
+  const answers = [{ word: 'XTUMSX', path: [5, 4, 3, 2, 1, 0] }];
+  assert.deepEqual(offensiveWordsOn(smutGrid, blockset, answers), []);
+});
+
+test('a trace scrambled within one answer (not a contiguous run of its path) is flagged', () => {
+  // Answer path visits S, U, M, T out of order; SMUT is traceable on its cells but is not a substring.
+  const grid = gridOf(['SUXXXX', 'MTXXXX', 'XXXXXX', 'XXXXXX', 'XXXXXX', 'XXXXXX', 'XXXXXX', 'XXXXXX']);
+  const answers = [{ word: 'SUMT', path: [0, 1, 6, 7] }];
+  assert.deepEqual(offensiveWordsOn(grid, blockset, answers), ['SMUT']);
+});

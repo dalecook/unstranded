@@ -40,14 +40,23 @@ function traces(grid, word) {
   return out;
 }
 
-// Blocked words spelled on the board (sorted). A word is exempt when every trace of it
-// lies entirely within one answer's cells (e.g. RAPE inside PARAPET); any trace that
-// spans cells of different answers counts. Letter counts prefilter before tracing.
+// True when `trace` is a contiguous run of `path`, in forward or reverse order.
+function isRunOf(trace, path) {
+  const start = path.indexOf(trace[0]);
+  if (start < 0) return false;
+  const fwd = trace.every((c, i) => path[start + i] === c);
+  const rev = trace.every((c, i) => path[start - i] === c);
+  return fwd || rev;
+}
+
+// Blocked words spelled on the board (sorted). A trace is exempt only when its cells are a
+// contiguous run of one answer's path, forward or reversed (the blocked word is literally a
+// substring of the answer as laid out, e.g. RAPE inside PARAPET); any other trace, scrambled
+// within one answer or spanning answers, counts. Letter counts prefilter before tracing.
 export function offensiveWordsOn(grid, blockset, answers = []) {
   const counts = {};
   for (const ch of grid) counts[ch] = (counts[ch] ?? 0) + 1;
-  const cellsOf = answers.map((a) => new Set(a.path));
-  const nested = (trace) => cellsOf.some((cells) => trace.every((c) => cells.has(c)));
+  const nested = (trace) => answers.some((a) => isRunOf(trace, a.path));
   const found = [];
   for (const word of blockset) {
     const need = {};

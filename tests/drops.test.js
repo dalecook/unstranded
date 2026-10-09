@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { verifyPuzzle } from '../tools/lib/layout.js';
 import { checkPuzzle } from '../tools/lib/checks.js';
+import { loadBlocklist, offensiveWordsOn } from '../tools/lib/blocklist.js';
 
 async function readJson(path) {
   return JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
@@ -24,6 +25,7 @@ function addDays(dateStr, days) {
 }
 
 const index = await loadIndex();
+const blocklist = await loadBlocklist({ file: new URL('../content/blocklist.txt', import.meta.url) });
 
 if (!index) {
   test('drops: no drops published yet', () => {
@@ -54,6 +56,7 @@ if (!index) {
         });
         assert.equal(result.ok, true, `${p.id}: ${result.reason}`);
         assert.deepEqual(result.steppingStones, p.steppingStones, `${p.id} stepping stones`);
+        assert.deepEqual(offensiveWordsOn(p.grid, blocklist, p.answers), [], `${p.id} spells a blocked word`);
         for (const a of p.answers.filter((x) => !x.isSpangram)) {
           assert.ok(/^[A-Z]{6,10}$/.test(a.word), `${p.id}: ${a.word} must be 6-10 letters`);
         }
