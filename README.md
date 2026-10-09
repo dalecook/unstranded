@@ -38,6 +38,6 @@ Run `npm test` afterwards.
 
 ## Credits
 
-- Bonus-word dictionary: [ENABLE](https://github.com/dolph/dictionary) word list (public domain), filtered with the [LDNOOBW](https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words) list (CC BY 4.0).
+- Bonus-word dictionary, merged from: [ENABLE](https://github.com/dolph/dictionary) (public domain); the [Wordnik word list](https://github.com/wordnik/wordlist) (MIT licence, (c) Wordnik); [SCOWL / en-wl wordlist](https://github.com/en-wl/wordlist) en_US-large (Copyright 2000-2026 Kevin Atkinson and contributors; permission to use, copy, modify, distribute and sell word lists created from SCOWL is granted without fee provided this copyright notice appears in all copies and supporting documentation; provided "as is" without warranty; full terms in the SCOWL README, https://github.com/en-wl/wordlist, with the affix data under Geoff Kuenning's Ispell BSD licence). Offensive words are removed using a curated blocklist and the [LDNOOBW](https://github.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words) list (CC BY 4.0).
 - Theme word pools informed by [dariusk/corpora](https://github.com/dariusk/corpora) (CC0).
 - Inspired by *Strands* from The New York Times. UnStranded is an independent fan project and is not affiliated with The New York Times.

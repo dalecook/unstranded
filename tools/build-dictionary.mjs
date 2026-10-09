@@ -1,39 +1,87 @@
-// Builds data/words.txt from ENABLE (public domain), minus a profanity blocklist and the
-// curated content/blocklist.txt (with the same inflections the drop builder blocks).
-// Run once with `npm run build:dictionary` and commit the output.
-// `--from-existing` re-filters the committed data/words.txt against content/blocklist.txt
-// without downloading anything (use after editing the curated blocklist).
-import { readFileSync, writeFileSync } from 'node:fs';
+// Builds data/words.txt: ENABLE (public domain) + Wordnik word list (MIT) + SCOWL en_US-large
+// (hunspell, expanded) + content/dictionary-extra.txt + every theme word, then removes the
+// offensive-word blocklist LAST (curated content/blocklist.txt with inflections, plus LDNOOBW).
+// Sources are cached in .cache/. Run with `npm run build:dictionary` and commit the output.
+// `--from-existing` re-filters the committed data/words.txt against the blocklist offline.
+import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { loadBlocklist } from './lib/blocklist.js';
+import { mergeDictionary } from './lib/dictionary.js';
+import { expandHunspell } from './lib/hunspell.js';
+import { readZip } from './lib/zip.js';
 
-const ENABLE_URL = 'https://raw.githubusercontent.com/dolph/dictionary/master/enable1.txt';
-const BLOCKLIST_URL =
-  'https://raw.githubusercontent.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words/master/en';
+const CACHE = fileURLToPath(new URL('../.cache/', import.meta.url));
+const SOURCES = {
+  enable: { file: 'enable1.txt', url: 'https://raw.githubusercontent.com/dolph/dictionary/master/enable1.txt' },
+  wordnik: { file: 'wordnik.txt', url: 'https://raw.githubusercontent.com/wordnik/wordlist/main/wordlist-20210729.txt' },
+  scowl: { file: 'scowl.zip', url: 'https://github.com/en-wl/wordlist/releases/download/rel-2026.02.25/hunspell-en_US-large-2026.02.25.zip' },
+  ldnoobw: { file: 'ldnoobw-en.txt', url: 'https://raw.githubusercontent.com/LDNOOBW/List-of-Dirty-Naughty-Obscene-and-Otherwise-Bad-Words/master/en' },
+};
 const WORDS_FILE = new URL('../data/words.txt', import.meta.url);
+const EXTRA_FILE = new URL('../content/dictionary-extra.txt', import.meta.url);
+const THEMES_DIR = new URL('../content/themes/', import.meta.url);
 const CURATED_FILE = fileURLToPath(new URL('../content/blocklist.txt', import.meta.url));
 
-const toLines = (text) => text.split(/\r?\n/).map((l) => l.trim().toLowerCase()).filter(Boolean);
+const toLines = (text) => text.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
 
-async function fetchLines(url) {
-  const res = await fetch(url);
-  if (!res.ok) throw new Error(`${url} -> HTTP ${res.status}`);
-  return toLines(await res.text());
+// Raw bytes of a source: cache first, else download (and cache).
+async function load({ file, url }) {
+  const path = CACHE + file;
+  if (existsSync(path)) return readFile(path);
+  let res;
+  try {
+    res = await fetch(url);
+  } catch (err) {
+    throw new Error(`Could not download ${url} (${err.message}) and no cache exists at .cache/${file}`);
+  }
+  if (!res.ok) throw new Error(`Could not download ${url} (HTTP ${res.status}) and no cache exists at .cache/${file}`);
+  const buf = Buffer.from(await res.arrayBuffer());
+  await mkdir(CACHE, { recursive: true });
+  await writeFile(path, buf);
+  return buf;
+}
+
+const ldnoobwWords = (buf) => toLines(buf.toString('utf8').toLowerCase()).filter((w) => /^[a-z]+$/.test(w));
+
+function themeWords() {
+  const out = [];
+  for (const f of readdirSync(THEMES_DIR).filter((n) => n.endsWith('.json'))) {
+    const t = JSON.parse(readFileSync(new URL(f, THEMES_DIR), 'utf8'));
+    out.push(...(t.answers ?? []), ...(t.recognized ?? []));
+    if (t.spangram) out.push(t.spangram);
+  }
+  return out;
 }
 
 const fromExisting = process.argv.includes('--from-existing');
-let words;
-let blockSet = new Set();
+const blockSet = new Set();
+let input;
 if (fromExisting) {
-  words = toLines(readFileSync(WORDS_FILE, 'utf8'));
+  input = { sources: { existing: toLines(readFileSync(WORDS_FILE, 'utf8')) } };
+  if (existsSync(CACHE + SOURCES.ldnoobw.file)) {
+    for (const w of ldnoobwWords(readFileSync(CACHE + SOURCES.ldnoobw.file))) blockSet.add(w);
+  }
 } else {
-  const [all, blocked] = await Promise.all([fetchLines(ENABLE_URL), fetchLines(BLOCKLIST_URL)]);
-  words = all;
-  blockSet = new Set(blocked.filter((w) => /^[a-z]+$/.test(w)));
+  const [enable, wordnik, scowlZip, ldnoobw] = await Promise.all(Object.values(SOURCES).map(load));
+  const files = readZip(scowlZip);
+  const dic = files.get('en_US-large.dic');
+  const aff = files.get('en_US-large.aff');
+  if (!dic || !aff) throw new Error('SCOWL zip is missing en_US-large.dic/.aff');
+  input = {
+    sources: {
+      enable: toLines(enable.toString('utf8')),
+      wordnik: toLines(wordnik.toString('utf8')).map((l) => l.replace(/^"|"$/g, '')),
+      scowl: expandHunspell(aff.toString('utf8'), dic.toString('utf8')),
+    },
+    extras: toLines(readFileSync(EXTRA_FILE, 'utf8')),
+    themeWords: themeWords(),
+  };
+  for (const w of ldnoobwWords(ldnoobw)) blockSet.add(w);
 }
 for (const w of await loadBlocklist({ file: CURATED_FILE })) blockSet.add(w.toLowerCase());
-const isBlocked = (w) => blockSet.has(w) || (w.endsWith('s') && blockSet.has(w.slice(0, -1)));
 
-const kept = words.filter((w) => /^[a-z]{4,}$/.test(w) && !isBlocked(w));
-writeFileSync(WORDS_FILE, kept.join('\n') + '\n');
-console.log(`wrote ${kept.length} words (${words.length - kept.length} removed)`);
+const { words, counts, removed } = mergeDictionary({ ...input, blockSet });
+writeFileSync(WORDS_FILE, words.join('\n') + '\n');
+for (const [name, n] of Object.entries(counts)) console.log(`  ${name}: ${n} valid words`);
+console.log(`wrote ${words.length} words (${removed} removed by blocklist)`);
