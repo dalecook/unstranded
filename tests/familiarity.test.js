@@ -6,15 +6,15 @@ import { join } from 'node:path';
 import { loadRanks, isFamiliar, eligibleAnswers, FAMILIAR_RANK, OBSCURE_RANK } from '../tools/lib/familiarity.js';
 
 const ranks = new Map([
-  ['EDGE', 60000],
-  ['PAST', 60001],
-  ['RARE', 200000],
-  ['RARER', 200001],
+  ['EDGE', 120000],
+  ['PAST', 120001],
+  ['RARE', 300000],
+  ['RARER', 300001],
 ]);
 
 test('constants', () => {
-  assert.equal(FAMILIAR_RANK, 60000);
-  assert.equal(OBSCURE_RANK, 200000);
+  assert.equal(FAMILIAR_RANK, 120000);
+  assert.equal(OBSCURE_RANK, 300000);
 });
 
 test('familiar cutoff boundary', () => {

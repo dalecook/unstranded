@@ -2,8 +2,8 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 
 const URL = 'https://norvig.com/ngrams/count_1w.txt';
-export const FAMILIAR_RANK = 60000;
-export const OBSCURE_RANK = 200000;
+export const FAMILIAR_RANK = 120000;
+export const OBSCURE_RANK = 300000;
 
 async function download(fetchImpl) {
   let res;
