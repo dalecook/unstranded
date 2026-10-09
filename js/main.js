@@ -1,11 +1,13 @@
-import { buildPuzzle } from './generator.js';
-import { newGameState, submitWord, useHint, canHint, foundCells, completedAnswer, HINT_COST } from './game.js';
-import { dailySeed, dateKey, randomSeed } from './rng.js';
+import {
+  newGameState, submitWord, useHint, canHint, availableHints, foundCells, completedAnswer, HINT_COST,
+} from './game.js';
+import { dateKey } from './rng.js';
+import { loadDrops, dailyFor, getPuzzle, isReleased, randomPuzzle } from './drops.js';
 import { createBoard, renderBoard } from './render.js';
 import { createSelection } from './input.js';
 import {
   loadProgress, saveProgress, loadStats, saveStats, applyStart, applyCompletion,
-  displayStreak, isFirstVisit, markVisited,
+  displayStreak, isFirstVisit, markVisited, markPlayed, markSolved, loadPlayed, loadSolved,
 } from './storage.js';
 import { buildShareText, shareText } from './share.js';
 
@@ -21,11 +23,12 @@ const SHAKE_ON = new Set(['already-found', 'too-short', 'not-a-word']);
 const MESSAGE_MS = 1800;
 
 const app = {
-  themes: [],
+  drops: [],
   dictionary: null,
   puzzle: null,
   state: null,
   isDaily: false,
+  playedMarked: false,
   today: dateKey(),
   selection: [],
   message: '',
@@ -40,7 +43,7 @@ function render() {
   const { puzzle, state } = app;
   if (!puzzle) return;
   renderBoard(app.board, { puzzle, state, selection: app.selection });
-  $('theme-label').textContent = app.isDaily ? "TODAY'S THEME" : `PUZZLE #${puzzle.seed}`;
+  $('theme-label').textContent = (app.isDaily ? "TODAY'S THEME" : 'PUZZLE') + (puzzle.obscure ? ' · DEEP CUT' : '');
   $('clue').textContent = puzzle.clue;
   $('daily-btn').hidden = app.isDaily;
 
@@ -54,6 +57,8 @@ function render() {
 
   const hintBtn = $('hint-btn');
   hintBtn.disabled = !canHint(state);
+  const hints = availableHints(state);
+  hintBtn.textContent = hints > 1 ? `Hint ×${hints}` : 'Hint';
   hintBtn.style.setProperty('--meter', String(Math.min(state.hintMeter, HINT_COST) / HINT_COST));
   $('share-btn').hidden = !state.completed;
 }
@@ -80,12 +85,18 @@ function onSubmit(path) {
   const { state, result } = submitWord(app.state, app.puzzle, path, app.dictionary);
   app.state = state;
   saveProgress(state);
+  if (!app.playedMarked) {
+    markPlayed(state.puzzleId);
+    app.playedMarked = true;
+  }
   if (SHAKE_ON.has(result.type)) shake();
-  if (result.type === 'bonus') flashMessage(`Bonus word! (${state.hintMeter}/${HINT_COST} toward a hint)`);
+  if (result.type === 'stepping-stone') flashMessage(`On theme: ${result.word}. +1 hint`);
+  else if (result.type === 'bonus') flashMessage(`Bonus word! (${state.hintMeter}/${HINT_COST} toward a hint)`);
   else if (MESSAGES[result.type]) flashMessage(MESSAGES[result.type]);
   else render();
 
   if (state.completed && !wasCompleted) {
+    markSolved(state.puzzleId);
     saveStats(applyCompletion(loadStats(), state, app.isDaily ? app.today : null));
     resultsTimer = setTimeout(showResults, 600);
   }
@@ -103,8 +114,8 @@ function playUrl() {
 }
 
 function currentShareText() {
-  const label = app.isDaily ? app.today : String(app.puzzle.seed);
-  const url = app.isDaily ? null : `${playUrl()}?p=${app.puzzle.seed}`;
+  const label = app.isDaily ? app.today : app.puzzle.id;
+  const url = app.isDaily ? null : `${playUrl()}?id=${app.puzzle.id}`;
   return buildShareText({ state: app.state, puzzle: app.puzzle, label, url });
 }
 
@@ -150,25 +161,20 @@ function showFatal() {
   $('fatal').hidden = false;
 }
 
-function startPuzzle(seed, isDaily) {
+function startPuzzle(puzzle) {
   clearTimeout(resultsTimer);
   clearTimeout(messageTimer);
-  try {
-    app.puzzle = buildPuzzle(app.themes, seed);
-  } catch {
-    showFatal();
-    return;
-  }
-  app.isDaily = isDaily;
-  const puzzleId = isDaily ? `daily-${app.today}` : `seed-${seed}`;
-  let state = loadProgress(puzzleId);
-  // Discard saved progress if themes.json changed underneath it.
-  if (!state || state.seed !== seed || state.themeId !== app.puzzle.themeId) {
-    state = newGameState(app.puzzle, puzzleId);
+  app.puzzle = puzzle;
+  app.isDaily = dailyFor(app.drops, app.today)?.id === puzzle.id;
+  let state = loadProgress(puzzle.id);
+  // Discard saved progress from another format or if the drop's theme changed underneath it.
+  if (!state || state.puzzleId !== puzzle.id || state.themeId !== puzzle.themeId) {
+    state = newGameState(puzzle, puzzle.id);
     saveStats(applyStart(loadStats()));
     saveProgress(state);
   }
   app.state = state;
+  app.playedMarked = state.log.length > 0 || state.bonusWords.length > 0;
   if (!state.completed && $('results-dialog').open) $('results-dialog').close();
   app.message = '';
   app.selector.clear();
@@ -177,28 +183,32 @@ function startPuzzle(seed, isDaily) {
 }
 
 function newPuzzle() {
-  const seed = randomSeed();
-  history.replaceState(null, '', `?p=${seed}`);
-  startPuzzle(seed, false);
+  const next = randomPuzzle(app.drops, app.today, {
+    played: loadPlayed(),
+    solved: loadSolved(),
+    excludeId: app.puzzle?.id,
+  });
+  if (!next) {
+    flashMessage("That's every puzzle for now. New ones arrive with the next drop!");
+    return;
+  }
+  history.replaceState(null, '', `?id=${next.id}`);
+  startPuzzle(next);
 }
 
 function playDaily() {
   history.replaceState(null, '', location.pathname);
-  startPuzzle(dailySeed(), true);
+  startPuzzle(dailyFor(app.drops, app.today));
 }
 
 function checkDateRollover() {
   const key = dateKey();
   if (key === app.today) return;
   app.today = key;
-  if (app.isDaily) startPuzzle(dailySeed(), true);
-}
-
-function parseSeedParam() {
-  const raw = new URLSearchParams(location.search).get('p');
-  if (!raw || !/^\d{1,10}$/.test(raw)) return null;
-  const n = Number(raw);
-  return n <= 0xffffffff ? n : null;
+  if (app.isDaily) {
+    const daily = dailyFor(app.drops, app.today);
+    if (daily) startPuzzle(daily);
+  }
 }
 
 async function loadDictionary() {
@@ -243,20 +253,25 @@ async function init() {
   });
 
   try {
-    const res = await fetch('data/themes.json');
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    app.themes = await res.json();
+    app.drops = await loadDrops();
   } catch {
     showFatal();
     return;
   }
+  const daily = dailyFor(app.drops, app.today);
+  if (!daily) {
+    showFatal();
+    return;
+  }
 
-  const seed = parseSeedParam();
-  if (seed === null) {
-    if (new URLSearchParams(location.search).has('p')) history.replaceState(null, '', location.pathname);
-    startPuzzle(dailySeed(), true);
+  const params = new URLSearchParams(location.search);
+  const id = params.get('id');
+  const linked = id && isReleased(app.drops, id, app.today) ? getPuzzle(app.drops, id) : null;
+  if (linked) {
+    startPuzzle(linked);
   } else {
-    startPuzzle(seed, false);
+    if (params.has('id') || params.has('p')) history.replaceState(null, '', location.pathname);
+    startPuzzle(daily);
   }
 
   document.addEventListener('visibilitychange', () => {

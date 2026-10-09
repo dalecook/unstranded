@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "type": "module",
-  "description": "An unlimited Strands-style word search.",
+  "description": "A Strands-style word search with curated monthly puzzle drops.",
   "scripts": {
     "test": "node --test",
     "serve": "node tools/serve.mjs",

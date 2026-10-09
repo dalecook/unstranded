@@ -1,4 +1,4 @@
-// Grid geometry shared by the generator, game logic, input and rendering.
+// Grid geometry shared by the build tools, game logic, input and rendering.
 export const COLS = 6;
 export const ROWS = 8;
 export const CELLS = COLS * ROWS;

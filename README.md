@@ -1,9 +1,9 @@
 # UnStranded
 
-An unlimited Strands-style word search that runs entirely in the browser.
+A Strands-style word search with curated monthly puzzle drops that runs entirely in the browser.
 
 - **Daily puzzle:** the first puzzle each day is the same for everyone.
-- **Unlimited puzzles:** press **New puzzle** for a fresh board. Every board has a link (`?p=<seed>`) you can share.
+- **More puzzles:** press **New puzzle** to play on through the released puzzles in the current collection. Every puzzle has a link (`?id=<id>`) you can share.
 - Works on phones and desktops. No accounts, no tracking. Progress and stats are stored in your browser.
 
 ## Play locally
@@ -20,18 +20,15 @@ Then open http://localhost:8080.
 
 Uses Node 22+'s built-in test runner. No dependencies to install.
 
-## Adding themes
+## Adding content
 
-Edit `data/themes.json`. Each theme needs:
+Theme content lives in `content/themes/`. Puzzles are built ahead of time into monthly drop files under `drops/`, and the drops are committed:
 
-- `id`: unique, lowercase
-- `clue`: the hint shown above the grid
-- `spangram`: 6–14 letters, A–Z only (join multiple words: `PIZZATOPPINGS`)
-- `words`: at least 10 words, 4–9 letters each, A–Z only
+    npm run build:drop -- --id YYYY-MM --start YYYY-MM-DD
 
-Run `npm test` afterwards. The theme tests check that every theme can fill the 48-letter board.
+The next drop must start the day after the previous drop's last daily (for 2026-10, that's 2026-11-08). Otherwise the date-hash fallback is used for the gap.
 
-Note: changing `themes.json` changes which board a given seed or date produces.
+Run `npm test` afterwards.
 
 ## Deploy
 
