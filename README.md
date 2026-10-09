@@ -26,7 +26,7 @@ Theme content lives in `content/themes/`. Puzzles are built ahead of time into m
 
     npm run build:drop -- --id YYYY-MM --start YYYY-MM-DD
 
-The next drop must start the day after the previous drop's last daily (for 2026-10, that's 2026-11-08). Otherwise the date-hash fallback is used for the gap.
+The next drop must start the day after the previous drop's last daily (for 2026-10, that's 2026-11-07). Otherwise the date-hash fallback is used for the gap.
 
 Run `npm test` afterwards.
 

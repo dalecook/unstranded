@@ -8,13 +8,14 @@ import { chooseWords, layoutWords } from './lib/layout.js';
 import { directionVariants, checkPuzzle, difficulty, isTraceable } from './lib/checks.js';
 import { loadRanks, eligibleAnswers } from './lib/familiarity.js';
 import { assembleDrop } from './lib/assemble.js';
+import { loadBlocklist, offensiveWordsOn } from './lib/blocklist.js';
 
 const PASS_LIMIT = 200;
 const MAX_OBSCURE = 10;
 
 // Best passing puzzle for one theme, or { failure } explaining why there is none.
 // Stopping is deterministic (attempt and pass counts); the time cap is a safety net only.
-export function searchTheme(theme, dropId, { attempts, seconds, eligible }) {
+export function searchTheme(theme, dropId, { attempts, seconds, eligible, blockset = new Set() }) {
   const rand = mulberry32(hashString(`${theme.id}:${dropId}`));
   const pool = shuffle(eligible, rand)
     .map((word, i) => ({ word, i }))
@@ -41,6 +42,7 @@ export function searchTheme(theme, dropId, { attempts, seconds, eligible }) {
     for (const variant of directionVariants(layout)) {
       const result = checkPuzzle(variant, { answers: theme.answers, recognized: theme.recognized });
       if (!result.ok) { reasons.add(result.reason); continue; }
+      if (offensiveWordsOn(variant.grid, blockset, variant.answers).length) { reasons.add('offensive'); continue; }
       passes++;
       const score = difficulty(variant, { obscure: !!theme.obscure });
       if (!best || score > best.score) best = { variant, score, steppingStones: result.steppingStones };
@@ -74,7 +76,7 @@ function tracedDictionaryWords(grid, dictionaryWords, exclude) {
 
 export function buildDrop({
   dropId, startDate, count = 50, dailies = 30, attempts = 2000, seconds = 60,
-  themes, ranks, existingDropThemeIds = [], dictionaryWords = [],
+  themes, ranks, existingDropThemeIds = [], dictionaryWords = [], blockset = new Set(),
 }) {
   const skipped = new Set(existingDropThemeIds);
   const failures = [];
@@ -90,7 +92,7 @@ export function buildDrop({
       failures.push({ themeId: theme.id, reason: `only ${eligible.length} eligible answers` });
       continue;
     }
-    const found = searchTheme(theme, dropId, { attempts, seconds, eligible });
+    const found = searchTheme(theme, dropId, { attempts, seconds, eligible, blockset });
     if (found.capped) cappedThemes.push(theme.id);
     if (found.failure) {
       failures.push({ themeId: theme.id, reason: found.failure });
@@ -162,10 +164,10 @@ export function buildDrop({
   return { drop, meta, report: lines.join('\n'), failures, spares };
 }
 
-const USAGE = 'Usage: build-drop --id 2026-10 --start 2026-10-09 [--count 50] [--attempts 2000] [--seconds 60] [--content dir]';
+const USAGE = 'Usage: build-drop --id 2026-10 --start 2026-10-08 [--count 50] [--attempts 6000] [--seconds 300] [--content dir]';
 
 function parseArgs(argv) {
-  const args = { count: 50, attempts: 2000, seconds: 60, content: 'content/themes' };
+  const args = { count: 50, attempts: 6000, seconds: 300, content: 'content/themes' };
   const numeric = ['count', 'attempts', 'seconds'];
   for (let i = 0; i < argv.length; i += 2) {
     const key = argv[i].replace(/^--/, '');
@@ -200,10 +202,11 @@ async function main() {
   const dictionaryWords = (await readFile('data/words.txt', 'utf8'))
     .split('\n').map((w) => w.trim().toUpperCase()).filter(Boolean);
   const ranks = await loadRanks();
+  const blockset = await loadBlocklist();
   const result = buildDrop({
     dropId: args.id, startDate: args.start, count: args.count,
     attempts: args.attempts, seconds: args.seconds,
-    themes, ranks, existingDropThemeIds, dictionaryWords,
+    themes, ranks, existingDropThemeIds, dictionaryWords, blockset,
   });
   console.log(result.report);
   if (!result.drop) process.exit(1);
