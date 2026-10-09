@@ -83,11 +83,16 @@ export function createSelection({ gridEl, isSelectable, onChange, onSubmit }) {
     pendingSubmit = false;
   });
 
-  gridEl.addEventListener('pointercancel', (e) => {
+  const resetPress = (e) => {
     if (e.pointerId !== activePointer) return;
     pressed = false;
     pendingSubmit = false;
-  });
+    activePointer = null;
+  };
+
+  gridEl.addEventListener('pointercancel', resetPress);
+  // Fires after pointerup too; by then pressed is already false, so this is a no-op.
+  gridEl.addEventListener('lostpointercapture', resetPress);
 
   return {
     clear: () => set([]),

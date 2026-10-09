@@ -165,6 +165,7 @@ function startPuzzle(seed, isDaily) {
     saveProgress(state);
   }
   app.state = state;
+  if (!state.completed && $('results-dialog').open) $('results-dialog').close();
   app.message = '';
   app.selector.clear();
   render();
