@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { stepTap, stepDrag } from '../js/input.js';
+import { linkSquares } from '../js/grid.js';
 
 const all = () => true;
 const not = (blocked) => (i) => !blocked.includes(i);
@@ -28,4 +29,35 @@ test('stepDrag backtracks onto the previous cell', () => {
 test('stepDrag ignores cells earlier in the path', () => {
   const path = [0, 1, 7, 6];
   assert.equal(stepDrag(path, 0, all), path);
+});
+
+test('stepDrag refuses a step crossing the selection\'s own diagonal', () => {
+  const path = [0, 7, 6]; // 0-7 is the down-right diagonal of square 0
+  assert.equal(stepDrag(path, 1, all), path);   // 6-1 would be the other diagonal
+  assert.deepEqual(stepDrag([0, 7, 8], 14, all), [0, 7, 8, 14]);
+});
+
+test('stepTap starts a new selection instead of crossing the own path', () => {
+  assert.deepEqual(stepTap([0, 7, 6], 1, all), [1]);
+});
+
+test('steps crossing found-word links are refused', () => {
+  const blocked = linkSquares([[0, 7]]); // a found word uses 0-7
+  const path = [6];
+  assert.equal(stepDrag(path, 1, all, blocked), path);
+  assert.deepEqual(stepTap(path, 1, all, blocked), [1]);
+  assert.deepEqual(stepDrag(path, 12, all, blocked), [6, 12]);
+});
+
+test('orthogonal steps are unaffected by blocked links', () => {
+  const blocked = linkSquares([[0, 7]]);
+  assert.deepEqual(stepDrag([6], 7, all, blocked), [6, 7]);
+  assert.deepEqual(stepTap([1], 7, all, blocked), [1, 7]);
+  assert.deepEqual(stepDrag([0], 7, all, blocked), [0, 7]); // same diagonal, not crossing
+});
+
+test('backtracking still works with blocked links', () => {
+  const blocked = linkSquares([[0, 7]]);
+  assert.deepEqual(stepDrag([0, 7, 6], 7, all, blocked), [0, 7]);
+  assert.deepEqual(stepTap([0, 7, 6], 7, all, blocked), [0, 7]);
 });

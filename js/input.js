@@ -1,23 +1,30 @@
-import { isAdjacent } from './grid.js';
+import { isAdjacent, crossesLinks, linkSquares } from './grid.js';
 
 const HIT_RADIUS = 0.42; // fraction of tile width that counts as "on" a tile while dragging
 
-export function stepTap(path, cell, isSelectable) {
+// A step may not cross a found word's link or the selection's own earlier links.
+function canExtend(path, cell, blocked) {
+  const last = path[path.length - 1];
+  return isAdjacent(last, cell) && !crossesLinks(last, cell, blocked) &&
+    !crossesLinks(last, cell, linkSquares([path]));
+}
+
+export function stepTap(path, cell, isSelectable, blocked = new Map()) {
   if (!isSelectable(cell)) return [];
   const at = path.indexOf(cell);
   if (at >= 0) return path.slice(0, at + 1);
-  if (path.length && isAdjacent(path[path.length - 1], cell)) return [...path, cell];
+  if (path.length && canExtend(path, cell, blocked)) return [...path, cell];
   return [cell];
 }
 
-export function stepDrag(path, cell, isSelectable) {
+export function stepDrag(path, cell, isSelectable, blocked = new Map()) {
   if (path.length >= 2 && cell === path[path.length - 2]) return path.slice(0, -1);
   if (path.includes(cell) || !isSelectable(cell)) return path;
-  if (path.length && isAdjacent(path[path.length - 1], cell)) return [...path, cell];
+  if (path.length && canExtend(path, cell, blocked)) return [...path, cell];
   return path;
 }
 
-export function createSelection({ gridEl, isSelectable, onChange, onSubmit, shouldAutoSubmit = () => false }) {
+export function createSelection({ gridEl, isSelectable, onChange, onSubmit, shouldAutoSubmit = () => false, blockedLinks = () => new Map() }) {
   let path = [];
   let pressed = false;
   let dragged = false;
@@ -66,7 +73,7 @@ export function createSelection({ gridEl, isSelectable, onChange, onSubmit, shou
     activePointer = e.pointerId;
     dragged = false;
     pendingSubmit = path.length > 0 && cell === path[path.length - 1];
-    if (!pendingSubmit) set(stepTap(path, cell, isSelectable));
+    if (!pendingSubmit) set(stepTap(path, cell, isSelectable, blockedLinks()));
     gridEl.setPointerCapture?.(e.pointerId);
   });
 
@@ -74,7 +81,7 @@ export function createSelection({ gridEl, isSelectable, onChange, onSubmit, shou
     if (!pressed || e.pointerId !== activePointer) return;
     const cell = cellAt(e.clientX, e.clientY);
     if (cell === null || cell === path[path.length - 1]) return;
-    const next = stepDrag(path, cell, isSelectable);
+    const next = stepDrag(path, cell, isSelectable, blockedLinks());
     if (next !== path) {
       dragged = true;
       pendingSubmit = false;
