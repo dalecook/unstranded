@@ -22,6 +22,7 @@ const WORDS_FILE = new URL('../data/words.txt', import.meta.url);
 const EXTRA_FILE = new URL('../content/dictionary-extra.txt', import.meta.url);
 const THEMES_DIR = new URL('../content/themes/', import.meta.url);
 const CURATED_FILE = fileURLToPath(new URL('../content/blocklist.txt', import.meta.url));
+const DICT_BLOCK_FILE = fileURLToPath(new URL('../content/blocklist-dictionary.txt', import.meta.url));
 
 const toLines = (text) => text.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
 
@@ -56,11 +57,12 @@ function themeWords() {
 
 const fromExisting = process.argv.includes('--from-existing');
 const blockSet = new Set();
+const softBlockSet = new Set();
 let input;
 if (fromExisting) {
   input = { sources: { existing: toLines(readFileSync(WORDS_FILE, 'utf8')) } };
   if (existsSync(CACHE + SOURCES.ldnoobw.file)) {
-    for (const w of ldnoobwWords(readFileSync(CACHE + SOURCES.ldnoobw.file))) blockSet.add(w);
+    for (const w of ldnoobwWords(readFileSync(CACHE + SOURCES.ldnoobw.file))) softBlockSet.add(w);
   }
 } else {
   const [enable, wordnik, scowlZip, ldnoobw] = await Promise.all(Object.values(SOURCES).map(load));
@@ -77,11 +79,13 @@ if (fromExisting) {
     extras: toLines(readFileSync(EXTRA_FILE, 'utf8')),
     themeWords: themeWords(),
   };
-  for (const w of ldnoobwWords(ldnoobw)) blockSet.add(w);
+  for (const w of ldnoobwWords(ldnoobw)) softBlockSet.add(w);
 }
-for (const w of await loadBlocklist({ file: CURATED_FILE })) blockSet.add(w.toLowerCase());
+for (const file of [CURATED_FILE, DICT_BLOCK_FILE]) {
+  for (const w of await loadBlocklist({ file })) blockSet.add(w.toLowerCase());
+}
 
-const { words, counts, removed } = mergeDictionary({ ...input, blockSet });
+const { words, counts, removed, junk } = mergeDictionary({ ...input, blockSet, softBlockSet });
 writeFileSync(WORDS_FILE, words.join('\n') + '\n');
 for (const [name, n] of Object.entries(counts)) console.log(`  ${name}: ${n} valid words`);
-console.log(`wrote ${words.length} words (${removed} removed by blocklist)`);
+console.log(`wrote ${words.length} words (${removed} removed by blocklist, ${junk} wordnik-only junk)`);

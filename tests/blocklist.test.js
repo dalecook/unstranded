@@ -76,3 +76,22 @@ test('a trace scrambled within one answer (not a contiguous run of its path) is 
   const answers = [{ word: 'SUMT', path: [0, 1, 6, 7] }];
   assert.deepEqual(offensiveWordsOn(grid, blockset, answers), ['SMUT']);
 });
+
+test('curated list includes the review-added slur and profanity stems', async () => {
+  const set = await loadBlocklist({ file: new URL('../content/blocklist.txt', import.meta.url) });
+  for (const w of ['DICKHEAD', 'DOUCHEBAG', 'SHITHEAD', 'SHITTING', 'SHITTED', 'FAGGY', 'FAGOT', 'GYPPO', 'LEZZIE', 'JAPS', 'KAFFIR', 'KRAUT', 'HONKY', 'WOPS', 'REDSKIN', 'SQUAW', 'MONGOLOID', 'POOFTER', 'PAEDO', 'BITCHY', 'SLUTTY', 'WHORISH', 'PISSER']) {
+    assert.ok(set.has(w), w);
+  }
+});
+
+test('dictionary-only blocklist removes words from the dictionary but is not a board check', async () => {
+  const board = await loadBlocklist({ file: new URL('../content/blocklist.txt', import.meta.url) });
+  const dict = await loadBlocklist({ file: new URL('../content/blocklist-dictionary.txt', import.meta.url) });
+  for (const w of ['PEDO', 'LESBO', 'HEBE', 'YIDS']) {
+    assert.ok(dict.has(w), `${w} in dictionary list`);
+    assert.ok(!board.has(w), `${w} not in board list`);
+  }
+  const grid = 'PEDO' + 'X'.repeat(44);
+  assert.deepEqual(offensiveWordsOn(grid, board, []), []);
+  assert.deepEqual(offensiveWordsOn(grid, dict, []), ['PEDO']);
+});

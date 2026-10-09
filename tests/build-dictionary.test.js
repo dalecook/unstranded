@@ -31,3 +31,32 @@ test('blocklist is applied last, even to extras and theme words, incl. simple pl
   assert.deepEqual(words, ['goose', 'house']);
   assert.equal(removed, 4);
 });
+
+test('soft (LDNOOBW) blocklist spares theme words but applies to sources and extras', () => {
+  const { words } = mergeDictionary({
+    sources: { a: ['hardcore', 'house'] },
+    extras: ['softextra'],
+    themeWords: ['hardcore', 'softtheme'],
+    softBlockSet: new Set(['hardcore', 'softextra', 'softtheme']),
+  });
+  assert.deepEqual(words, ['hardcore', 'house', 'softtheme']);
+  const { words: w2 } = mergeDictionary({
+    sources: { a: ['hardcore', 'house'] },
+    softBlockSet: new Set(['hardcore']),
+  });
+  assert.deepEqual(w2, ['house']);
+});
+
+test('curated blocklist still removes theme words', () => {
+  const { words } = mergeDictionary({ themeWords: ['themebad', 'goose'], blockSet: new Set(['themebad']) });
+  assert.deepEqual(words, ['goose']);
+});
+
+test('wordnik-only junk is dropped: vowelless, roman numerals, triple letters', () => {
+  const { words, junk } = mergeDictionary({
+    sources: { wordnik: ['brrrr', 'xxxvi', 'mmmm', 'aaaah', 'cwtch', 'tsktsk', 'house', 'ivxl', 'rhythm'], enable: ['tsktsk', 'cwtch'] },
+    extras: ['mmmm'],
+  });
+  assert.deepEqual(words, ['cwtch', 'house', 'mmmm', 'rhythm', 'tsktsk']);
+  assert.equal(junk, 4);
+});

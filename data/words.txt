@@ -18035,7 +18035,6 @@ bitchily
 bitchin
 bitchiness
 bitchinesses
-bitchy
 bitcoin
 bitcoins
 bite
@@ -30953,7 +30952,6 @@ cilice
 cilices
 ciliolate
 cilium
-cill
 cills
 cimar
 cimbalom
@@ -42533,7 +42531,6 @@ cuvettes
 cuzes
 cuzzes
 cwms
-cwtch
 cyan
 cyanamid
 cyanamide
@@ -48826,8 +48823,6 @@ dickering
 dickers
 dickey
 dickeys
-dickhead
-dickheads
 dickie
 dickier
 dickies
@@ -49305,7 +49300,6 @@ diligent
 diligently
 dill
 dilled
-dilli
 dillies
 dills
 dillweed
@@ -51881,7 +51875,6 @@ divestments
 divests
 divesture
 divestures
-divi
 dividable
 divide
 divided
@@ -51983,7 +51976,6 @@ divvy
 divvying
 diwan
 diwans
-dixi
 dixie
 dixieland
 dixies
@@ -53017,8 +53009,6 @@ doucet
 douceur
 douceurs
 douche
-douchebag
-douchebags
 douched
 douches
 douching
@@ -55842,7 +55832,6 @@ edulcorating
 edutainment
 edutainments
 eech
-eeew
 eejit
 eejits
 eelgrass
@@ -63513,16 +63502,10 @@ fagging
 faggotries
 faggotry
 faggoty
-faggy
 fagin
 fagins
-fagot
-fagoted
 fagoter
 fagoters
-fagoting
-fagotings
-fagots
 fahlband
 fahlbands
 fahs
@@ -77133,9 +77116,6 @@ growths
 growthy
 groyne
 groynes
-grrl
-grrrl
-grrrls
 grub
 grubbed
 grubber
@@ -78022,8 +78002,6 @@ gypped
 gypper
 gyppers
 gypping
-gyppo
-gyppos
 gyps
 gypseian
 gypseous
@@ -79280,6 +79258,7 @@ hardbound
 hardbounds
 hardcase
 hardcases
+hardcore
 hardcourt
 hardcover
 hardcovers
@@ -80294,13 +80273,11 @@ hebdomadal
 hebdomadally
 hebdomadary
 hebdomads
-hebe
 heben
 hebephrenia
 hebephrenias
 hebephrenic
 hebephrenics
-hebes
 hebetate
 hebetated
 hebetates
@@ -82283,7 +82260,6 @@ hiya
 hizz
 hizzoner
 hizzoners
-hmmm
 hoactzin
 hoactzines
 hoactzins
@@ -83117,10 +83093,8 @@ honked
 honker
 honkers
 honkie
-honkies
 honking
 honks
-honky
 honkytonk
 honor
 honorabilities
@@ -84006,7 +83980,6 @@ hryvnia
 hryvnias
 hryvnya
 hryvnyas
-html
 huarache
 huaraches
 huaracho
@@ -93895,7 +93868,6 @@ japonaiserie
 japonaiseries
 japonica
 japonicas
-japs
 jaques
 jardiniere
 jardinieres
@@ -95344,8 +95316,6 @@ kaffeeklatch
 kaffeeklatches
 kaffeeklatsch
 kaffeeklatsches
-kaffir
-kaffirs
 kaffiyah
 kaffiyahs
 kaffiyeh
@@ -97368,8 +97338,6 @@ krans
 krantz
 krater
 kraters
-kraut
-krauts
 kray
 krays
 kreep
@@ -100036,8 +100004,6 @@ lesbianisms
 lesbians
 lesbigay
 lesbigays
-lesbo
-lesbos
 leses
 lesion
 lesioned
@@ -100357,8 +100323,6 @@ leys
 lezes
 lezz
 lezzes
-lezzie
-lezzies
 lezzy
 lhasa
 lhasaapso
@@ -100868,7 +100832,6 @@ liliaceous
 lilied
 lilies
 lilikoi
-lill
 lilliput
 lilliputian
 lilliputians
@@ -112277,8 +112240,6 @@ mongol
 mongolian
 mongolism
 mongolisms
-mongoloid
-mongoloids
 mongols
 mongongo
 mongoos
@@ -127832,7 +127793,6 @@ paediatric
 paediatrician
 paediatricians
 paediatrics
-paedo
 paedogeneses
 paedogenesis
 paedogenetic
@@ -135364,8 +135324,6 @@ pisolitic
 pisos
 pissant
 pissants
-pisser
-pissers
 pisshole
 pissholes
 pissier
@@ -137936,8 +137894,6 @@ poofier
 poofiest
 pooftah
 pooftahs
-poofter
-poofters
 poofy
 pooh
 poohed
@@ -149760,8 +149716,6 @@ redshirt
 redshirted
 redshirting
 redshirts
-redskin
-redskins
 redsnapper
 redstart
 redstarts
@@ -164648,7 +164602,6 @@ shewers
 shewing
 shewn
 shews
-shhh
 shiatsu
 shiatsus
 shiatzu
@@ -164926,8 +164879,6 @@ shite
 shitface
 shitfaced
 shitfaces
-shithead
-shitheads
 shitheel
 shitheels
 shithole
@@ -164943,7 +164894,6 @@ shitstorm
 shitstorms
 shittah
 shittahs
-shitted
 shitter
 shitters
 shittier
@@ -164952,7 +164902,6 @@ shittim
 shittims
 shittimwood
 shittimwoods
-shitting
 shitwork
 shitworks
 shiur
@@ -167114,7 +167063,6 @@ skillfulness
 skillfulnesses
 skilling
 skillings
-skillless
 skills
 skilly
 skim
@@ -168249,7 +168197,6 @@ sluttish
 sluttishly
 sluttishness
 sluttishnesses
-slutty
 slyboots
 slyer
 slyest
@@ -172837,7 +172784,6 @@ squattiest
 squattily
 squatting
 squatty
-squaw
 squawbush
 squawbushes
 squawfish
@@ -172850,7 +172796,6 @@ squawking
 squawks
 squawroot
 squawroots
-squaws
 squeak
 squeaked
 squeaker
@@ -199435,7 +199380,6 @@ viking
 vikings
 vilayet
 vilayets
-vild
 vile
 vilely
 vileness
@@ -203236,7 +203180,6 @@ whoremonger
 whoremongers
 whoreson
 whoresons
-whorish
 whorishly
 whorl
 whorled
@@ -204609,7 +204552,6 @@ woozily
 wooziness
 woozinesses
 woozy
-wops
 word
 wordage
 wordages
@@ -205801,7 +205743,6 @@ yexes
 yfere
 ygoe
 yidaki
-yids
 yield
 yieldable
 yielded
@@ -206850,4 +206791,3 @@ zymurgy
 zythum
 zyzzyva
 zyzzyvas
-zzzs
