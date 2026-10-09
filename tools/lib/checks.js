@@ -1,4 +1,4 @@
-import { neighbors, rowOf, colOf, diagonalKey, crossesLinks, pathsCross } from '../../js/grid.js';
+import { neighbors, rowOf, colOf, isValidPath, diagonalKey, crossesLinks, pathsCross } from '../../js/grid.js';
 import { verifyPuzzle } from './layout.js';
 
 // Visit every legal trace of `word`: a self-avoiding adjacent path whose diagonal steps never
@@ -55,6 +55,10 @@ export function checkPuzzle(layout, theme) {
   const steppingStones = [...new Set(theme.recognized)]
     .filter((w) => w.length >= 4 && w.length <= 5 && !chosen.has(w) && isTraceable(grid, w))
     .sort();
+  // Malformed paths are 'invalid', not 'crossing': validate shape before the crossing check.
+  if (answers.some((a) => !isValidPath(a.path) || a.path.length !== a.word.length)) {
+    return { ok: false, reason: 'invalid', steppingStones };
+  }
   if (pathsCross(answers.map((a) => a.path))) return { ok: false, reason: 'crossing', steppingStones };
   if (!verifyPuzzle(layout)) return { ok: false, reason: 'invalid', steppingStones };
   if (answers.some((a) => countTraces(grid, a.word, 2) !== 1)) {

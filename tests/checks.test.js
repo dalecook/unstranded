@@ -132,7 +132,20 @@ test('checkPuzzle reports invalid', () => {
   assert.equal(checkPuzzle({ grid, answers: variant.answers }, theme).reason, 'invalid');
 });
 
-test('checkPuzzle reports crossing before anything else', () => {
+test('checkPuzzle reports invalid, not crossing, for malformed paths', () => {
+  const grid = new Array(CELLS).fill('X');
+  const crossing = (first) => [
+    { word: 'XX', path: first, isSpangram: true },
+    { word: 'XX', path: [1, 6], isSpangram: false },
+  ];
+  const theme = { answers: [], recognized: [] };
+  // Wrong length, non-adjacent step, out-of-range cell: each would otherwise read as a crossing.
+  assert.equal(checkPuzzle({ grid, answers: [{ word: 'XXX', path: [0, 7], isSpangram: true }, crossing([0, 7])[1]] }, theme).reason, 'invalid');
+  assert.equal(checkPuzzle({ grid, answers: crossing([0, 7, 30]) }, theme).reason, 'invalid');
+  assert.equal(checkPuzzle({ grid, answers: crossing([0, 99]) }, theme).reason, 'invalid');
+});
+
+test('checkPuzzle reports crossing before the remaining checks', () => {
   const grid = new Array(CELLS).fill('X');
   const answers = [
     { word: 'XX', path: [0, 7], isSpangram: true },
