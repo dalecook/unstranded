@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {
   loadProgress, saveProgress, loadStats, saveStats, applyStart, applyCompletion,
   displayStreak, previousDateKey, isFirstVisit, markVisited,
+  markPlayed, markSolved, loadPlayed, loadSolved,
 } from '../js/storage.js';
 
 class MemoryStore {
@@ -85,4 +86,33 @@ test('first visit flag', () => {
   assert.equal(isFirstVisit(store), true);
   markVisited(store);
   assert.equal(isFirstVisit(store), false);
+});
+
+test('played and solved round-trip as sets', () => {
+  const store = new MemoryStore();
+  assert.equal(loadPlayed(store).size, 0);
+  markPlayed('2026-10-p01', store);
+  markPlayed('2026-10-p02', store);
+  markPlayed('2026-10-p01', store);
+  markSolved('2026-10-p02', store);
+  assert.deepEqual([...loadPlayed(store)].sort(), ['2026-10-p01', '2026-10-p02']);
+  assert.deepEqual([...loadSolved(store)], ['2026-10-p02']);
+});
+
+test('played and solved keep the 500 most recent', () => {
+  const store = new MemoryStore();
+  for (let i = 1; i <= 505; i++) { markPlayed('p' + i, store); markSolved('p' + i, store); }
+  for (const load of [loadPlayed, loadSolved]) {
+    const set = load(store);
+    assert.equal(set.size, 500);
+    assert.equal(set.has('p5'), false);
+    assert.equal(set.has('p6'), true);
+    assert.equal(set.has('p505'), true);
+  }
+});
+
+test('blocked storage never throws for played and solved', () => {
+  assert.doesNotThrow(() => { markPlayed('x', throwingStore); markSolved('x', throwingStore); });
+  assert.equal(loadPlayed(throwingStore).size, 0);
+  assert.equal(loadSolved(throwingStore).size, 0);
 });

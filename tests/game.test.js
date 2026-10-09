@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  newGameState, wordFromPath, foundCells, submitWord, canHint, useHint, HINT_COST, completedAnswer,
+  newGameState, wordFromPath, foundCells, submitWord, canHint, useHint, HINT_COST, completedAnswer, availableHints,
 } from '../js/game.js';
 
 // Hand-built puzzle: game logic does not require full coverage.
@@ -14,7 +14,7 @@ function makePuzzle() {
   put('CATS', [24, 25, 26, 27]); // decoy: same word, wrong path
   put('BIRD', [30, 31, 32, 33]);
   return {
-    seed: 1, themeId: 'pets', clue: 'Pets', grid,
+    themeId: 'pets', clue: 'Pets', grid, steppingStones: ['PETS'],
     answers: [
       { word: 'ANIMAL', path: [12, 13, 14, 15, 16, 17], isSpangram: true },
       { word: 'CATS', path: [0, 1, 2, 3], isSpangram: false },
@@ -27,8 +27,8 @@ const DICT = new Set(['STAC', 'BIRD', 'SGOD']);
 test('newGameState starts empty', () => {
   const s = newGameState(makePuzzle(), 'seed-1', 1000);
   assert.deepEqual(s, {
-    puzzleId: 'seed-1', seed: 1, themeId: 'pets', found: [], log: [], bonusWords: [],
-    hintsUsed: 0, hintMeter: 0, activeHint: null, startedAt: 1000, completed: false,
+    puzzleId: 'seed-1', themeId: 'pets', found: [], log: [], bonusWords: [],
+    stonesFound: [], bankedHints: 0, hintsUsed: 0, hintMeter: 0, activeHint: null, startedAt: 1000, completed: false,
   });
 });
 
@@ -174,4 +174,60 @@ test('completedAnswer waits while the word could still grow into a longer unfoun
   assert.equal(completedAnswer(s, p, [0, 1, 2, 3, 4, 5, 11]).word, 'BASSOON');
   ({ state: s } = submitWord(s, p, [0, 1, 2, 3, 4, 5, 11], DICT));
   assert.equal(completedAnswer(s, p, [6, 7, 8, 9]).word, 'BASS', 'no longer ambiguous once BASSOON is found');
+});
+
+// Stone PETS traced on cells 36-39.
+function stonePuzzle() {
+  const p = makePuzzle();
+  [36, 37, 38, 39].forEach((c, i) => { p.grid[c] = 'PETS'[i]; });
+  return p;
+}
+
+test('stepping stone banks a hint once', () => {
+  const p = stonePuzzle();
+  let s = newGameState(p, 'x');
+  let r;
+  ({ state: s, result: r } = submitWord(s, p, [36, 37, 38, 39], DICT));
+  assert.deepEqual(r, { type: 'stepping-stone', word: 'PETS' });
+  assert.deepEqual(s.stonesFound, ['PETS']);
+  assert.equal(s.bankedHints, 1);
+  assert.deepEqual(s.log, ['P']);
+  assert.equal(s.hintMeter, 0);
+  const before = s;
+  ({ state: s, result: r } = submitWord(s, p, [36, 37, 38, 39], DICT));
+  assert.equal(r.type, 'already-found');
+  assert.equal(s, before);
+});
+
+test('stepping stone check wins over a dictionary word', () => {
+  const p = stonePuzzle();
+  const { result, state } = submitWord(newGameState(p, 'x'), p, [36, 37, 38, 39], new Set(['PETS']));
+  assert.equal(result.type, 'stepping-stone');
+  assert.deepEqual(state.bonusWords, []);
+});
+
+test('canHint with a banked hint and an empty meter', () => {
+  const s = { ...newGameState(stonePuzzle(), 'x'), bankedHints: 1 };
+  assert.equal(canHint(s), true);
+  assert.equal(canHint({ ...s, bankedHints: 0 }), false);
+  assert.equal(canHint({ ...s, activeHint: { word: 'CATS', level: 2 } }), false);
+});
+
+test('useHint spends a banked hint before the meter', () => {
+  const p = stonePuzzle();
+  const s = { ...newGameState(p, 'x'), bankedHints: 1, hintMeter: HINT_COST };
+  const after = useHint(s, p);
+  assert.equal(after.bankedHints, 0);
+  assert.equal(after.hintMeter, HINT_COST);
+  assert.equal(after.hintsUsed, 1);
+  const again = useHint(after, p);
+  assert.equal(again.hintMeter, 0);
+});
+
+test('availableHints counts banked plus a full meter', () => {
+  const s = newGameState(stonePuzzle(), 'x');
+  assert.equal(availableHints(s), 0);
+  assert.equal(availableHints({ ...s, bankedHints: 2 }), 2);
+  assert.equal(availableHints({ ...s, bankedHints: 2, hintMeter: HINT_COST }), 3);
+  assert.equal(availableHints({ ...s, hintMeter: HINT_COST - 1 }), 0);
 });

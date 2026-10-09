@@ -46,3 +46,11 @@ test('shareText falls back to clipboard when share fails, else reports failure',
   assert.equal(copied, 'hi');
   assert.equal(await shareText('hi', { share: failingShare }), 'failed');
 });
+
+test('stepping stones share as feathers', () => {
+  const state = { log: ['P', 'T', 'P'] };
+  assert.equal(
+    buildShareText({ state, puzzle, label: 'x', url: null }),
+    'UnStranded #x\n"Drawer full of tools"\n🪶🔵🪶',
+  );
+});

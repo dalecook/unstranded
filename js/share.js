@@ -1,4 +1,4 @@
-const EMOJI = { T: '🔵', S: '🟡', H: '💡' };
+const EMOJI = { T: '🔵', S: '🟡', H: '💡', P: '🪶' };
 const PER_LINE = 4;
 
 export function buildShareText({ state, puzzle, label, url }) {

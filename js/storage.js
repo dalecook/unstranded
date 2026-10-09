@@ -2,6 +2,7 @@ import { dateKey } from './rng.js';
 
 const PREFIX = 'unstranded:';
 const MAX_SAVED = 30;
+const MAX_IDS = 500;
 
 function defaultStore() {
   try {
@@ -86,6 +87,28 @@ export function applyCompletion(stats, state, dailyDate) {
 export function displayStreak(stats, today) {
   const live = stats.lastDailyDate === today || stats.lastDailyDate === previousDateKey(today);
   return live ? stats.currentStreak : 0;
+}
+
+function markId(key, id, store) {
+  const ids = read(key, [], store).filter((x) => x !== id);
+  ids.push(id);
+  write(key, ids.slice(-MAX_IDS), store);
+}
+
+export function markPlayed(id, store = defaultStore()) {
+  markId('played', id, store);
+}
+
+export function markSolved(id, store = defaultStore()) {
+  markId('solved', id, store);
+}
+
+export function loadPlayed(store = defaultStore()) {
+  return new Set(read('played', [], store));
+}
+
+export function loadSolved(store = defaultStore()) {
+  return new Set(read('solved', [], store));
 }
 
 export function isFirstVisit(store = defaultStore()) {

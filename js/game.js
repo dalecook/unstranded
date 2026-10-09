@@ -4,11 +4,12 @@ export const HINT_COST = 3;
 export function newGameState(puzzle, puzzleId, now = Date.now()) {
   return {
     puzzleId,
-    seed: puzzle.seed,
     themeId: puzzle.themeId,
     found: [],
     log: [],
     bonusWords: [],
+    stonesFound: [],
+    bankedHints: 0,
     hintsUsed: 0,
     hintMeter: 0,
     activeHint: null,
@@ -64,6 +65,16 @@ export function submitWord(state, puzzle, path, dictionary) {
   if (answer) return { state, result: { type: 'already-found', word } };
 
   if (word.length < MIN_WORD_LENGTH) return { state, result: { type: 'too-short', word } };
+  if (puzzle.steppingStones?.includes(word)) {
+    if (state.stonesFound.includes(word)) return { state, result: { type: 'already-found', word } };
+    const next = {
+      ...state,
+      stonesFound: [...state.stonesFound, word],
+      bankedHints: state.bankedHints + 1,
+      log: [...state.log, 'P'],
+    };
+    return { state: next, result: { type: 'stepping-stone', word } };
+  }
   if (state.bonusWords.includes(word)) return { state, result: { type: 'already-found', word } };
   if (!dictionary || !dictionary.has(word)) return { state, result: { type: 'not-a-word', word } };
 
@@ -76,11 +87,13 @@ export function submitWord(state, puzzle, path, dictionary) {
 }
 
 export function canHint(state) {
-  return !state.completed && state.hintMeter >= HINT_COST && state.activeHint?.level !== 2;
+  return !state.completed && state.activeHint?.level !== 2
+    && (state.bankedHints > 0 || state.hintMeter >= HINT_COST);
 }
 
 export function useHint(state, puzzle) {
   if (!canHint(state)) return state;
+  const spendBanked = state.bankedHints > 0;
   let activeHint;
   if (state.activeHint && !isFound(state, state.activeHint.word)) {
     activeHint = { word: state.activeHint.word, level: 2 };
@@ -93,7 +106,12 @@ export function useHint(state, puzzle) {
     ...state,
     activeHint,
     hintsUsed: state.hintsUsed + 1,
-    hintMeter: 0,
+    bankedHints: spendBanked ? state.bankedHints - 1 : state.bankedHints,
+    hintMeter: spendBanked ? state.hintMeter : 0,
     log: [...state.log, 'H'],
   };
+}
+
+export function availableHints(state) {
+  return state.bankedHints + (state.hintMeter >= HINT_COST ? 1 : 0);
 }
