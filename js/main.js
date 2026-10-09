@@ -98,9 +98,14 @@ function onHint() {
   render();
 }
 
+// Share links use the canonical URL so copies hosted in iframes (e.g. itch.io) link somewhere playable.
+function playUrl() {
+  return document.querySelector('link[rel="canonical"]')?.href ?? `${location.origin}${location.pathname}`;
+}
+
 function currentShareText() {
   const label = app.isDaily ? app.today : String(app.puzzle.seed);
-  const url = app.isDaily ? null : `${location.origin}${location.pathname}?p=${app.puzzle.seed}`;
+  const url = app.isDaily ? null : `${playUrl()}?p=${app.puzzle.seed}`;
   return buildShareText({ state: app.state, puzzle: app.puzzle, label, url });
 }
 
