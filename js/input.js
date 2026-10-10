@@ -2,8 +2,9 @@ import { isAdjacent, crossesLinks } from './grid.js';
 
 const HIT_RADIUS = 0.42; // fraction of tile width that counts as "on" a tile while dragging
 
-// A step may not cross a found word's link. The selection may cross its own earlier links;
-// such a trace can only make a bonus word or stepping stone, never an answer (see game.js).
+// The selection may cross its own earlier links; such a trace can only make a bonus word or
+// stepping stone, never an answer (see game.js). `blocked` lets a caller forbid crossing given
+// links; the app passes none, since solved words no longer block anything.
 function canExtend(path, cell, blocked) {
   const last = path[path.length - 1];
   return isAdjacent(last, cell) && !crossesLinks(last, cell, blocked);

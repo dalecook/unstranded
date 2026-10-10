@@ -58,10 +58,10 @@ export function submitWord(state, puzzle, path, dictionary) {
   const word = wordFromPath(puzzle, path);
   const answer = puzzle.answers.find((a) => a.word === word);
 
-  // Any trace that spells an answer counts, unless it crosses itself: a self-crossing trace is
-  // never an answer, and is not scored as a bonus word either. Repeated letters can allow several
-  // traces, so the answer's own cells are locked (foundCells uses answer.path), leaving other
-  // answers solvable.
+  // A trace that spells an answer counts unless it crosses itself: a self-crossing trace is never
+  // an answer, and is not scored as a bonus word either. The build guarantees exactly one
+  // non-crossing trace per answer, so an accepted trace is the answer's own path (answer.path),
+  // which is what gets highlighted. Solved letters stay usable for bonus words and stepping stones.
   if (answer && !isFound(state, word)) {
     if (pathsCross([path])) return { state, result: { type: 'crossed-answer', word } };
     const found = [...state.found, { word, order: state.found.length + 1 }];
