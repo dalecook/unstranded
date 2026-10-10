@@ -1,8 +1,7 @@
 import {
-  newGameState, layoutKey, submitWord, useHint, canHint, availableHints, foundCells, completedAnswer, isFound, HINT_COST,
+  newGameState, layoutKey, submitWord, useHint, canHint, availableHints, completedAnswer, HINT_COST,
 } from './game.js';
 import { dateKey } from './rng.js';
-import { linkSquares } from './grid.js';
 import { loadDrops, dailyFor, getPuzzle, isReleased, randomPuzzle } from './drops.js';
 import { createBoard, renderBoard } from './render.js';
 import { createSelection } from './input.js';
@@ -230,15 +229,12 @@ async function init() {
   app.board = createBoard($('grid'));
   app.selector = createSelection({
     gridEl: $('grid'),
-    isSelectable: (i) => Boolean(app.state) && !foundCells(app.state, app.puzzle).has(i),
+    isSelectable: () => Boolean(app.state) && !app.state.completed,
     onChange: (path) => {
       app.selection = path;
       if (path.length) app.message = '';
       render();
     },
-    blockedLinks: () => linkSquares(
-      app.state ? app.puzzle.answers.filter((a) => isFound(app.state, a.word)).map((a) => a.path) : [],
-    ),
     onSubmit,
     shouldAutoSubmit: (path) => Boolean(app.state) && completedAnswer(app.state, app.puzzle, path) !== null,
   });

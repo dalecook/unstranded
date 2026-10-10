@@ -40,6 +40,7 @@ export function renderBoard(board, { puzzle, state, selection }) {
   const showOrder = state.activeHint?.level === 2;
   const selected = new Set(selection);
 
+  board.gridEl.classList.toggle('solved', state.completed);
   board.tiles.forEach((tile, i) => {
     tile.firstChild.textContent = puzzle.grid[i];
     const classes = ['tile'];

@@ -150,9 +150,10 @@ main {
   transition: background-color 0.12s;
 }
 .tile.selected span { background: var(--selected); }
-.tile.found { cursor: default; }
+.grid.solved .tile { cursor: default; }
 .tile.found.theme span { background: var(--theme); }
 .tile.found.spangram span { background: var(--spangram); color: #1a1a1a; }
+.tile.found.selected span { outline: 3px solid var(--fg); outline-offset: -3px; }
 .tile.hinted span { outline: 2px dashed var(--hint); outline-offset: -2px; }
 .tile.hint-start span { outline-style: solid; }
 

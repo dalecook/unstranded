@@ -286,3 +286,47 @@ test('stepping stones and bonus words count along a self-crossing trace', () => 
   assert.deepEqual(s.bonusWords, ['BIRD']);
   assert.equal(s.hintMeter, 1);
 });
+
+function found(p, words) {
+  let s = newGameState(p, 's', 0);
+  for (const w of words) s = submitWord(s, p, p.answers.find((a) => a.word === w).path, DICT).state;
+  return s;
+}
+
+test('bonus word traced through solved letters counts once', () => {
+  const p = makePuzzle();
+  const s = found(p, ['CATS']);
+  const a = submitWord(s, p, [3, 2, 1, 0], DICT); // STAC along CATS' own cells
+  assert.equal(a.result.type, 'bonus');
+  assert.equal(a.state.hintMeter, 1);
+  assert.equal(submitWord(a.state, p, [3, 2, 1, 0], DICT).result.type, 'already-found');
+});
+
+test('stepping stone traced through solved letters banks a hint once', () => {
+  const p = { ...makePuzzle(), steppingStones: ['SGOD'] };
+  const s = found(p, ['CATS', 'DOGS']);
+  const a = submitWord(s, p, [3, 2, 1, 0], DICT); // STAC is a plain bonus here
+  assert.equal(a.result.type, 'bonus');
+  const b = submitWord(s, p, [9, 8, 7, 6], { has: () => false }); // SGOD reversed DOGS cells
+  assert.equal(b.result.type, 'stepping-stone');
+  assert.equal(b.state.bankedHints, 1);
+  assert.equal(submitWord(b.state, p, [9, 8, 7, 6], DICT).result.type, 'already-found');
+});
+
+test('an unfound answer still works on its official path after others are found', () => {
+  const p = makePuzzle();
+  const s = found(p, ['CATS', 'DOGS']);
+  const r = submitWord(s, p, p.answers[0].path, DICT);
+  assert.equal(r.result.type, 'spangram');
+  assert.equal(r.state.completed, true);
+});
+
+test('re-tracing a found answer in any way is already-found with state unchanged', () => {
+  const p = makePuzzle();
+  const s = found(p, ['CATS']);
+  for (const path of [[0, 1, 2, 3], [24, 25, 26, 27]]) {
+    const r = submitWord(s, p, path, DICT);
+    assert.equal(r.result.type, 'already-found');
+    assert.equal(r.state, s);
+  }
+});
