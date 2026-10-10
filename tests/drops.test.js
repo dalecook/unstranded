@@ -24,12 +24,17 @@ function addDays(dateStr, days) {
   return date.toISOString().slice(0, 10);
 }
 
-// Drops built before the no-crossing rule fail checkPuzzle until they are rebuilt.
-const NO_CROSSING_TODO = {
-  '2026-10': 'drop 2026-10 predates the no-crossing rule; rebuilt in the next task',
-};
-
 const index = await loadIndex();
+
+// A published drop must always be fully validated: this file may never mark a test
+// todo or skip, so a stale drop can't ship behind a pending test.
+test('published drops are never marked todo or skip', async () => {
+  const source = await readFile(new URL(import.meta.url), 'utf8');
+  const flags = ['to' + 'do', 'sk' + 'ip'].join('|'); // split so this line doesn't match itself
+  const flagged = source.match(new RegExp(String.raw`\b(${flags})\s*:|\.(${flags})\s*\(`, 'g')) ?? [];
+  assert.deepEqual(flagged, [], 'drops.test.js must not mark tests todo/skip');
+});
+
 const blocklist = await loadBlocklist({ file: new URL('../content/blocklist.txt', import.meta.url) });
 
 if (!index) {
@@ -38,7 +43,7 @@ if (!index) {
   });
 } else {
   for (const dropId of index) {
-    test(`drop ${dropId} is valid`, { todo: NO_CROSSING_TODO[dropId] }, async () => {
+    test(`drop ${dropId} is valid`, async () => {
       const drop = await readJson(`../drops/${dropId}.json`);
       const meta = await readJson(`../drops/${dropId}.meta.json`);
       assert.equal(drop.id, dropId);
