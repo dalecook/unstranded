@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { buildDrop, parseArgs } from '../tools/build-drop.mjs';
+import { buildDrop, buildDropParallel, parseArgs } from '../tools/build-drop.mjs';
 import { verifyPuzzle } from '../tools/lib/layout.js';
 import { checkPuzzle } from '../tools/lib/checks.js';
 
@@ -138,4 +138,19 @@ test('parseArgs rejects non-positive-integer numeric options with usage', () => 
   for (const bad of ['abc', '0', '-5', '1.5', '']) {
     assert.throws(() => parseArgs(['--id', 'x', '--start', '2026-10-08', '--count', bad]), /Usage/, bad);
   }
+});
+
+test('parallel workers produce the same drop as the sequential build', async () => {
+  const opts = {
+    dropId: '2026-10', startDate: '2026-10-09', count: 3, dailies: 2, attempts: 60, seconds: 60,
+    themes: THEMES, ranks, existingDropThemeIds: ['gems'], dictionaryWords: ['TRIPLET', 'CARDINAL'],
+  };
+  const seq = await buildDropParallel(opts, { workers: 1 });
+  const par = await buildDropParallel(opts, { workers: 3 });
+  assert.equal(JSON.stringify(par.drop), JSON.stringify(seq.drop));
+  assert.equal(JSON.stringify(par.meta), JSON.stringify(seq.meta));
+  assert.equal(par.report, seq.report);
+  assert.equal(JSON.stringify(par.drop), JSON.stringify(result().drop));
+  assert.deepEqual(par.timings.map((t) => t.themeId), ['birds', 'fruits', 'trees']);
+  assert.ok(par.wallMs >= 0);
 });

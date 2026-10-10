@@ -3,6 +3,8 @@
 import { readFile, writeFile, readdir, mkdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
+import os from 'node:os';
+import { Worker } from 'node:worker_threads';
 import { mulberry32, hashString, shuffle } from '../js/rng.js';
 import { chooseWords, layoutWords } from './lib/layout.js';
 import { directionVariants, checkPuzzle, difficulty, isTraceable } from './lib/checks.js';
@@ -77,6 +79,7 @@ function tracedDictionaryWords(grid, dictionaryWords, exclude) {
 export function buildDrop({
   dropId, startDate, count = 50, dailies = 30, attempts = 2000, seconds = 60,
   themes, ranks, existingDropThemeIds = [], dictionaryWords = [], blockset = new Set(),
+  search = null,
 }) {
   const skipped = new Set(existingDropThemeIds);
   const failures = [];
@@ -92,7 +95,7 @@ export function buildDrop({
       failures.push({ themeId: theme.id, reason: `only ${eligible.length} eligible answers` });
       continue;
     }
-    const found = searchTheme(theme, dropId, { attempts, seconds, eligible, blockset });
+    const found = search ? search(theme) : searchTheme(theme, dropId, { attempts, seconds, eligible, blockset });
     if (found.capped) cappedThemes.push(theme.id);
     if (found.failure) {
       failures.push({ themeId: theme.id, reason: found.failure });
@@ -164,11 +167,88 @@ export function buildDrop({
   return { drop, meta, report: lines.join('\n'), failures, spares };
 }
 
-const USAGE = 'Usage: build-drop --id 2026-10 --start 2026-10-08 [--count 50] [--attempts 6000] [--seconds 300] [--content dir]';
+// Runners take jobs ({ theme, dropId, attempts, seconds, eligible }) and resolve to a
+// Map of theme id -> { result, ms }. Results never depend on completion order.
+export async function runSequential(jobs, { blockset }) {
+  const out = new Map();
+  for (const job of jobs) {
+    const started = performance.now();
+    const result = searchTheme(job.theme, job.dropId, {
+      attempts: job.attempts, seconds: job.seconds, eligible: job.eligible, blockset,
+    });
+    out.set(job.theme.id, { result, ms: performance.now() - started });
+  }
+  return out;
+}
+
+export function runInWorkers(jobs, { blockset, workers }) {
+  const out = new Map();
+  if (!jobs.length) return Promise.resolve(out);
+  const n = Math.min(workers, jobs.length);
+  const workerUrl = new URL('./lib/search-worker.mjs', import.meta.url);
+  return new Promise((resolve, reject) => {
+    let next = 0;
+    let live = n;
+    let failed = false;
+    const pool = [];
+    const fail = (err) => {
+      if (failed) return;
+      failed = true;
+      pool.forEach((w) => w.terminate());
+      reject(err instanceof Error ? err : new Error(String(err)));
+    };
+    const feed = (w) => {
+      if (next < jobs.length) w.postMessage(jobs[next++]);
+      else { w.terminate(); if (--live === 0 && !failed) resolve(out); }
+    };
+    for (let i = 0; i < n; i++) {
+      const w = new Worker(workerUrl, { workerData: { blockset } });
+      pool.push(w);
+      w.on('message', (m) => {
+        if (m.error) return fail(new Error(`worker failed on ${m.id}: ${m.error}`));
+        out.set(m.id, { result: m.result, ms: m.ms });
+        feed(w);
+      });
+      w.on('error', fail);
+      feed(w);
+    }
+  });
+}
+
+// Same output as buildDrop, with the per-theme searches farmed out to a runner.
+export async function buildDropParallel(opts, { workers = 1, runner } = {}) {
+  const { dropId, attempts = 2000, seconds = 60, themes, ranks, existingDropThemeIds = [], blockset = new Set() } = opts;
+  const skipped = new Set(existingDropThemeIds);
+  const jobs = [];
+  for (const theme of [...themes].sort((a, b) => a.id.localeCompare(b.id))) {
+    if (skipped.has(theme.id)) continue;
+    const { eligible } = eligibleAnswers(theme, ranks);
+    if (eligible.length >= 4) jobs.push({ theme, dropId, attempts, seconds, eligible });
+  }
+  const run = runner ?? (workers > 1 ? runInWorkers : runSequential);
+  const started = performance.now();
+  const results = await run(jobs, { blockset, workers });
+  const wallMs = performance.now() - started;
+  const timings = jobs.map((j) => ({ themeId: j.theme.id, ms: results.get(j.theme.id).ms }));
+  const built = buildDrop({ ...opts, search: (theme) => results.get(theme.id).result });
+  return { ...built, timings, wallMs };
+}
+
+export function timingHeader(timings, wallMs, workers) {
+  const secs = (ms) => (ms / 1000).toFixed(1);
+  const lines = [`Search: ${timings.length} themes, ${workers} worker(s), wall time ${secs(wallMs)}s`];
+  for (const t of timings) lines.push(`  ${t.themeId}: ${secs(t.ms)}s`);
+  return lines.join('\n');
+}
+
+const USAGE = 'Usage: build-drop --id 2026-10 --start 2026-10-08 [--count 50] [--attempts 6000] [--seconds 300] [--workers N] [--content dir]';
 
 export function parseArgs(argv) {
-  const args = { count: 50, attempts: 6000, seconds: 300, content: 'content/themes' };
-  const numeric = ['count', 'attempts', 'seconds'];
+  const args = {
+    count: 50, attempts: 6000, seconds: 300, content: 'content/themes',
+    workers: Math.max(1, os.availableParallelism() - 2),
+  };
+  const numeric = ['count', 'attempts', 'seconds', 'workers'];
   for (let i = 0; i < argv.length; i += 2) {
     const key = argv[i].replace(/^--/, '');
     if (![...numeric, 'id', 'start', 'content'].includes(key) || argv[i + 1] === undefined) {
@@ -206,12 +286,13 @@ async function main() {
     .split('\n').map((w) => w.trim().toUpperCase()).filter(Boolean);
   const ranks = await loadRanks();
   const blockset = await loadBlocklist();
-  const result = buildDrop({
+  const result = await buildDropParallel({
     dropId: args.id, startDate: args.start, count: args.count,
     attempts: args.attempts, seconds: args.seconds,
     themes, ranks, existingDropThemeIds, dictionaryWords, blockset,
-  });
-  console.log(result.report);
+  }, { workers: args.workers });
+  console.log(`${timingHeader(result.timings, result.wallMs, args.workers)}
+${result.report}`);
   if (!result.drop) process.exit(1);
   await mkdir('drops', { recursive: true });
   await writeFile(`drops/${args.id}.json`, JSON.stringify(result.drop));
