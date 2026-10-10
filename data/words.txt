@@ -20193,9 +20193,7 @@ boondoggles
 boondoggling
 booner
 boonest
-boong
 boonga
-boongs
 boonies
 boonless
 boons
@@ -95315,8 +95313,6 @@ kaffiyah
 kaffiyahs
 kaffiyeh
 kaffiyehs
-kafir
-kafirs
 kafs
 kaftan
 kaftans
@@ -109846,8 +109842,6 @@ mineworker
 mineworkers
 ming
 minge
-minger
-mingers
 mingier
 mingiest
 mingily
@@ -115562,12 +115556,8 @@ nana
 nanas
 nance
 nances
-nancier
-nancies
 nanciest
 nancified
-nancy
-nancys
 nandin
 nandina
 nandinas
