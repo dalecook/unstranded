@@ -36,3 +36,10 @@ export function mergeDictionary({ sources = {}, extras = [], themeWords = [], bl
   words.sort();
   return { words, counts, removed: origins.size - words.length, junk };
 }
+
+// Input for `--from-existing`: re-filter the committed word list offline under exactly the same
+// rules as a full build. Extras and theme words ride along so theme words stay exempt from the
+// soft list (curated hard lists still apply to everything inside mergeDictionary).
+export function fromExistingInput({ existing = [], extras = [], themeWords = [] } = {}) {
+  return { sources: { existing }, extras, themeWords };
+}

@@ -2,12 +2,13 @@
 // (hunspell, expanded) + content/dictionary-extra.txt + every theme word, then removes the
 // offensive-word blocklist LAST (curated content/blocklist.txt with inflections, plus LDNOOBW).
 // Sources are cached in .cache/. Run with `npm run build:dictionary` and commit the output.
-// `--from-existing` re-filters the committed data/words.txt against the blocklist offline.
+// `--from-existing` re-filters the committed data/words.txt offline with the same rules as a full
+// build (theme words exempt from the soft LDNOOBW list; curated hard lists applied to everything).
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { loadBlocklist } from './lib/blocklist.js';
-import { mergeDictionary } from './lib/dictionary.js';
+import { fromExistingInput, mergeDictionary } from './lib/dictionary.js';
 import { expandHunspell } from './lib/hunspell.js';
 import { readZip } from './lib/zip.js';
 
@@ -60,7 +61,11 @@ const blockSet = new Set();
 const softBlockSet = new Set();
 let input;
 if (fromExisting) {
-  input = { sources: { existing: toLines(readFileSync(WORDS_FILE, 'utf8')) } };
+  input = fromExistingInput({
+    existing: toLines(readFileSync(WORDS_FILE, 'utf8')),
+    extras: toLines(readFileSync(EXTRA_FILE, 'utf8')),
+    themeWords: themeWords(),
+  });
   if (existsSync(CACHE + SOURCES.ldnoobw.file)) {
     for (const w of ldnoobwWords(readFileSync(CACHE + SOURCES.ldnoobw.file))) softBlockSet.add(w);
   }

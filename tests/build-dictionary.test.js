@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mergeDictionary } from '../tools/lib/dictionary.js';
+import { fromExistingInput, mergeDictionary } from '../tools/lib/dictionary.js';
 
 test('unions sources, sorts and dedupes', () => {
   const { words } = mergeDictionary({ sources: { a: ['water', 'house'], b: ['House', 'bread'] } });
@@ -59,4 +59,17 @@ test('wordnik-only junk is dropped: vowelless, roman numerals, triple letters', 
   });
   assert.deepEqual(words, ['cwtch', 'house', 'mmmm', 'rhythm', 'tsktsk']);
   assert.equal(junk, 4);
+});
+
+test('--from-existing applies the same rules as a full build (theme words spared by the soft list)', () => {
+  const opts = {
+    blockSet: new Set(['badword', 'themebad']),
+    softBlockSet: new Set(['hardcore', 'softword']),
+  };
+  const existing = ['hardcore', 'house', 'softword', 'badword', 'themebad'];
+  const themeWords = ['HARDCORE', 'THEMEBAD'];
+  const full = mergeDictionary({ sources: { a: existing }, themeWords, ...opts }).words;
+  const refiltered = mergeDictionary({ ...fromExistingInput({ existing, themeWords }), ...opts }).words;
+  assert.deepEqual(full, ['hardcore', 'house']);
+  assert.deepEqual(refiltered, full);
 });
