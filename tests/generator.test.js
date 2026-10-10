@@ -61,6 +61,16 @@ test('a blocked word spanning answers is pruned; one inside a single answer is e
   assert.equal(nested.place('CATS', [0, 1, 2, 3]), null);
 });
 
+test('a blocked word scrambled within one answer is pruned; a reversed run of it is exempt', () => {
+  // ABCDE along 0-1-7-8-2: BEC reads 1-2-7, which is no contiguous run of that path.
+  const path = [0, 1, 7, 8, 2];
+  const scrambled = checker({ chosen: ['ABCDE'], blockset: new Set(['BEC']) });
+  assert.equal(scrambled.place('ABCDE', path), 'offensive');
+  // DCB reads 8-7-1: the answer's own cells backwards, a contiguous reversed run.
+  const reversed = checker({ chosen: ['ABCDE'], blockset: new Set(['DCB']) });
+  assert.equal(reversed.place('ABCDE', path), null);
+});
+
 test('more than five stepping stones is pruned as soon as they appear', () => {
   const stones = ['ABCD', 'BCDE', 'CDEF', 'DEFG', 'EFGH'];
   const five = checker({ chosen: ['ABCDEFGH'], recognized: stones });
@@ -81,8 +91,47 @@ test('undo restores letters and stepping stones', () => {
   assert.deepEqual(c.stones(), before.stones);
 });
 
+test('undo restores the unplaced answers', () => {
+  const c = checker({ chosen: ['CAT', 'ACT'] });
+  assert.equal(c.place('ACT', [12, 13, 14]), null);
+  c.undo();
+  // ACT is unplaced again, so CAT at 6-0-1 (which also reads ACT) is ambiguous.
+  assert.equal(c.place('CAT', [6, 0, 1]), 'ambiguous');
+  assert.equal(c.place('CAT', [12, 13, 14]), null, 'CAT can still be placed after the rejection');
+});
+
+test('a rejected placement restores the unplaced answers', () => {
+  const c = checker({ chosen: ['CAT', 'ACT', 'DOG'] });
+  assert.equal(c.place('CAT', [6, 0, 1]), 'ambiguous');
+  assert.equal(c.place('DOG', [30, 31, 32]), null);
+  // CAT is unplaced again, so ACT over the same cells makes CAT traceable.
+  assert.equal(c.place('ACT', [0, 6, 1]), 'ambiguous');
+  assert.equal(c.place('CAT', [12, 13, 14]), null, 'CAT can still be placed');
+});
+
 const breads = JSON.parse(await readFile(new URL('../content/themes/breads.json', import.meta.url), 'utf8'));
 const blockset = await loadBoardBlocklist();
+
+test('committed drop boards replay through the checker in any order without pruning', async () => {
+  const drop = JSON.parse(await readFile(new URL('../drops/2026-10.json', import.meta.url), 'utf8'));
+  const rand = mulberry32(7);
+  for (const puzzle of drop.puzzles.slice(0, 5)) {
+    const theme = JSON.parse(await readFile(new URL(`../content/themes/${puzzle.themeId}.json`, import.meta.url), 'utf8'));
+    const expected = checkPuzzle(puzzle, theme).steppingStones;
+    for (let round = 0; round < 4; round++) {
+      const order = [...puzzle.answers];
+      for (let i = order.length - 1; i > 0; i--) {
+        const j = Math.floor(rand() * (i + 1));
+        [order[i], order[j]] = [order[j], order[i]];
+      }
+      const c = createBoardChecker({
+        chosen: puzzle.answers.map((a) => a.word), answers: theme.answers, recognized: theme.recognized, blockset,
+      });
+      for (const a of order) assert.equal(c.place(a.word, a.path), null, `${puzzle.id} round ${round}: ${a.word}`);
+      assert.deepEqual(c.stones(), expected, `${puzzle.id} round ${round} stones`);
+    }
+  }
+});
 
 function boardsFor(theme, seeds) {
   const out = [];
@@ -128,5 +177,5 @@ test('generateBoard records why branches were pruned', () => {
   const stats = {};
   generateBoard(breads, words, rand, { blockset, stats });
   assert.ok(stats.ambiguous > 0);
-  assert.ok(Object.keys(stats).every((k) => ['ambiguous', 'long-decoy', 'offensive', 'stones', 'few-stones', 'final'].includes(k)));
+  assert.ok(Object.keys(stats).every((k) => ['ambiguous', 'long-decoy', 'offensive', 'stones', 'few-stones'].includes(k)));
 });
