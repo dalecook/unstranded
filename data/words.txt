@@ -23703,8 +23703,6 @@ butterwort
 butterworts
 buttery
 buttes
-butthead
-buttheads
 buttie
 butties
 butting
@@ -64083,7 +64081,6 @@ farsightedly
 farsightedness
 farsightednesses
 fart
-farted
 farther
 farthermost
 farthest
@@ -76747,8 +76744,6 @@ grindings
 grinds
 grindstone
 grindstones
-gringa
-gringas
 gringo
 gringos
 grinned
@@ -161287,7 +161282,6 @@ scrootching
 scrophulariaceous
 scrota
 scrotal
-scrote
 scrotum
 scrotums
 scrouge

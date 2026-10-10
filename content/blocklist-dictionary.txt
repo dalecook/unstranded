@@ -1,5 +1,7 @@
 # Words removed from the bonus dictionary only. These are NOT checked against boards
 # (false-positive-prone substrings of legitimate answers, so a board may spell them).
+BUTTHEAD
+FARTED
 HEBE
 LESBO
 PEDO
