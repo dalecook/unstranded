@@ -393,7 +393,6 @@ abortuaries
 abortuary
 abortus
 abortuses
-abos
 abought
 aboulia
 aboulias
@@ -19471,8 +19470,6 @@ boccias
 boccie
 boccies
 boccis
-boche
-boches
 bock
 bocks
 bodacious
@@ -121663,8 +121660,6 @@ oestrus
 oestruses
 oeuvre
 oeuvres
-ofay
-ofays
 offa
 offal
 offals
