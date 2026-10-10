@@ -1,12 +1,12 @@
-import { isAdjacent, crossesLinks, linkSquares } from './grid.js';
+import { isAdjacent, crossesLinks } from './grid.js';
 
 const HIT_RADIUS = 0.42; // fraction of tile width that counts as "on" a tile while dragging
 
-// A step may not cross a found word's link or the selection's own earlier links.
+// A step may not cross a found word's link. The selection may cross its own earlier links;
+// such a trace can only make a bonus word or stepping stone, never an answer (see game.js).
 function canExtend(path, cell, blocked) {
   const last = path[path.length - 1];
-  return isAdjacent(last, cell) && !crossesLinks(last, cell, blocked) &&
-    !crossesLinks(last, cell, linkSquares([path]));
+  return isAdjacent(last, cell) && !crossesLinks(last, cell, blocked);
 }
 
 export function stepTap(path, cell, isSelectable, blocked = new Map()) {

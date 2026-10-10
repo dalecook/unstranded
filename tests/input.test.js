@@ -31,14 +31,14 @@ test('stepDrag ignores cells earlier in the path', () => {
   assert.equal(stepDrag(path, 0, all), path);
 });
 
-test('stepDrag refuses a step crossing the selection\'s own diagonal', () => {
-  const path = [0, 7, 6]; // 0-7 is the down-right diagonal of square 0
-  assert.equal(stepDrag(path, 1, all), path);   // 6-1 would be the other diagonal
+test('stepDrag lets the selection cross its own diagonal', () => {
+  // 0-7 is the down-right diagonal of square 0; 6-1 is the other diagonal.
+  assert.deepEqual(stepDrag([0, 7, 6], 1, all), [0, 7, 6, 1]);
   assert.deepEqual(stepDrag([0, 7, 8], 14, all), [0, 7, 8, 14]);
 });
 
-test('stepTap starts a new selection instead of crossing the own path', () => {
-  assert.deepEqual(stepTap([0, 7, 6], 1, all), [1]);
+test('stepTap extends across the own path instead of restarting', () => {
+  assert.deepEqual(stepTap([0, 7, 6], 1, all), [0, 7, 6, 1]);
 });
 
 test('steps crossing found-word links are refused', () => {
@@ -60,4 +60,14 @@ test('backtracking still works with blocked links', () => {
   const blocked = linkSquares([[0, 7]]);
   assert.deepEqual(stepDrag([0, 7, 6], 7, all, blocked), [0, 7]);
   assert.deepEqual(stepTap([0, 7, 6], 7, all, blocked), [0, 7]);
+});
+
+test('a self-crossing selection still may not cross a found word', () => {
+  const blocked = linkSquares([[2, 9]]); // a found word uses 2-9
+  const path = [0, 7, 6, 1, 2, 3]; // crosses itself in square 0
+  assert.equal(stepDrag(path, 8, all, blocked), path); // 3-8 would cross 2-9
+  assert.deepEqual(stepTap(path, 8, all, blocked), [8]);
+  assert.deepEqual(stepDrag(path, 4, all, blocked), [...path, 4]);
+  assert.deepEqual(stepDrag([0, 7, 6, 1], 6, all, blocked), [0, 7, 6]); // backtracking over the crossing
+  assert.deepEqual(stepTap([0, 7, 6, 1], 7, all, blocked), [0, 7]);
 });

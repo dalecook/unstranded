@@ -19,8 +19,9 @@ const MESSAGES = {
   'already-found': 'Already found',
   'too-short': 'Too short',
   'not-a-word': 'Not in word list',
+  'crossed-answer': 'No crossing over for theme words',
 };
-const SHAKE_ON = new Set(['already-found', 'too-short', 'not-a-word']);
+const SHAKE_ON = new Set(['already-found', 'too-short', 'not-a-word', 'crossed-answer']);
 const MESSAGE_MS = 1800;
 
 const app = {

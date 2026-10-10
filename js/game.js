@@ -1,3 +1,5 @@
+import { pathsCross } from './grid.js';
+
 export const MIN_WORD_LENGTH = 4;
 export const HINT_COST = 3;
 
@@ -34,7 +36,9 @@ export function isFound(state, word) {
 
 // The unfound answer the selection spells, or null while it could still grow into a longer
 // unfound answer (e.g. BASS on the way to BASSOON). Safe to submit without waiting for release.
+// A trace that crosses itself never counts as an answer.
 export function completedAnswer(state, puzzle, path) {
+  if (pathsCross([path])) return null;
   const word = wordFromPath(puzzle, path);
   const unfound = puzzle.answers.filter((a) => !isFound(state, a.word));
   const answer = unfound.find((a) => a.word === word);
@@ -54,9 +58,12 @@ export function submitWord(state, puzzle, path, dictionary) {
   const word = wordFromPath(puzzle, path);
   const answer = puzzle.answers.find((a) => a.word === word);
 
-  // Any trace that spells an answer counts. Repeated letters can allow several traces, so the
-  // answer's own cells are locked (foundCells uses answer.path), leaving other answers solvable.
+  // Any trace that spells an answer counts, unless it crosses itself: a self-crossing trace is
+  // never an answer, and is not scored as a bonus word either. Repeated letters can allow several
+  // traces, so the answer's own cells are locked (foundCells uses answer.path), leaving other
+  // answers solvable.
   if (answer && !isFound(state, word)) {
+    if (pathsCross([path])) return { state, result: { type: 'crossed-answer', word } };
     const found = [...state.found, { word, order: state.found.length + 1 }];
     const next = {
       ...state,

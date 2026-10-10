@@ -231,3 +231,58 @@ test('availableHints counts banked plus a full meter', () => {
   assert.equal(availableHints({ ...s, bankedHints: 2, hintMeter: HINT_COST }), 3);
   assert.equal(availableHints({ ...s, hintMeter: HINT_COST - 1 }), 0);
 });
+
+// Self-crossing copies on rows 6-7: each path takes both diagonals of one 2x2 square.
+const CROSSED = { CATS: [36, 43, 42, 37], BIRD: [38, 45, 44, 39], PETS: [40, 47, 46, 41] };
+function crossPuzzle() {
+  const p = makePuzzle();
+  for (const [word, path] of Object.entries(CROSSED)) path.forEach((c, i) => { p.grid[c] = word[i]; });
+  return p;
+}
+
+test('a self-crossing trace never counts as a theme answer', () => {
+  const p = crossPuzzle();
+  const s = newGameState(p, 'x');
+  const { state, result } = submitWord(s, p, CROSSED.CATS, new Set(['CATS']));
+  assert.deepEqual(result, { type: 'crossed-answer', word: 'CATS' });
+  assert.equal(state, s, 'state is unchanged: not found, not a bonus word');
+  assert.equal(submitWord(s, p, [0, 1, 2, 3], DICT).result.type, 'theme', 'the straight trace still counts');
+});
+
+test('a self-crossing trace never counts as the spangram', () => {
+  const p = crossPuzzle();
+  p.answers = [{ word: 'CATS', path: [0, 1, 2, 3], isSpangram: true }, p.answers[2]];
+  const s = newGameState(p, 'x');
+  const { state, result } = submitWord(s, p, CROSSED.CATS, DICT);
+  assert.deepEqual(result, { type: 'crossed-answer', word: 'CATS' });
+  assert.equal(state, s);
+});
+
+test('an already-found answer along a self-crossing trace is already-found', () => {
+  const p = crossPuzzle();
+  let s = newGameState(p, 'x');
+  ({ state: s } = submitWord(s, p, [0, 1, 2, 3], DICT));
+  const { state, result } = submitWord(s, p, CROSSED.CATS, new Set(['CATS']));
+  assert.equal(result.type, 'already-found');
+  assert.equal(state, s);
+});
+
+test('completedAnswer ignores a self-crossing trace', () => {
+  const p = crossPuzzle();
+  const s = newGameState(p, 'x');
+  assert.equal(completedAnswer(s, p, CROSSED.CATS), null);
+  assert.equal(completedAnswer(s, p, [0, 1, 2, 3]).word, 'CATS');
+});
+
+test('stepping stones and bonus words count along a self-crossing trace', () => {
+  const p = crossPuzzle();
+  let s = newGameState(p, 'x');
+  let r;
+  ({ state: s, result: r } = submitWord(s, p, CROSSED.PETS, DICT));
+  assert.deepEqual(r, { type: 'stepping-stone', word: 'PETS' });
+  assert.equal(s.bankedHints, 1);
+  ({ state: s, result: r } = submitWord(s, p, CROSSED.BIRD, DICT));
+  assert.deepEqual(r, { type: 'bonus', word: 'BIRD' });
+  assert.deepEqual(s.bonusWords, ['BIRD']);
+  assert.equal(s.hintMeter, 1);
+});
