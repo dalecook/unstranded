@@ -30111,7 +30111,6 @@ chocolatiers
 chocolatine
 chocolaty
 chocs
-chode
 chog
 chogs
 choice
@@ -37720,7 +37719,6 @@ cooters
 cootie
 cooties
 coots
-cooze
 copacetic
 copaiba
 copaibas
@@ -40770,9 +40768,7 @@ crinum
 crinums
 criollo
 criollos
-crip
 cripe
-cripes
 cripple
 crippled
 crippler
@@ -40781,7 +40777,6 @@ cripples
 crippleware
 crippling
 cripplingly
-crips
 cris
 crises
 crisic
@@ -73818,8 +73813,6 @@ ginrummy
 gins
 ginseng
 ginsengs
-ginzo
-ginzoes
 giocoso
 gios
 gipon
@@ -73905,10 +73898,8 @@ girting
 girts
 gisarme
 gisarmes
-gism
 gismo
 gismos
-gisms
 gist
 gists
 gitano
@@ -111848,8 +111839,6 @@ mofette
 mofettes
 moffette
 moffettes
-mofo
-mofos
 moggan
 mogged
 moggie
@@ -128757,7 +128746,6 @@ papillons
 papillose
 papillote
 papillotes
-papish
 papism
 papisms
 papist
@@ -137037,8 +137025,6 @@ poking
 poky
 polacca
 polaccas
-polack
-polacks
 polacre
 polacres
 polar
@@ -137720,8 +137706,6 @@ pommeling
 pommelled
 pommelling
 pommels
-pommie
-pommies
 pommy
 pomo
 pomological
@@ -165514,9 +165498,7 @@ shtreimel
 shtreimels
 shtum
 shtummer
-shtup
 shtupped
-shtups
 shuck
 shucked
 shucker
