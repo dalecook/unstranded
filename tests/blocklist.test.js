@@ -85,7 +85,7 @@ test('a trace that crosses itself is not a legal selection and is ignored', () =
 
 test('curated list includes the review-added slur and profanity stems', async () => {
   const set = await loadBlocklist({ file: new URL('../content/blocklist.txt', import.meta.url) });
-  for (const w of ['DICKHEAD', 'DOUCHEBAG', 'SHITHEAD', 'SHITTING', 'SHITTED', 'FAGGY', 'FAGOT', 'GYPPO', 'LEZZIE', 'JAPS', 'KAFFIR', 'KRAUT', 'HONKY', 'WOPS', 'REDSKIN', 'SQUAW', 'MONGOLOID', 'POOFTER', 'PAEDO', 'BITCHY', 'SLUTTY', 'WHORISH', 'PISSER']) {
+  for (const w of ['DICKHEAD', 'DOUCHEBAG', 'SHITHEAD', 'SHITTING', 'SHITTED', 'FAGGY', 'FAGOT', 'GYPPO', 'LEZZIE', 'JAPS', 'KAFFIR', 'KRAUT', 'HONKY', 'WOPS', 'REDSKIN', 'SQUAW', 'MONGOLOID', 'POOFTER', 'PAEDO', 'BITCHY', 'SLUTTY', 'WHORISH', 'PISSER', 'CRACKA', 'DARKEY', 'DARKY', 'NANCE', 'NANCES']) {
     assert.ok(set.has(w), w);
   }
 });
