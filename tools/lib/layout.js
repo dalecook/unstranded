@@ -1,7 +1,11 @@
 import { COLS, ROWS, CELLS, neighbors, rowOf, colOf, isValidPath, touchesOppositeEdges, diagonalKey, crossesLinks, pathsCross } from '../../js/grid.js';
 import { mulberry32, hashString, shuffle, randInt } from '../../js/rng.js';
 
-const STEP_BUDGET = 50000;
+export const STEP_BUDGET = 50000;
+// Neighbour lists are read on every walk step; build them once.
+const NEIGHBORS = Array.from({ length: CELLS }, (_, i) => neighbors(i));
+const IS_DIAGONAL = new Uint8Array(CELLS * CELLS);
+for (let a = 0; a < CELLS; a++) for (const b of NEIGHBORS[a]) IS_DIAGONAL[a * CELLS + b] = diagonalKey(a, b) ? 1 : 0;
 const ATTEMPTS_PER_THEME = 10;
 
 // Pick non-spangram words whose lengths exactly fill the rest of the board.
@@ -41,46 +45,74 @@ function subsetSums(lengths) {
   return sums;
 }
 
-function emptyRegionSizes(used, links) {
-  const seen = new Array(CELLS).fill(false);
+const seen = new Uint8Array(CELLS);
+const stack = new Int8Array(CELLS);
+
+// Sizes of the empty regions, stopping early (with what it has) once `stop(size)` is true.
+function emptyRegionSizes(used, links, stop = () => false) {
+  seen.fill(0);
   const sizes = [];
   for (let i = 0; i < CELLS; i++) {
     if (used[i] || seen[i]) continue;
     let size = 0;
-    const stack = [i];
-    seen[i] = true;
-    while (stack.length) {
-      const cur = stack.pop();
+    let top = 0;
+    stack[top++] = i;
+    seen[i] = 1;
+    while (top) {
+      const cur = stack[--top];
       size++;
-      for (const n of neighbors(cur)) {
-        if (!used[n] && !seen[n] && !crossesLinks(cur, n, links)) {
-          seen[n] = true;
-          stack.push(n);
+      for (const n of NEIGHBORS[cur]) {
+        if (!used[n] && !seen[n] && !(IS_DIAGONAL[cur * CELLS + n] && crossesLinks(cur, n, links))) {
+          seen[n] = 1;
+          stack[top++] = n;
         }
       }
     }
     sizes.push(size);
+    if (stop(size)) break;
   }
   return sizes;
 }
 
 // Empty cells joined only by a blocked (crossing) diagonal are separate regions; each must be fillable by some of the remaining words.
+const sumsCache = new Map();
 function regionsFit(used, links, remainingLengths) {
-  const sums = subsetSums(remainingLengths);
-  return emptyRegionSizes(used, links).every((size) => sums.has(size));
+  const key = remainingLengths.join(',');
+  let sums = sumsCache.get(key);
+  if (!sums) {
+    if (sumsCache.size > 5000) sumsCache.clear();
+    sums = subsetSums(remainingLengths);
+    sumsCache.set(key, sums);
+  }
+  let fit = true;
+  emptyRegionSizes(used, links, (size) => !(fit = sums.has(size)));
+  return fit;
 }
 
+// Geometry-only layout: paths for every word, letters assigned at the end with a random
+// reading direction. See searchLayout for the shared walk.
 export function layoutWords(spangram, words, rand, budget = STEP_BUDGET) {
+  const placed = searchLayout(spangram, words, rand, budget, (word, path, isSpangram, next) => next(path));
+  return placed ? assignLetters(placed, rand) : null;
+}
+
+// Depth-first walk that lays the spangram (touching opposite edges) and then each word from the
+// first empty cell, never crossing a diagonal link and keeping every empty region fillable.
+// `place(word, path, isSpangram, next)` decides how a geometric path becomes an answer: it calls
+// next(finalPath) for each acceptable reading (and may undo its own state after each) and returns
+// true as soon as one next() does. `done()` accepts or rejects a full board (rejecting backtracks);
+// `counter.steps` is shared so callers can charge their own work to the budget.
+// Returns the placed { word, path } list (spangram first) or null.
+export function searchLayout(spangram, words, rand, budget, place, { counter = { steps: 0 }, done = () => true } = {}) {
   const used = new Array(CELLS).fill(false);
   const placed = [];
   const links = new Map();
-  let steps = 0;
 
   function extend(path, length, prune, accept) {
-    if (++steps > budget) return false;
+    if (++counter.steps > budget) return false;
     if (path.length === length) return accept(path);
     if (prune && prune(path)) return false;
-    for (const n of shuffle(neighbors(path[path.length - 1]), rand)) {
+    for (const n of shuffle(NEIGHBORS[path[path.length - 1]], rand)) {
       if (used[n] || crossesLinks(path[path.length - 1], n, links)) continue;
       const key = diagonalKey(path[path.length - 1], n);
       if (key) links.set(key.square, key.dir);
@@ -94,8 +126,15 @@ export function layoutWords(spangram, words, rand, budget = STEP_BUDGET) {
     return false;
   }
 
+  const commit = (word, path, isSpangram, then) => place(word, [...path], isSpangram, (finalPath) => {
+    placed.push({ word, path: finalPath });
+    if (then()) return true;
+    placed.pop();
+    return false;
+  });
+
   function placeRest(remaining) {
-    if (remaining.length === 0) return used.every(Boolean);
+    if (remaining.length === 0) return used.every(Boolean) && done();
     const first = used.indexOf(false);
     const triedLengths = new Set();
     for (const word of shuffle(remaining, rand)) {
@@ -106,14 +145,11 @@ export function layoutWords(spangram, words, rand, budget = STEP_BUDGET) {
       used[first] = true;
       const ok = extend([first], word.length, null, (path) => {
         if (!regionsFit(used, links, restLengths)) return false;
-        placed.push({ word, path: [...path] });
-        if (placeRest(rest)) return true;
-        placed.pop();
-        return false;
+        return commit(word, path, false, () => placeRest(rest));
       });
       if (ok) return true;
       used[first] = false;
-      if (steps > budget) return false;
+      if (counter.steps > budget) return false;
     }
     return false;
   }
@@ -138,14 +174,11 @@ export function layoutWords(spangram, words, rand, budget = STEP_BUDGET) {
       used[start] = true;
       const ok = extend([start], length, prune, (path) => {
         if (!reachedFar(path) || !regionsFit(used, links, wordLengths)) return false;
-        placed.push({ word: spangram, path: [...path] });
-        if (placeRest(words)) return true;
-        placed.pop();
-        return false;
+        return commit(spangram, path, true, () => placeRest(words));
       });
-      if (ok) return assignLetters(placed, rand);
+      if (ok) return placed;
       used[start] = false;
-      if (steps > budget) return null;
+      if (counter.steps > budget) return null;
     }
   }
   return null;

@@ -53,20 +53,22 @@ export async function loadBoardBlocklist({ file = BLOCKLIST_FILE, allowFile = AL
   return blockset;
 }
 
-// Every legal trace spelling `word` (self-avoiding, no crossing diagonals), as cell-index arrays.
-function traces(grid, word) {
-  const out = [];
-  walkTraces(grid, word, (path) => { out.push([...path]); });
-  return out;
-}
-
 // True when `trace` is a contiguous run of `path`, in forward or reverse order.
-function isRunOf(trace, path) {
+export function isRunOf(trace, path) {
   const start = path.indexOf(trace[0]);
   if (start < 0) return false;
   const fwd = trace.every((c, i) => path[start + i] === c);
   const rev = trace.every((c, i) => path[start - i] === c);
   return fwd || rev;
+}
+
+// True when `word` has a legal trace on `grid` that is not a contiguous run (forward or reversed)
+// of one answer's path. Once true it stays true as more cells are filled: the trace's cells are
+// already final, so no later answer can make it a run.
+export function hasUnexemptTrace(grid, word, answers = []) {
+  let found = false;
+  walkTraces(grid, word, (path) => (found = !answers.some((a) => isRunOf(path, a.path))));
+  return found;
 }
 
 // Blocked words spelled on the board (sorted). A trace is exempt only when its cells are a
@@ -76,7 +78,6 @@ function isRunOf(trace, path) {
 export function offensiveWordsOn(grid, blockset, answers = []) {
   const counts = {};
   for (const ch of grid) counts[ch] = (counts[ch] ?? 0) + 1;
-  const nested = (trace) => answers.some((a) => isRunOf(trace, a.path));
   const found = [];
   for (const word of blockset) {
     const need = {};
@@ -85,7 +86,7 @@ export function offensiveWordsOn(grid, blockset, answers = []) {
       need[ch] = (need[ch] ?? 0) + 1;
       if (need[ch] > (counts[ch] ?? 0)) { possible = false; break; }
     }
-    if (possible && traces(grid, word).some((t) => !nested(t))) found.push(word);
+    if (possible && hasUnexemptTrace(grid, word, answers)) found.push(word);
   }
   return found.sort();
 }
