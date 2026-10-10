@@ -39952,7 +39952,6 @@ crabstick
 crabsticks
 crabwise
 crack
-cracka
 crackajack
 crackajacks
 crackback
@@ -43564,8 +43563,6 @@ darkening
 darkens
 darker
 darkest
-darkey
-darkeys
 darking
 darkish
 darkle
@@ -43585,7 +43582,6 @@ darkroom
 darkrooms
 darks
 darksome
-darky
 darling
 darlingest
 darlingly
@@ -115554,8 +115550,6 @@ nams
 namu
 nana
 nanas
-nance
-nances
 nanciest
 nancified
 nandin
