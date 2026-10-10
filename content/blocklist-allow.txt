@@ -1,7 +1,8 @@
 # Words subtracted from the board offensive-word check (tools/lib/blocklist.js), with their
-# simple inflections. Only words whose primary meaning is innocent, which LDNOOBW lists but which
+# simple inflections. Only reviewed words (mostly LDNOOBW entries) whose primary meaning is innocent and which
 # a teacher would not wince at as a standalone word. Anything sexually explicit, a slur or
 # abuse-related stays blocked. Curated content/blocklist.txt entries may never appear here.
+ARSE
 BAREBACK
 BASTINADO
 BOOB

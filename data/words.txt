@@ -12836,9 +12836,6 @@ baculiform
 baculine
 baculum
 baculums
-badass
-badassed
-badasses
 badder
 badderlocks
 baddest
@@ -26915,8 +26912,6 @@ catamaran
 catamarans
 catamenia
 catamenial
-catamite
-catamites
 catamount
 catamounts
 catan
@@ -30175,8 +30170,6 @@ cholis
 cholla
 chollah
 chollas
-cholo
-cholos
 chomp
 chomped
 chomper
@@ -33701,15 +33694,10 @@ coistrel
 coistrels
 coistril
 coistrils
-coit
-coital
 coitally
 coition
 coitional
 coitions
-coits
-coitus
-coituses
 cojoin
 cojoined
 cojoining
@@ -64192,9 +64180,6 @@ fats
 fatshedera
 fatshederas
 fatsia
-fatso
-fatsoes
-fatsos
 fatstock
 fatstocks
 fatted
@@ -64472,13 +64457,11 @@ fecht
 fecial
 fecials
 fecit
-feck
 feckless
 fecklessly
 fecklessness
 fecklessnesses
 feckly
-fecks
 fecula
 feculae
 feculence
@@ -64529,7 +64512,6 @@ fedexing
 fedora
 fedoras
 feds
-feeb
 feeble
 feebleminded
 feeblemindedly
@@ -64541,7 +64523,6 @@ feebler
 feeblest
 feeblish
 feebly
-feebs
 feed
 feedable
 feedback
@@ -70425,7 +70406,6 @@ frypans
 ftpers
 ftping
 ftps
-fubar
 fubbed
 fubbing
 fubby
@@ -73645,13 +73625,8 @@ gimmicks
 gimmicky
 gimmie
 gimmies
-gimp
-gimped
 gimpier
 gimpiest
-gimping
-gimps
-gimpy
 ginandtonic
 ginch
 ginches
@@ -73738,7 +73713,6 @@ gipped
 gipper
 gippers
 gipping
-gippo
 gips
 gipsied
 gipsies
@@ -77880,7 +77854,6 @@ gyplures
 gypper
 gyppers
 gypping
-gyps
 gypseian
 gypseous
 gypsie
@@ -79120,8 +79093,6 @@ harbourmaster
 harbourmasters
 harbours
 hard
-hardass
-hardasses
 hardback
 hardbacks
 hardball
@@ -83117,7 +83088,6 @@ hoopskirt
 hoopskirts
 hoopster
 hoopsters
-hoor
 hoorah
 hoorahed
 hoorahing
@@ -83220,8 +83190,6 @@ hording
 hore
 horehound
 horehounds
-hori
-horis
 horizon
 horizonal
 horizonless
@@ -94325,8 +94293,6 @@ jipijapas
 jird
 jirds
 jirga
-jism
-jisms
 jitney
 jitneys
 jitter
@@ -98401,8 +98367,6 @@ laparotomies
 laparotomy
 lapboard
 lapboards
-lapdancer
-lapdancers
 lapdancing
 lapdog
 lapdogs
@@ -99343,10 +99307,8 @@ lebensraum
 lebensraums
 lebkuchen
 leccy
-lech
 lechayim
 lechayims
-leched
 lecher
 lechered
 lecheries
@@ -99357,8 +99319,6 @@ lecherousness
 lecherousnesses
 lechers
 lechery
-leches
-leching
 lechwe
 lechwes
 lecithin
@@ -114404,17 +114364,13 @@ munnions
 muns
 munster
 munsters
-munt
 muntin
 muntined
-munting
-muntings
 muntins
 muntjac
 muntjacs
 muntjak
 muntjaks
-munts
 muon
 muonic
 muonium
@@ -115271,7 +115227,6 @@ nadas
 nadir
 nadiral
 nadirs
-nads
 naes
 naething
 naethings
@@ -119743,7 +119698,6 @@ noris
 norite
 norites
 noritic
-nork
 norland
 norlands
 norm
@@ -127847,8 +127801,6 @@ paleate
 paled
 paleethnologies
 paleethnology
-paleface
-palefaces
 palely
 paleness
 palenesses
@@ -129933,8 +129885,6 @@ pathfinder
 pathfinders
 pathfinding
 pathfindings
-pathic
-pathics
 pathless
 pathlessness
 pathlessnesses
@@ -132660,7 +132610,6 @@ phalanx
 phalanxes
 phalarope
 phalaropes
-phalli
 phallic
 phallically
 phallicism
@@ -132673,8 +132622,6 @@ phallocentric
 phallocentrism
 phallocentrisms
 phallocratic
-phallus
-phalluses
 phanerogam
 phanerogams
 phanerophyte
@@ -133800,7 +133747,6 @@ phthisics
 phthisis
 phut
 phuts
-phwoar
 phycocyanin
 phycocyanins
 phycoerythrin
@@ -142251,7 +142197,6 @@ promulges
 promulging
 promycelium
 promyceliums
-pron
 pronate
 pronated
 pronates
@@ -142712,8 +142657,6 @@ prosperousnesses
 prospers
 pross
 prosses
-prossie
-prossies
 prost
 prostacyclin
 prostacyclins
@@ -142740,8 +142683,6 @@ prosthetists
 prosthodontics
 prosthodontist
 prosthodontists
-prostie
-prosties
 prostitute
 prostituted
 prostitutes
@@ -143669,7 +143610,6 @@ ptyxis
 pubbing
 pubbings
 pubco
-pube
 puberal
 pubertal
 puberties
@@ -146830,7 +146770,6 @@ randy
 ranee
 ranees
 rang
-ranga
 rangatira
 rangatiras
 range
@@ -161047,10 +160986,7 @@ scrootched
 scrootches
 scrootching
 scrophulariaceous
-scrota
 scrotal
-scrotum
-scrotums
 scrouge
 scrouged
 scrouges
@@ -164004,7 +163940,6 @@ shasta
 shastas
 shastra
 shastras
-shat
 shatoosh
 shatooshes
 shatter
@@ -181472,8 +181407,6 @@ tartelette
 tarter
 tartest
 tartetatin
-tartier
-tartiest
 tartily
 tartiness
 tartinesses
@@ -181496,7 +181429,6 @@ tartuffes
 tartufi
 tartufo
 tartufos
-tarty
 tarweed
 tarweeds
 tarzan
@@ -205558,9 +205490,7 @@ yomps
 yond
 yonder
 yonders
-yoni
 yonic
-yonis
 yonker
 yonkers
 yonks
