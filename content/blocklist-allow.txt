@@ -1,0 +1,41 @@
+# Words subtracted from the board offensive-word check (tools/lib/blocklist.js), with their
+# simple inflections. Only words whose primary meaning is innocent, which LDNOOBW lists but which
+# a teacher would not wince at as a standalone word. Anything sexually explicit, a slur or
+# abuse-related stays blocked. Curated content/blocklist.txt entries may never appear here.
+BAREBACK
+BASTINADO
+BOOB
+BOOBS
+BUTT
+COCK
+COCKS
+DICK
+DOMINATION
+ESCORT
+EUNUCH
+FECAL
+FINGERING
+HARDCORE
+NUDE
+NUDITY
+PANTIES
+PANTY
+PEGGING
+PLAYBOY
+RECTUM
+SADISM
+SCAT
+SCISSORING
+SEXUAL
+SEXUALITY
+SEXUALLY
+SEXY
+SHRIMPING
+SKEET
+SNATCH
+SNOWBALLING
+STRAPPADO
+SUCK
+SUCKS
+TWINKIE
+UNDRESSING

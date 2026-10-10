@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { verifyPuzzle } from '../tools/lib/layout.js';
 import { checkPuzzle } from '../tools/lib/checks.js';
-import { loadBlocklist, offensiveWordsOn } from '../tools/lib/blocklist.js';
+import { loadBoardBlocklist, offensiveWordsOn } from '../tools/lib/blocklist.js';
 
 async function readJson(path) {
   return JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
@@ -35,7 +35,7 @@ test('published drops are never marked todo or skip', async () => {
   assert.deepEqual(flagged, [], 'drops.test.js must not mark tests todo/skip');
 });
 
-const blocklist = await loadBlocklist({ file: new URL('../content/blocklist.txt', import.meta.url) });
+const blocklist = await loadBoardBlocklist();
 
 if (!index) {
   test('drops: no drops published yet', () => {

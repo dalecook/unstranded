@@ -1,13 +1,15 @@
 // Builds data/words.txt: ENABLE (public domain) + Wordnik word list (MIT) + SCOWL en_US-large
 // (hunspell, expanded) + content/dictionary-extra.txt + every theme word, then removes the
-// offensive-word blocklist LAST (curated content/blocklist.txt with inflections, plus LDNOOBW).
+// offensive-word blocklist LAST: the board check list (curated content/blocklist.txt + LDNOOBW
+// minus content/blocklist-allow.txt, with inflections) and content/blocklist-dictionary.txt are
+// hard (everything); the full LDNOOBW list is soft (theme words exempt).
 // Sources are cached in .cache/. Run with `npm run build:dictionary` and commit the output.
 // `--from-existing` re-filters the committed data/words.txt offline with the same rules as a full
 // build (theme words exempt from the soft LDNOOBW list; curated hard lists applied to everything).
 import { existsSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
-import { loadBlocklist } from './lib/blocklist.js';
+import { loadBlocklist, loadBoardBlocklist, loadLdnoobw } from './lib/blocklist.js';
 import { fromExistingInput, mergeDictionary } from './lib/dictionary.js';
 import { expandHunspell } from './lib/hunspell.js';
 import { readZip } from './lib/zip.js';
@@ -22,7 +24,6 @@ const SOURCES = {
 const WORDS_FILE = new URL('../data/words.txt', import.meta.url);
 const EXTRA_FILE = new URL('../content/dictionary-extra.txt', import.meta.url);
 const THEMES_DIR = new URL('../content/themes/', import.meta.url);
-const CURATED_FILE = fileURLToPath(new URL('../content/blocklist.txt', import.meta.url));
 const DICT_BLOCK_FILE = fileURLToPath(new URL('../content/blocklist-dictionary.txt', import.meta.url));
 
 const toLines = (text) => text.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
@@ -44,7 +45,6 @@ async function load({ file, url }) {
   return buf;
 }
 
-const ldnoobwWords = (buf) => toLines(buf.toString('utf8').toLowerCase()).filter((w) => /^[a-z]+$/.test(w));
 
 function themeWords() {
   const out = [];
@@ -66,11 +66,8 @@ if (fromExisting) {
     extras: toLines(readFileSync(EXTRA_FILE, 'utf8')),
     themeWords: themeWords(),
   });
-  if (existsSync(CACHE + SOURCES.ldnoobw.file)) {
-    for (const w of ldnoobwWords(readFileSync(CACHE + SOURCES.ldnoobw.file))) softBlockSet.add(w);
-  }
 } else {
-  const [enable, wordnik, scowlZip, ldnoobw] = await Promise.all(Object.values(SOURCES).map(load));
+  const [enable, wordnik, scowlZip] = await Promise.all(Object.values(SOURCES).map(load)); // caches LDNOOBW too
   const files = readZip(scowlZip);
   const dic = files.get('en_US-large.dic');
   const aff = files.get('en_US-large.aff');
@@ -84,11 +81,12 @@ if (fromExisting) {
     extras: toLines(readFileSync(EXTRA_FILE, 'utf8')),
     themeWords: themeWords(),
   };
-  for (const w of ldnoobwWords(ldnoobw)) softBlockSet.add(w);
 }
-for (const file of [CURATED_FILE, DICT_BLOCK_FILE]) {
-  for (const w of await loadBlocklist({ file })) blockSet.add(w.toLowerCase());
-}
+// LDNOOBW from .cache when present, else the committed snapshot (same source as the board check).
+const ldnoobw = await loadLdnoobw();
+for (const w of ldnoobw) softBlockSet.add(w.toLowerCase());
+for (const w of await loadBoardBlocklist({ ldnoobw })) blockSet.add(w.toLowerCase());
+for (const w of await loadBlocklist({ file: DICT_BLOCK_FILE })) blockSet.add(w.toLowerCase());
 
 const { words, counts, removed, junk } = mergeDictionary({ ...input, blockSet, softBlockSet });
 writeFileSync(WORDS_FILE, words.join('\n') + '\n');

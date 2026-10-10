@@ -10,7 +10,7 @@ import { chooseWords, layoutWords } from './lib/layout.js';
 import { directionVariants, checkPuzzle, difficulty, isTraceable } from './lib/checks.js';
 import { loadRanks, eligibleAnswers } from './lib/familiarity.js';
 import { assembleDrop } from './lib/assemble.js';
-import { loadBlocklist, offensiveWordsOn } from './lib/blocklist.js';
+import { loadBoardBlocklist, offensiveWordsOn } from './lib/blocklist.js';
 
 const PASS_LIMIT = 200;
 const MAX_OBSCURE = 10;
@@ -285,7 +285,7 @@ async function main() {
   const dictionaryWords = (await readFile('data/words.txt', 'utf8'))
     .split('\n').map((w) => w.trim().toUpperCase()).filter(Boolean);
   const ranks = await loadRanks();
-  const blockset = await loadBlocklist();
+  const blockset = await loadBoardBlocklist();
   const result = await buildDropParallel({
     dropId: args.id, startDate: args.start, count: args.count,
     attempts: args.attempts, seconds: args.seconds,

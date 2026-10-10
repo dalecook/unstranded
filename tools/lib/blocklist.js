@@ -1,8 +1,16 @@
 // Offensive-word blocklist: no board may spell one of these words across answers.
+// Board list = curated content/blocklist.txt + LDNOOBW single words (4+ letters, a-z), with
+// inflections, minus the innocent words in content/blocklist-allow.txt (and their inflections).
+import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
+import { fileURLToPath } from 'node:url';
 import { walkTraces } from './checks.js';
 
-export const BLOCKLIST_FILE = 'content/blocklist.txt';
+const repo = (p) => fileURLToPath(new URL(`../../${p}`, import.meta.url));
+export const BLOCKLIST_FILE = repo('content/blocklist.txt');
+export const ALLOWLIST_FILE = repo('content/blocklist-allow.txt');
+export const LDNOOBW_CACHE_FILE = repo('.cache/ldnoobw-en.txt');
+export const LDNOOBW_SNAPSHOT_FILE = repo('content/ldnoobw-en.txt');
 
 // Word plus simple inflections: +S, +ES, +ED, +ING (and +D / E-dropping +ING for words ending in E,
 // Y-to-IES/IED for words ending in Y).
@@ -13,14 +21,34 @@ export function inflections(word) {
   return out;
 }
 
-// Set of UPPERCASE blocked words (committed curated list, 4+ letters) with inflections.
-export async function loadBlocklist({ file = BLOCKLIST_FILE } = {}) {
+// UPPERCASE 4+ letter a-z words of a list file ('#' comment lines and anything else skipped).
+async function readWords(file) {
   const text = await readFile(file, 'utf8');
+  return text.split(/\r?\n/).map((l) => l.trim().toUpperCase()).filter((w) => /^[A-Z]{4,}$/.test(w));
+}
+
+// Set of UPPERCASE blocked words from one list file (4+ letters) with inflections.
+export async function loadBlocklist({ file = BLOCKLIST_FILE } = {}) {
   const blockset = new Set();
-  for (const line of text.split(/\r?\n/)) {
-    const word = line.trim().toUpperCase();
-    if (!/^[A-Z]{4,}$/.test(word)) continue;
-    for (const w of inflections(word)) blockset.add(w);
+  for (const word of await readWords(file)) for (const w of inflections(word)) blockset.add(w);
+  return blockset;
+}
+
+// LDNOOBW single words (UPPERCASE, 4+ letters a-z): the downloaded .cache copy when present,
+// else the committed filtered snapshot content/ldnoobw-en.txt.
+export async function loadLdnoobw({ cacheFile = LDNOOBW_CACHE_FILE, snapshotFile = LDNOOBW_SNAPSHOT_FILE } = {}) {
+  return [...new Set(await readWords(existsSync(cacheFile) ? cacheFile : snapshotFile))];
+}
+
+// The board check list: curated + LDNOOBW words with inflections, minus allowlisted words and
+// their inflections (an LDNOOBW entry that is itself an allowed inflection is skipped whole).
+export async function loadBoardBlocklist({ file = BLOCKLIST_FILE, allowFile = ALLOWLIST_FILE, ldnoobw } = {}) {
+  const allowed = new Set((await readWords(allowFile)).flatMap(inflections));
+  const words = [...await readWords(file), ...(ldnoobw ?? await loadLdnoobw())];
+  const blockset = new Set();
+  for (const word of words) {
+    if (allowed.has(word)) continue;
+    for (const w of inflections(word)) if (!allowed.has(w)) blockset.add(w);
   }
   return blockset;
 }

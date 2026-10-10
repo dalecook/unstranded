@@ -1,9 +1,9 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, writeFile } from 'node:fs/promises';
+import { mkdtemp, readFile, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { loadBlocklist, offensiveWordsOn, inflections } from '../tools/lib/blocklist.js';
+import { loadBlocklist, loadBoardBlocklist, loadLdnoobw, offensiveWordsOn, inflections } from '../tools/lib/blocklist.js';
 
 test('loadBlocklist reads the list, keeps 4+ letter words and adds inflections', async () => {
   const dir = await mkdtemp(join(tmpdir(), 'block-'));
@@ -90,14 +90,73 @@ test('curated list includes the review-added slur and profanity stems', async ()
   }
 });
 
-test('dictionary-only blocklist removes words from the dictionary but is not a board check', async () => {
-  const board = await loadBlocklist({ file: new URL('../content/blocklist.txt', import.meta.url) });
+test('dictionary-only list holds only harmless-on-boards words; offensive ones are board-checked', async () => {
+  const board = await loadBoardBlocklist();
   const dict = await loadBlocklist({ file: new URL('../content/blocklist-dictionary.txt', import.meta.url) });
-  for (const w of ['PEDO', 'LESBO', 'HEBE', 'YIDS']) {
+  for (const w of ['HEBE', 'NANCY']) {
     assert.ok(dict.has(w), `${w} in dictionary list`);
     assert.ok(!board.has(w), `${w} not in board list`);
   }
-  const grid = 'PEDO' + 'X'.repeat(44);
+  for (const w of ['PEDO', 'LESBO', 'YIDS', 'LUBRA', 'MINGER', 'BUTTHEAD']) {
+    assert.ok(!dict.has(w), `${w} moved out of the dictionary-only list`);
+    assert.ok(board.has(w), `${w} in board list`);
+  }
+  const grid = 'HEBE' + 'X'.repeat(44);
   assert.deepEqual(offensiveWordsOn(grid, board, []), []);
-  assert.deepEqual(offensiveWordsOn(grid, dict, []), ['PEDO']);
+  assert.deepEqual(offensiveWordsOn(grid, dict, []), ['HEBE']);
+});
+
+test('board list includes the words found traceable on earlier final boards', async () => {
+  const board = await loadBoardBlocklist();
+  for (const w of ['RIMJOB', 'STRAPON', 'GOATSE', 'PTHC', 'LUBRA', 'TOSSER', 'BIMBOS', 'PERV', 'PERVS', 'CHAV', 'TOERAG', 'MUNTER']) {
+    assert.ok(board.has(w), w);
+  }
+});
+
+const listFile = async (text) => {
+  const dir = await mkdtemp(join(tmpdir(), 'block-'));
+  const file = join(dir, 'list.txt');
+  await writeFile(file, text);
+  return file;
+};
+
+test('an LDNOOBW word blocks a board', async () => {
+  const board = await loadBoardBlocklist();
+  assert.ok(board.has('GOKKUN'), 'LDNOOBW-only word is on the board list');
+  assert.deepEqual(offensiveWordsOn('GOKKUN' + 'X'.repeat(42), board, []), ['GOKKUN']);
+  const custom = await loadBoardBlocklist({
+    file: await listFile('# none\n'), allowFile: await listFile(''), ldnoobw: ['ZORBLE'],
+  });
+  assert.deepEqual([...custom].sort(), inflections('ZORBLE').sort());
+});
+
+test('an allowlisted word (and its inflections) does not block a board', async () => {
+  const board = await loadBoardBlocklist();
+  for (const w of ['SCAT', 'COCK', 'COCKS', 'DICK', 'NUDE', 'SUCK', 'SUCKS', 'BOOB', 'BOOBS', 'BUTT', 'SEXY']) {
+    assert.ok(!board.has(w), w);
+  }
+  assert.deepEqual(offensiveWordsOn('SCAT' + 'X'.repeat(44), board, []), []);
+  const custom = await loadBoardBlocklist({
+    file: await listFile('SMUT\n'), allowFile: await listFile('ZORB\n'), ldnoobw: ['ZORB', 'ZORBS', 'GLOP'],
+  });
+  assert.deepEqual([...custom].sort(), [...inflections('SMUT'), ...inflections('GLOP')].sort());
+});
+
+test('no curated board word is allowlisted', async () => {
+  const curated = await loadBlocklist();
+  const allow = await loadBlocklist({ file: new URL('../content/blocklist-allow.txt', import.meta.url) });
+  assert.deepEqual([...allow].filter((w) => curated.has(w)), []);
+});
+
+test('LDNOOBW loads from the committed snapshot when there is no cache', async () => {
+  const words = await loadLdnoobw({ cacheFile: join(tmpdir(), 'no-such-ldnoobw.txt') });
+  assert.ok(words.length > 200);
+  assert.ok(words.includes('GOKKUN') && words.includes('RIMJOB'));
+  assert.ok(words.every((w) => /^[A-Z]{4,}$/.test(w)));
+});
+
+test('data/words.txt contains no board-list word', async () => {
+  const board = await loadBoardBlocklist();
+  const words = (await readFile(new URL('../data/words.txt', import.meta.url), 'utf8')).split('\n');
+  assert.deepEqual(words.filter((w) => board.has(w.trim().toUpperCase())), []);
 });
