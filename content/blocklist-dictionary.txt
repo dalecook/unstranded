@@ -1,12 +1,8 @@
-# Words removed from the bonus dictionary only. These are NOT checked against boards
-# (false-positive-prone substrings of legitimate answers, so a board may spell them).
-BUTTHEAD
+# Words removed from the bonus dictionary only, NOT checked against boards: innocent or
+# near-innocent words (names, a goddess, childish words) that are also false-positive-prone
+# substrings of legitimate answers, so a board may spell them. Genuinely offensive words belong
+# in content/blocklist.txt, which is checked against boards and removed from the dictionary.
 FARTED
 HEBE
-LESBO
-LUBRA
-MINGER
 NANCIER
 NANCY
-PEDO
-YIDS
