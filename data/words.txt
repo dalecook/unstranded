@@ -37640,8 +37640,6 @@ coolest
 coolheaded
 coolibah
 coolibahs
-coolie
-coolies
 cooling
 coolish
 coolly
@@ -49230,7 +49228,6 @@ diked
 diker
 dikers
 dikes
-dikey
 diking
 dikkop
 diktat
@@ -109837,11 +109834,9 @@ minesweepings
 mineworker
 mineworkers
 ming
-minge
 mingier
 mingiest
 mingily
-minging
 mingle
 mingled
 mingler
@@ -158766,9 +158761,6 @@ sambhar
 sambhars
 sambhur
 sambhurs
-sambo
-samboes
-sambos
 sambuca
 sambucas
 sambuke
@@ -163901,8 +163893,6 @@ shag
 shagbark
 shagbarks
 shagged
-shagger
-shaggers
 shaggier
 shaggiest
 shaggily
@@ -180985,11 +180975,9 @@ tahsil
 tahsildar
 tahsildars
 tahsils
-taig
 taiga
 taigas
 taiglach
-taigs
 taihoa
 taiko
 taikos
