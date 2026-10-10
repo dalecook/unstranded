@@ -1,16 +1,23 @@
 import { neighbors, rowOf, colOf, isValidPath, diagonalKey, crossesLinks, pathsCross } from '../../js/grid.js';
 import { verifyPuzzle } from './layout.js';
 
-// Visit every legal trace of `word`: a self-avoiding adjacent path whose diagonal steps never
-// cross each other. `visit` receives the live path; return true to stop the walk.
-export function walkTraces(grid, word, visit) {
+// A player's selection may cross its own path, but such a trace only ever makes a bonus word or a
+// stepping stone: an answer counts along a non-self-crossing trace only. So checks about answers
+// use the default traces (no crossing), and checks about every other word pass ANY_TRACE.
+export const ANY_TRACE = Object.freeze({ selfCrossing: true });
+
+// Visit every trace of `word`: a self-avoiding adjacent path whose diagonal steps never cross
+// each other, unless `selfCrossing` allows that. `visit` receives the live path; return true to
+// stop the walk.
+export function walkTraces(grid, word, visit, { selfCrossing = false } = {}) {
   const links = new Map();
   const walk = (path) => {
     if (path.length === word.length) return visit(path);
     const last = path[path.length - 1];
     for (const next of neighbors(last)) {
-      if (path.includes(next) || grid[next] !== word[path.length] || crossesLinks(last, next, links)) continue;
-      const key = diagonalKey(last, next);
+      if (path.includes(next) || grid[next] !== word[path.length]) continue;
+      if (!selfCrossing && crossesLinks(last, next, links)) continue;
+      const key = selfCrossing ? null : diagonalKey(last, next);
       if (key) links.set(key.square, key.dir);
       path.push(next);
       const stop = walk(path);
@@ -23,15 +30,15 @@ export function walkTraces(grid, word, visit) {
   for (let i = 0; i < grid.length; i++) if (grid[i] === word[0] && walk([i])) return;
 }
 
-// Number of legal traces spelling `word`, stopping early at `cap`.
-export function countTraces(grid, word, cap = Infinity) {
+// Number of traces spelling `word`, stopping early at `cap`. `options` as for walkTraces.
+export function countTraces(grid, word, cap = Infinity, options = {}) {
   let n = 0;
-  walkTraces(grid, word, () => ++n >= cap);
+  walkTraces(grid, word, () => ++n >= cap, options);
   return n;
 }
 
-export function isTraceable(grid, word) {
-  return countTraces(grid, word, 1) > 0;
+export function isTraceable(grid, word, options = {}) {
+  return countTraces(grid, word, 1, options) > 0;
 }
 
 // Every forward/reverse assignment of the answer paths; answers[0] stays the spangram.
@@ -47,13 +54,14 @@ export function* directionVariants({ answers }) {
   }
 }
 
-// Exactly one trace per chosen answer implies exactly one complete solution: any
-// full cover uses one trace per answer, and each answer has only its own.
+// Exactly one non-self-crossing trace per chosen answer implies exactly one complete solution:
+// any full cover uses one such trace per answer, and each answer has only its own. Stepping
+// stones and long decoys are not answers, so any trace of them counts, self-crossing included.
 export function checkPuzzle(layout, theme) {
   const { grid, answers } = layout;
   const chosen = new Set(answers.map((a) => a.word));
   const steppingStones = [...new Set(theme.recognized)]
-    .filter((w) => w.length >= 4 && w.length <= 5 && !chosen.has(w) && isTraceable(grid, w))
+    .filter((w) => w.length >= 4 && w.length <= 5 && !chosen.has(w) && isTraceable(grid, w, ANY_TRACE))
     .sort();
   // Malformed paths are 'invalid', not 'crossing': validate shape before the crossing check.
   if (answers.some((a) => !isValidPath(a.path) || a.path.length !== a.word.length)) {
@@ -66,7 +74,7 @@ export function checkPuzzle(layout, theme) {
   }
   const onTheme = new Set([...theme.answers, ...theme.recognized]);
   for (const w of onTheme) {
-    if (w.length >= 6 && !chosen.has(w) && isTraceable(grid, w)) {
+    if (w.length >= 6 && !chosen.has(w) && isTraceable(grid, w, ANY_TRACE)) {
       return { ok: false, reason: 'long-decoy', steppingStones };
     }
   }

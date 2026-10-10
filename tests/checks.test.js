@@ -46,6 +46,18 @@ test('countTraces ignores a route that crosses itself', () => {
   assert.equal(isTraceable(gridWith({ 0: 'A', 7: 'B', 6: 'C', 1: 'D' }), 'ABCD'), false);
 });
 
+test('with selfCrossing, traces may cross themselves but still never reuse a cell', () => {
+  const any = { selfCrossing: true };
+  const grid = gridWith({ 0: 'A', 7: 'B', 6: 'C', 1: 'D', 12: 'D' });
+  assert.equal(countTraces(grid, 'ABCD', Infinity, any), 2);
+  assert.equal(countTraces(grid, 'ABCD', 1, any), 1);
+  const crossedOnly = gridWith({ 0: 'A', 7: 'B', 6: 'C', 1: 'D' });
+  assert.equal(countTraces(crossedOnly, 'ABCD', Infinity, any), 1);
+  assert.equal(isTraceable(crossedOnly, 'ABCD', any), true);
+  assert.equal(isTraceable(crossedOnly, 'ABCD', { selfCrossing: false }), false);
+  assert.equal(countTraces(gridWith({ 0: 'A', 1: 'B' }), 'ABA', Infinity, any), 0);
+});
+
 const THEME = {
   id: 'utensils',
   clue: 'Drawer full of tools',
@@ -195,6 +207,41 @@ test('checkPuzzle ignores recognized words that are not 4-5 letters or are chose
   const extra = [variant.answers[1].word, 'XX'];
   const result = checkPuzzle(variant, { ...theme, recognized: [...theme.recognized, ...extra] });
   assert.deepEqual(result.steppingStones, [...theme.recognized].sort());
+});
+
+// Hand-built board. BOOK runs 0-6-7-1 and also reads 0-7-6-1, which crosses itself; QVRU
+// (2-9-3-8) and BKQVRU (0-1-2-9-3-8) can only be traced by crossing over.
+function bowtieBoard() {
+  const grid = ['BKQRST', 'OOUVWY', 'CDEFGH', 'IJLMNP', 'DCFEHG', 'JILNPM', 'ECGDHF', 'LINJPM'].join('').split('');
+  const row = (r) => Array.from({ length: 6 }, (_, c) => r * 6 + c);
+  const paths = [row(2), [0, 6, 7, 1], [2, 3, 4, 5], [8, 9, 10, 11], row(3), row(4), row(5), row(6), row(7)];
+  const answers = paths.map((path, k) => ({ word: path.map((c) => grid[c]).join(''), path, isSpangram: k === 0 }));
+  return { grid, answers };
+}
+const BOWTIE_STONES = ['CDEF', 'IJLM'];
+
+test('checkPuzzle: a self-crossing second trace does not make an answer ambiguous', () => {
+  const board = bowtieBoard();
+  assert.equal(countTraces(board.grid, 'BOOK'), 1);
+  assert.equal(countTraces(board.grid, 'BOOK', Infinity, { selfCrossing: true }), 2);
+  const result = checkPuzzle(board, { answers: [], recognized: BOWTIE_STONES });
+  assert.deepEqual(result, { ok: true, steppingStones: BOWTIE_STONES });
+});
+
+test('checkPuzzle counts a stepping stone that can only be traced by crossing over', () => {
+  const board = bowtieBoard();
+  assert.equal(isTraceable(board.grid, 'QVRU'), false);
+  const result = checkPuzzle(board, { answers: [], recognized: ['CDEF', 'QVRU'] });
+  assert.deepEqual(result, { ok: true, steppingStones: ['CDEF', 'QVRU'] });
+  const six = ['CDEF', 'DEFG', 'IJLM', 'JLMN', 'LMNP', 'QVRU'];
+  assert.equal(checkPuzzle(board, { answers: [], recognized: six }).reason, 'stones');
+});
+
+test('checkPuzzle rejects a long decoy that can only be traced by crossing over', () => {
+  const board = bowtieBoard();
+  assert.equal(isTraceable(board.grid, 'BKQVRU'), false);
+  assert.equal(checkPuzzle(board, { answers: ['BKQVRU'], recognized: BOWTIE_STONES }).reason, 'long-decoy');
+  assert.equal(checkPuzzle(board, { answers: [], recognized: [...BOWTIE_STONES, 'BKQVRU'] }).reason, 'long-decoy');
 });
 
 // Count sets of cell-disjoint traces, one per answer, covering all 48 cells.

@@ -19,6 +19,21 @@ test('the fast tracer counts exactly the traces checks.countTraces does', () => 
   }
 });
 
+test('with selfCrossing the fast tracer matches checks.countTraces too', () => {
+  const rand = mulberry32(43);
+  const pick = (s) => s[Math.floor(rand() * s.length)];
+  const any = { selfCrossing: true };
+  let more = 0;
+  for (let round = 0; round < 300; round++) {
+    const grid = Array.from({ length: CELLS }, () => pick(['A', 'B', 'C', '', '']));
+    const word = Array.from({ length: 3 + Math.floor(rand() * 4) }, () => pick('ABC')).join('');
+    const n = traceCount(grid, word, 500, any);
+    assert.equal(n, countTraces(grid, word, 500, any), `round ${round} ${word}`);
+    if (n > traceCount(grid, word, 500)) more++;
+  }
+  assert.ok(more > 0, 'some rounds have self-crossing traces');
+});
+
 function checker(opts) {
   return createBoardChecker({ answers: [], recognized: [], blockset: new Set(), ...opts });
 }
@@ -69,6 +84,33 @@ test('a blocked word scrambled within one answer is pruned; a reversed run of it
   // DCB reads 8-7-1: the answer's own cells backwards, a contiguous reversed run.
   const reversed = checker({ chosen: ['ABCDE'], blockset: new Set(['DCB']) });
   assert.equal(reversed.place('ABCDE', path), null);
+});
+
+// ABCDEF along 0-6-7-1-2-3: ACBD reads 0-7-6-1 and ACBDEF 0-7-6-1-2-3, both only by crossing over.
+const HOOK = [0, 6, 7, 1, 2, 3];
+
+test('a long decoy traceable only by crossing over is pruned', () => {
+  assert.equal(checker({ chosen: ['ABCDEF'], answers: ['ACBDEF'] }).place('ABCDEF', HOOK), 'long-decoy');
+  assert.equal(checker({ chosen: ['ABCDEF'], recognized: ['ACBDEF'] }).place('ABCDEF', HOOK), 'long-decoy');
+});
+
+test('a blocked word traceable only by crossing over is pruned', () => {
+  assert.equal(checker({ chosen: ['ABCDEF'], blockset: new Set(['ACBD']) }).place('ABCDEF', HOOK), 'offensive');
+});
+
+test('a stepping stone traceable only by crossing over counts', () => {
+  const c = checker({ chosen: ['ABCDEF'], recognized: ['ACBD', 'ACBDE'] });
+  assert.equal(c.place('ABCDEF', HOOK), null);
+  assert.deepEqual(c.stones(), ['ACBD', 'ACBDE']);
+  const full = checker({ chosen: ['ABCDEF'], recognized: ['ACBD'], maxStones: 0 });
+  assert.equal(full.place('ABCDEF', HOOK), 'stones');
+});
+
+test('self-crossing traces never make a chosen answer ambiguous', () => {
+  // BOOK also reads 0-7-6-1, crossing itself.
+  assert.equal(checker({ chosen: ['BOOK'] }).place('BOOK', [0, 6, 7, 1]), null);
+  // The unplaced answer ACBD is so far traceable only by crossing over.
+  assert.equal(checker({ chosen: ['ABCDEF', 'ACBD'] }).place('ABCDEF', HOOK), null);
 });
 
 test('more than five stepping stones is pruned as soon as they appear', () => {

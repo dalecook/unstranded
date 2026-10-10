@@ -1,11 +1,15 @@
 // Check-as-you-go board generator: letters are written as each answer is placed, and the
 // letter-dependent rules are checked straight away instead of after the board is full.
 //
+// Answers count along non-self-crossing traces only; every other word (decoys, blocked words,
+// stepping stones) can be selected along any self-avoiding path, self-crossing included.
+//
 // Every rule below is monotone while a board is being filled (cells only go from empty to a
-// letter, and an empty cell matches nothing), so a branch that breaks one can never recover:
-//   - a placed answer with 2+ legal traces keeps them;
-//   - an unplaced chosen answer that is already traceable will have a second trace once it is
-//     placed in other (still empty) cells;
+// letter, and an empty cell matches nothing, so a trace of either kind is never lost), so a
+// branch that breaks one can never recover:
+//   - a placed answer with 2+ non-self-crossing traces keeps them;
+//   - an unplaced chosen answer that already has a non-self-crossing trace will have a second
+//     one once it is placed in other (still empty) cells;
 //   - a traceable long on-theme decoy stays traceable;
 //   - a blocked word with a non-exempt trace keeps it (its cells already belong to placed
 //     answers, so no later answer can make it a contiguous run);
@@ -29,7 +33,7 @@ const letterIndex = (ch) => ch.charCodeAt(0) - A;
 
 const NEIGHBORS = Array.from({ length: CELLS }, (_, i) => neighbors(i));
 // DIAGONAL[a * CELLS + b]: 0 for an orthogonal step, else 4 * square + dir (1 or 2): a square's
-// two diagonals get different dirs, and a trace may use at most one of them.
+// two diagonals get different dirs, and a non-self-crossing trace may use at most one of them.
 const DIAGONAL = new Int16Array(CELLS * CELLS);
 for (let a = 0; a < CELLS; a++) {
   for (const b of NEIGHBORS[a]) {
@@ -51,16 +55,17 @@ function entry(word) {
   return { word, rev: [...word].reverse().join(''), mask, needs };
 }
 
-// Trace counter over a live grid ('' = empty) and its per-letter counts. traces(e, cap, accept)
-// counts the legal traces of e.word (self-avoiding, no crossing diagonals: the same rule as
-// checks.walkTraces) up to `cap`; `accept(path)` may veto a trace. The walk starts from
-// whichever end letter is rarer on the grid; a reversed trace covers the same cells, so counts
-// and run-of-an-answer tests are unchanged.
+// Trace counter over a live grid ('' = empty) and its per-letter counts.
+// traces(e, cap, selfCrossing, accept) counts the traces of e.word (self-avoiding, and with no
+// crossing diagonals unless `selfCrossing`: the same rules as checks.walkTraces) up to `cap`;
+// `accept(path)` may veto a trace. The walk starts from whichever end letter is rarer on the
+// grid; a reversed trace covers the same cells and links, so counts and run-of-an-answer tests
+// are unchanged.
 function createTracer(grid, counts) {
   const visited = new Uint8Array(CELLS);
   const squares = new Uint8Array(CELLS);
   const trail = [];
-  function traces(e, cap, accept = null) {
+  function traces(e, cap, selfCrossing = false, accept = null) {
     const fwd = counts[letterIndex(e.word[0])] <= counts[letterIndex(e.rev[0])];
     const w = fwd ? e.word : e.rev;
     const last = w.length - 1;
@@ -73,7 +78,7 @@ function createTracer(grid, counts) {
       const ch = w[k + 1];
       for (const next of NEIGHBORS[cell]) {
         if (visited[next] || grid[next] !== ch) continue;
-        const d = DIAGONAL[cell * CELLS + next];
+        const d = selfCrossing ? 0 : DIAGONAL[cell * CELLS + next];
         const sq = d >> 2;
         if (d) {
           if (squares[sq] && squares[sq] !== (d & 3)) continue;
@@ -104,11 +109,11 @@ function createTracer(grid, counts) {
   return traces;
 }
 
-// Legal traces of `word` on `grid`, up to `cap` (for tests: matches checks.countTraces).
-export function traceCount(grid, word, cap = Infinity) {
+// Traces of `word` on `grid`, up to `cap` (for tests: matches checks.countTraces).
+export function traceCount(grid, word, cap = Infinity, { selfCrossing = false } = {}) {
   const counts = new Array(26).fill(0);
   for (const ch of grid) if (ch) counts[letterIndex(ch)]++;
-  return createTracer(grid, counts)(entry(word), cap);
+  return createTracer(grid, counts)(entry(word), cap, selfCrossing);
 }
 
 // Blocklist entries are shared by every board built against the same blockset.
@@ -137,8 +142,10 @@ export function createBoardChecker({ chosen, answers = [], recognized = [], bloc
   const frames = [];
 
   const traces = createTracer(grid, counts);
-  const traceable = (e) => traces(e, 1) > 0;
-  const unexempt = (e) => traces(e, 1, (path) => !placed.some((a) => isRunOf(path, a.path))) > 0;
+  // An answer needs a non-self-crossing trace; any other word may be traced crossing itself.
+  const answerTraceable = (e) => traces(e, 1) > 0;
+  const traceable = (e) => traces(e, 1, true) > 0;
+  const unexempt = (e) => traces(e, 1, true, (path) => !placed.some((a) => isRunOf(path, a.path))) > 0;
 
   // Letter mask of the filled cells; kept in step with counts.
   let gridMask = 0;
@@ -172,7 +179,7 @@ export function createBoardChecker({ chosen, answers = [], recognized = [], bloc
       if ((a.e.mask & newMask) && traces(a.e, 2) >= 2) return { why: 'ambiguous' };
     }
     for (const e of unplaced.values()) {
-      if (reachable(e, newMask) && traceable(e)) return { why: 'ambiguous' };
+      if (reachable(e, newMask) && answerTraceable(e)) return { why: 'ambiguous' };
     }
     for (const e of decoys) {
       if (reachable(e, newMask) && traceable(e)) return { why: 'long-decoy' };

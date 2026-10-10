@@ -8,7 +8,7 @@ import { Worker } from 'node:worker_threads';
 import { mulberry32, hashString, shuffle } from '../js/rng.js';
 import { chooseWords } from './lib/layout.js';
 import { generateBoard } from './lib/generator.js';
-import { checkPuzzle, difficulty, isTraceable } from './lib/checks.js';
+import { checkPuzzle, difficulty, isTraceable, ANY_TRACE } from './lib/checks.js';
 import { loadRanks, eligibleAnswers } from './lib/familiarity.js';
 import { assembleDrop } from './lib/assemble.js';
 import { loadBoardBlocklist, offensiveWordsOn } from './lib/blocklist.js';
@@ -69,6 +69,8 @@ export function searchTheme(theme, dropId, {
   return { best, passes, attempts: tried, capped };
 }
 
+// Dictionary words of 6+ letters a player could select: any self-avoiding path, self-crossing
+// included (they are not answers).
 function tracedDictionaryWords(grid, dictionaryWords, exclude) {
   const counts = {};
   for (const ch of grid) counts[ch] = (counts[ch] ?? 0) + 1;
@@ -81,7 +83,7 @@ function tracedDictionaryWords(grid, dictionaryWords, exclude) {
       need[ch] = (need[ch] ?? 0) + 1;
       if (need[ch] > (counts[ch] ?? 0)) { possible = false; break; }
     }
-    if (possible && isTraceable(grid, word)) found.push(word);
+    if (possible && isTraceable(grid, word, ANY_TRACE)) found.push(word);
   }
   return found;
 }

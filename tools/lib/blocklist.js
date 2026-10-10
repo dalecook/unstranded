@@ -4,7 +4,7 @@
 import { existsSync } from 'node:fs';
 import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
-import { walkTraces } from './checks.js';
+import { walkTraces, ANY_TRACE } from './checks.js';
 
 const repo = (p) => fileURLToPath(new URL(`../../${p}`, import.meta.url));
 export const BLOCKLIST_FILE = repo('content/blocklist.txt');
@@ -62,12 +62,13 @@ export function isRunOf(trace, path) {
   return fwd || rev;
 }
 
-// True when `word` has a legal trace on `grid` that is not a contiguous run (forward or reversed)
-// of one answer's path. Once true it stays true as more cells are filled: the trace's cells are
-// already final, so no later answer can make it a run.
+// True when `word` has a trace on `grid` (any self-avoiding path, self-crossing included: a
+// player can select it) that is not a contiguous run (forward or reversed) of one answer's path.
+// Once true it stays true as more cells are filled: the trace's cells are already final, so no
+// later answer can make it a run.
 export function hasUnexemptTrace(grid, word, answers = []) {
   let found = false;
-  walkTraces(grid, word, (path) => (found = !answers.some((a) => isRunOf(path, a.path))));
+  walkTraces(grid, word, (path) => (found = !answers.some((a) => isRunOf(path, a.path))), ANY_TRACE);
   return found;
 }
 

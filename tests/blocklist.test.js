@@ -77,10 +77,12 @@ test('a trace scrambled within one answer (not a contiguous run of its path) is 
   assert.deepEqual(offensiveWordsOn(grid, blockset, answers), ['SMUT']);
 });
 
-test('a trace that crosses itself is not a legal selection and is ignored', () => {
+test('a trace that crosses itself is a legal selection and is flagged', () => {
   // S(0) M(7) U(6) T(1): the steps 0-7 and 6-1 are the two diagonals of one square.
   const grid = gridOf(['STXXXX', 'UMXXXX', 'XXXXXX', 'XXXXXX', 'XXXXXX', 'XXXXXX', 'XXXXXX', 'XXXXXX']);
-  assert.deepEqual(offensiveWordsOn(grid, blockset, []), []);
+  assert.deepEqual(offensiveWordsOn(grid, blockset, []), ['SMUT']);
+  // The same cells belong to one answer, but the trace is no contiguous run of its path.
+  assert.deepEqual(offensiveWordsOn(grid, blockset, [{ word: 'SUMT', path: [0, 6, 7, 1] }]), ['SMUT']);
 });
 
 test('curated list includes the review-added slur and profanity stems', async () => {

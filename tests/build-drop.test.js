@@ -120,6 +120,24 @@ test('the report lists every puzzle with its stepping stones', () => {
   assert.match(report, /Spares:/);
 });
 
+test('the dictionary decoy list includes words traceable only by crossing over', () => {
+  // BOOK runs 0-6-7-1; BKQVRU reads 0-1-2-9-3-8, whose steps 2-9 and 3-8 cross.
+  const grid = ['BKQRST', 'OOUVWY', 'CDEFGH', 'IJLMNP', 'DCFEHG', 'JILNPM', 'ECGDHF', 'LINJPM'].join('').split('');
+  const row = (r) => Array.from({ length: 6 }, (_, c) => r * 6 + c);
+  const paths = [row(2), [0, 6, 7, 1], [2, 3, 4, 5], [8, 9, 10, 11], row(3), row(4), row(5), row(6), row(7)];
+  const answers = paths.map((path, k) => ({ word: path.map((c) => grid[c]).join(''), path, isSpangram: k === 0 }));
+  const theme = {
+    id: 'rows', clue: 'Rows', spangram: 'CDEFGH', obscure: false,
+    answers: answers.slice(1).map((a) => a.word), recognized: ['CDEF', 'IJLM'],
+  };
+  const { report } = buildDrop({
+    dropId: '2026-10', startDate: '2026-10-09', count: 1, dailies: 1, themes: [theme],
+    ranks: new Map(theme.answers.map((w) => [w, 1])), dictionaryWords: ['BKQVRU', 'BKQRTS', 'CDEFGH'],
+    search: () => ({ best: { variant: { grid, answers }, score: 0.5, steppingStones: ['CDEF', 'IJLM'] } }),
+  });
+  assert.match(report, /dictionary decoys \(review\): BKQVRU\n/);
+});
+
 test('building is deterministic', () => {
   const again = run();
   assert.equal(JSON.stringify(again.drop), JSON.stringify(result().drop));
