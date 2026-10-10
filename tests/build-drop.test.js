@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { buildDrop, buildDropParallel, parseArgs } from '../tools/build-drop.mjs';
+import { buildDrop, buildDropParallel, parseArgs, searchTheme, DEFAULT_ATTEMPTS, DEFAULT_SECONDS } from '../tools/build-drop.mjs';
 import { verifyPuzzle } from '../tools/lib/layout.js';
 import { checkPuzzle } from '../tools/lib/checks.js';
 
@@ -131,7 +131,8 @@ test('parseArgs reads ids and numeric options', () => {
   assert.equal(a.id, '2026-10');
   assert.equal(a.count, 40);
   assert.equal(a.seconds, 60);
-  assert.equal(a.attempts, 6000);
+  assert.equal(a.attempts, DEFAULT_ATTEMPTS);
+  assert.equal(parseArgs(['--id', 'x', '--start', '2026-10-08']).seconds, DEFAULT_SECONDS);
 });
 
 test('parseArgs rejects non-positive-integer numeric options with usage', () => {
@@ -153,4 +154,25 @@ test('parallel workers produce the same drop as the sequential build', async () 
   assert.equal(JSON.stringify(par.drop), JSON.stringify(result().drop));
   assert.deepEqual(par.timings.map((t) => t.themeId), ['birds', 'fruits', 'trees']);
   assert.ok(par.wallMs >= 0);
+});
+
+test('searchTheme stops after collecting maxCandidates passing boards and keeps the hardest', () => {
+  const birds = THEMES[0];
+  const found = searchTheme(birds, '2026-10', {
+    attempts: 500, seconds: 60, eligible: birds.answers, maxCandidates: 3,
+  });
+  assert.equal(found.passes, 3);
+  assert.ok(found.attempts >= 3);
+  const { variant, steppingStones } = found.best;
+  assert.equal(checkPuzzle(variant, birds).ok, true);
+  assert.deepEqual(checkPuzzle(variant, birds).steppingStones, steppingStones);
+});
+
+test('searchTheme explains a theme that never yields a board', () => {
+  const found = searchTheme(THEMES[0], '2026-10', {
+    attempts: 3, seconds: 60, eligible: THEMES[0].answers, maxCandidates: 3,
+    // Every letter pair is blocked, so any two neighbouring answers spell one.
+    blockset: new Set([...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'].flatMap((a) => [...'ABCDEFGHIJKLMNOPQRSTUVWXYZ'].map((b) => a + b))),
+  });
+  assert.match(found.failure, /no passing board in 3 attempts \(pruned: .*offensive/);
 });

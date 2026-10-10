@@ -6,31 +6,40 @@ import { pathToFileURL } from 'node:url';
 import os from 'node:os';
 import { Worker } from 'node:worker_threads';
 import { mulberry32, hashString, shuffle } from '../js/rng.js';
-import { chooseWords, layoutWords } from './lib/layout.js';
-import { directionVariants, checkPuzzle, difficulty, isTraceable } from './lib/checks.js';
+import { chooseWords } from './lib/layout.js';
+import { generateBoard } from './lib/generator.js';
+import { checkPuzzle, difficulty, isTraceable } from './lib/checks.js';
 import { loadRanks, eligibleAnswers } from './lib/familiarity.js';
 import { assembleDrop } from './lib/assemble.js';
 import { loadBoardBlocklist, offensiveWordsOn } from './lib/blocklist.js';
 
-const PASS_LIMIT = 200;
+// Passing boards collected per theme; the most difficult one is kept.
+export const MAX_CANDIDATES = 30;
+export const DEFAULT_ATTEMPTS = 6000;
+export const DEFAULT_SECONDS = 900;
 const MAX_OBSCURE = 10;
 
-// Best passing puzzle for one theme, or { failure } explaining why there is none.
-// Stopping is deterministic (attempt and pass counts); the time cap is a safety net only.
-export function searchTheme(theme, dropId, { attempts, seconds, eligible, blockset = new Set() }) {
+// Best passing puzzle for one theme, or { failure } explaining why there is none. Each attempt
+// picks words and asks the check-as-you-go generator for a finished board; every board is then
+// verified with checkPuzzle and the blocklist (a board failing either is a generator bug).
+// Stopping is deterministic (attempt and candidate counts); the time cap is a safety net only.
+export function searchTheme(theme, dropId, {
+  attempts, seconds, eligible, blockset = new Set(), maxCandidates = MAX_CANDIDATES,
+}) {
   const rand = mulberry32(hashString(`${theme.id}:${dropId}`));
   const pool = shuffle(eligible, rand)
     .map((word, i) => ({ word, i }))
     .sort((a, b) => b.word.length - a.word.length || a.i - b.i)
     .map((e) => e.word);
   const deadline = Date.now() + seconds * 1000;
-  const reasons = new Set();
+  const pruned = {};
+  const checked = { answers: theme.answers, recognized: theme.recognized };
   let best = null;
   let passes = 0;
-  let layouts = 0;
+  let tried = 0;
   let capped = false;
 
-  for (let attempt = 0; attempt < attempts && passes < PASS_LIMIT; attempt++) {
+  for (let attempt = 0; attempt < attempts && passes < maxCandidates; attempt++) {
     if (Date.now() > deadline) { capped = true; break; }
     const start = attempt % pool.length;
     const subject = { spangram: theme.spangram, words: [...pool.slice(start), ...pool.slice(0, start)] };
@@ -38,25 +47,26 @@ export function searchTheme(theme, dropId, { attempts, seconds, eligible, blocks
     const words = chooseWords(subject, rand, { ...opts, minCount: 5 })
       ?? chooseWords(subject, rand, { ...opts, minCount: 4 });
     if (!words) continue;
-    const layout = layoutWords(theme.spangram, words, rand);
-    if (!layout) continue;
-    layouts++;
-    for (const variant of directionVariants(layout)) {
-      const result = checkPuzzle(variant, { answers: theme.answers, recognized: theme.recognized });
-      if (!result.ok) { reasons.add(result.reason); continue; }
-      if (offensiveWordsOn(variant.grid, blockset, variant.answers).length) { reasons.add('offensive'); continue; }
-      passes++;
-      const score = difficulty(variant, { obscure: !!theme.obscure });
-      if (!best || score > best.score) best = { variant, score, steppingStones: result.steppingStones };
+    tried++;
+    const board = generateBoard(theme, words, rand, { blockset, stats: pruned });
+    if (!board) continue;
+    const result = checkPuzzle(board, checked);
+    const offensive = offensiveWordsOn(board.grid, blockset, board.answers);
+    if (!result.ok || offensive.length || result.steppingStones.join() !== board.steppingStones.join()) {
+      throw new Error(`generator produced a failing board for ${theme.id}: ${result.reason || offensive.join(' ') || 'stepping stones differ'}`);
     }
+    passes++;
+    const variant = { grid: board.grid, answers: board.answers };
+    const score = difficulty(variant, { obscure: !!theme.obscure });
+    if (!best || score > best.score) best = { variant, score, steppingStones: result.steppingStones };
   }
   if (!best) {
-    const why = layouts
-      ? `no passing layout in ${layouts} layouts (${[...reasons].sort().join(', ')})`
-      : 'no layout could be built';
+    const why = tried
+      ? `no passing board in ${tried} attempts (pruned: ${Object.entries(pruned).sort().map(([k, n]) => `${k} ${n}`).join(', ') || 'none'})`
+      : 'no word set fills the board';
     return { failure: `${why}${capped ? '; time cap hit' : ''}`, capped };
   }
-  return { best, passes, layouts, capped };
+  return { best, passes, attempts: tried, capped };
 }
 
 function tracedDictionaryWords(grid, dictionaryWords, exclude) {
@@ -77,7 +87,7 @@ function tracedDictionaryWords(grid, dictionaryWords, exclude) {
 }
 
 export function buildDrop({
-  dropId, startDate, count = 50, dailies = 30, attempts = 2000, seconds = 60,
+  dropId, startDate, count = 50, dailies = 30, attempts = DEFAULT_ATTEMPTS, seconds = DEFAULT_SECONDS,
   themes, ranks, existingDropThemeIds = [], dictionaryWords = [], blockset = new Set(),
   search = null,
 }) {
@@ -217,7 +227,7 @@ export function runInWorkers(jobs, { blockset, workers }) {
 
 // Same output as buildDrop, with the per-theme searches farmed out to a runner.
 export async function buildDropParallel(opts, { workers = 1, runner } = {}) {
-  const { dropId, attempts = 2000, seconds = 60, themes, ranks, existingDropThemeIds = [], blockset = new Set() } = opts;
+  const { dropId, attempts = DEFAULT_ATTEMPTS, seconds = DEFAULT_SECONDS, themes, ranks, existingDropThemeIds = [], blockset = new Set() } = opts;
   const skipped = new Set(existingDropThemeIds);
   const jobs = [];
   for (const theme of [...themes].sort((a, b) => a.id.localeCompare(b.id))) {
@@ -241,11 +251,11 @@ export function timingHeader(timings, wallMs, workers) {
   return lines.join('\n');
 }
 
-const USAGE = 'Usage: build-drop --id 2026-10 --start 2026-10-08 [--count 50] [--attempts 6000] [--seconds 300] [--workers N] [--content dir]';
+const USAGE = `Usage: build-drop --id 2026-10 --start 2026-10-08 [--count 50] [--attempts ${DEFAULT_ATTEMPTS}] [--seconds ${DEFAULT_SECONDS}] [--workers N] [--content dir]`;
 
 export function parseArgs(argv) {
   const args = {
-    count: 50, attempts: 6000, seconds: 300, content: 'content/themes',
+    count: 50, attempts: DEFAULT_ATTEMPTS, seconds: DEFAULT_SECONDS, content: 'content/themes',
     workers: Math.max(1, os.availableParallelism() - 2),
   };
   const numeric = ['count', 'attempts', 'seconds', 'workers'];
