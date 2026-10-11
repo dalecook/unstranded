@@ -58,7 +58,7 @@ function render() {
   const hintBtn = $('hint-btn');
   hintBtn.disabled = !canHint(state);
   const hints = availableHints(state);
-  hintBtn.textContent = hints > 1 ? `Hint ×${hints}` : 'Hint';
+  hintBtn.textContent = hints > 0 ? `Hint ×${hints}` : 'Hint';
   hintBtn.style.setProperty('--meter', String(state.hintMeter / HINT_COST));
   $('share-btn').hidden = !state.completed;
 }
