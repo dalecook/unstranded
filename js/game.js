@@ -91,22 +91,24 @@ export function submitWord(state, puzzle, path, dictionary) {
   if (state.bonusWords.includes(word)) return { state, result: { type: 'already-found', word } };
   if (!dictionary || !dictionary.has(word)) return { state, result: { type: 'not-a-word', word } };
 
+  // Every HINT_COST-th bonus word banks a hint and the meter starts again.
+  const meter = state.hintMeter + 1;
+  const hintEarned = meter >= HINT_COST;
   const next = {
     ...state,
     bonusWords: [...state.bonusWords, word],
-    hintMeter: Math.min(HINT_COST, state.hintMeter + 1),
+    bankedHints: state.bankedHints + (hintEarned ? 1 : 0),
+    hintMeter: hintEarned ? 0 : meter,
   };
-  return { state: next, result: { type: 'bonus', word } };
+  return { state: next, result: hintEarned ? { type: 'bonus', word, hintEarned } : { type: 'bonus', word } };
 }
 
 export function canHint(state) {
-  return !state.completed && state.activeHint?.level !== 2
-    && (state.bankedHints > 0 || state.hintMeter >= HINT_COST);
+  return !state.completed && state.activeHint?.level !== 2 && state.bankedHints > 0;
 }
 
 export function useHint(state, puzzle) {
   if (!canHint(state)) return state;
-  const spendBanked = state.bankedHints > 0;
   let activeHint;
   if (state.activeHint && !isFound(state, state.activeHint.word)) {
     activeHint = { word: state.activeHint.word, level: 2 };
@@ -119,12 +121,20 @@ export function useHint(state, puzzle) {
     ...state,
     activeHint,
     hintsUsed: state.hintsUsed + 1,
-    bankedHints: spendBanked ? state.bankedHints - 1 : state.bankedHints,
-    hintMeter: spendBanked ? state.hintMeter : 0,
+    bankedHints: state.bankedHints - 1,
     log: [...state.log, 'H'],
   };
 }
 
 export function availableHints(state) {
-  return state.bankedHints + (state.hintMeter >= HINT_COST ? 1 : 0);
+  return state.bankedHints;
+}
+
+// Old saves could hold a full meter (a spendable hint) and may lack newer fields.
+export function migrateState(state) {
+  const bankedHints = state.bankedHints ?? 0;
+  const stonesFound = state.stonesFound ?? [];
+  const full = Math.floor(state.hintMeter / HINT_COST);
+  if (!full && state.bankedHints !== undefined && state.stonesFound !== undefined) return state;
+  return { ...state, stonesFound, bankedHints: bankedHints + full, hintMeter: state.hintMeter % HINT_COST };
 }

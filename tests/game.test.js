@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  newGameState, wordFromPath, foundCells, submitWord, canHint, useHint, HINT_COST, completedAnswer, availableHints,
+  newGameState, wordFromPath, foundCells, submitWord, canHint, useHint, HINT_COST, completedAnswer, availableHints, migrateState,
 } from '../js/game.js';
 
 // Hand-built puzzle: game logic does not require full coverage.
@@ -102,30 +102,63 @@ test('without a dictionary, non-theme words are not-a-word', () => {
   assert.equal(submitWord(newGameState(p, 'x'), p, [30, 31, 32, 33], null).result.type, 'not-a-word');
 });
 
-test('hint meter caps at HINT_COST and hints follow levels', () => {
+// Six distinct bonus words on disjoint cells (overwrites the decoys at 24-33, which these tests do not use).
+const BONUS = ['AAAA', 'BBBB', 'CCCC', 'DDDD', 'EEEE', 'FFFF'];
+const BONUS_DICT = new Set(BONUS);
+const BONUS_PATHS = BONUS.map((_, k) => [0, 1, 2, 3].map((i) => 24 + k * 4 + i));
+function bonusPuzzle() {
   const p = makePuzzle();
-  let s = newGameState(p, 'x');
-  for (const path of [[30, 31, 32, 33], [3, 2, 1, 0], [9, 8, 7, 6]]) {
-    ({ state: s } = submitWord(s, p, path, DICT));
-  }
-  assert.equal(s.hintMeter, HINT_COST);
-  assert.equal(canHint(s), true);
+  BONUS.forEach((w, k) => BONUS_PATHS[k].forEach((c, i) => { p.grid[c] = w[i]; }));
+  return p;
+}
+function playBonus(s, p, n) {
+  let result;
+  for (let k = 0; k < n; k++) ({ state: s, result } = submitWord(s, p, BONUS_PATHS[k], BONUS_DICT));
+  return { state: s, result };
+}
 
+test('every third bonus word banks a hint and restarts the meter', () => {
+  const p = bonusPuzzle();
+  const s0 = newGameState(p, 'x');
+  let { state: s, result } = playBonus(s0, p, 2);
+  assert.equal(s.hintMeter, 2);
+  assert.equal(s.bankedHints, 0);
+  assert.equal(result.hintEarned, undefined);
+  ({ state: s, result } = playBonus(s0, p, 3));
+  assert.equal(s.bankedHints, 1);
+  assert.equal(s.hintMeter, 0);
+  assert.equal(result.type, 'bonus');
+  assert.equal(result.hintEarned, true);
+  assert.equal(canHint(s), true);
+  ({ state: s } = playBonus(s0, p, 6));
+  assert.equal(s.bankedHints, 2);
+  assert.equal(s.hintMeter, 0);
+  assert.equal(availableHints(s), 2);
+  ({ state: s } = playBonus(s0, p, 4));
+  assert.equal(s.bankedHints, 1);
+  assert.equal(s.hintMeter, 1);
+});
+
+test('hints follow levels and spending leaves the meter alone', () => {
+  const p = bonusPuzzle();
+  let { state: s } = playBonus(newGameState(p, 'x'), p, 4);
+  assert.equal(s.bankedHints, 1);
   s = useHint(s, p);
   assert.deepEqual(s.activeHint, { word: 'CATS', level: 1 }); // first unfound non-spangram
-  assert.equal(s.hintMeter, 0);
+  assert.equal(s.bankedHints, 0);
+  assert.equal(s.hintMeter, 1);
   assert.equal(s.hintsUsed, 1);
-  assert.deepEqual(s.log, ['H']);
-  assert.equal(canHint(s), false);
+  assert.equal(s.log[s.log.length - 1], 'H');
+  assert.equal(canHint(s), false, 'meter progress alone is not a hint');
 
-  s = { ...s, hintMeter: HINT_COST };
-  s = useHint(s, p);
+  s = useHint({ ...s, bankedHints: 2 }, p);
   assert.deepEqual(s.activeHint, { word: 'CATS', level: 2 });
-  s = { ...s, hintMeter: HINT_COST };
+  assert.equal(s.bankedHints, 1);
   assert.equal(canHint(s), false, 'no further hint while a level-2 hint is active');
 
   ({ state: s } = submitWord(s, p, [0, 1, 2, 3], DICT));
   assert.equal(s.activeHint, null, 'finding the hinted word clears the hint');
+  assert.equal(canHint(s), true, 'the remaining banked hint is usable again');
 });
 
 test('spangram is only hinted when it is the last word left', () => {
@@ -133,7 +166,7 @@ test('spangram is only hinted when it is the last word left', () => {
   let s = newGameState(p, 'x');
   ({ state: s } = submitWord(s, p, [0, 1, 2, 3], DICT));
   ({ state: s } = submitWord(s, p, [6, 7, 8, 9], DICT));
-  s = useHint({ ...s, hintMeter: HINT_COST }, p);
+  s = useHint({ ...s, bankedHints: 1 }, p);
   assert.equal(s.activeHint.word, 'ANIMAL');
 });
 
@@ -142,7 +175,7 @@ test('finding every answer completes the puzzle', () => {
   let s = newGameState(p, 'x');
   for (const a of p.answers) ({ state: s } = submitWord(s, p, a.path, DICT));
   assert.equal(s.completed, true);
-  assert.equal(canHint({ ...s, hintMeter: HINT_COST }), false);
+  assert.equal(canHint({ ...s, bankedHints: 1 }), false);
 });
 
 test('completedAnswer matches an unfound answer spelled along any path', () => {
@@ -213,23 +246,50 @@ test('canHint with a banked hint and an empty meter', () => {
   assert.equal(canHint({ ...s, activeHint: { word: 'CATS', level: 2 } }), false);
 });
 
-test('useHint spends a banked hint before the meter', () => {
-  const p = stonePuzzle();
-  const s = { ...newGameState(p, 'x'), bankedHints: 1, hintMeter: HINT_COST };
-  const after = useHint(s, p);
-  assert.equal(after.bankedHints, 0);
-  assert.equal(after.hintMeter, HINT_COST);
-  assert.equal(after.hintsUsed, 1);
-  const again = useHint(after, p);
-  assert.equal(again.hintMeter, 0);
+test('canHint is false with an unfilled meter and nothing banked', () => {
+  const s = { ...newGameState(stonePuzzle(), 'x'), hintMeter: HINT_COST - 1 };
+  assert.equal(canHint(s), false);
 });
 
-test('availableHints counts banked plus a full meter', () => {
+test('stepping-stone and bonus hints share one pool', () => {
+  const p = bonusPuzzle();
+  [36, 37, 38, 39].forEach((c, i) => { p.grid[c] = 'PETS'[i]; });
+  p.steppingStones = ['PETS'];
+  let s = newGameState(p, 'x');
+  ({ state: s } = submitWord(s, p, [36, 37, 38, 39], BONUS_DICT));
+  ({ state: s } = playBonus(s, p, 3));
+  assert.equal(s.bankedHints, 2);
+  assert.equal(availableHints(s), 2);
+  s = useHint(s, p);
+  assert.equal(s.bankedHints, 1);
+  assert.equal(s.hintMeter, 0);
+  assert.equal(availableHints(s), 1);
+});
+
+test('availableHints is the banked count', () => {
   const s = newGameState(stonePuzzle(), 'x');
   assert.equal(availableHints(s), 0);
   assert.equal(availableHints({ ...s, bankedHints: 2 }), 2);
-  assert.equal(availableHints({ ...s, bankedHints: 2, hintMeter: HINT_COST }), 3);
+  assert.equal(availableHints({ ...s, bankedHints: 2, hintMeter: HINT_COST - 1 }), 2);
   assert.equal(availableHints({ ...s, hintMeter: HINT_COST - 1 }), 0);
+});
+
+test('migrateState turns a full meter into a banked hint', () => {
+  const s = newGameState(stonePuzzle(), 'x');
+  const m = migrateState({ ...s, bankedHints: 1, hintMeter: HINT_COST });
+  assert.equal(m.bankedHints, 2);
+  assert.equal(m.hintMeter, 0);
+  assert.equal(migrateState({ ...s, hintMeter: 2 }).hintMeter, 2);
+  assert.equal(migrateState({ ...s, hintMeter: 2 }).bankedHints, 0);
+});
+
+test('migrateState fills missing defaults and leaves current state untouched', () => {
+  const s = newGameState(stonePuzzle(), 'x');
+  const { bankedHints, stonesFound, ...old } = s;
+  const m = migrateState(old);
+  assert.equal(m.bankedHints, 0);
+  assert.deepEqual(m.stonesFound, []);
+  assert.equal(migrateState(s), s, 'already-current state is returned as is');
 });
 
 // Self-crossing copies on rows 6-7: each path takes both diagonals of one 2x2 square.

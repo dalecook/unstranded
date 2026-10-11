@@ -1,5 +1,5 @@
 import {
-  newGameState, layoutKey, submitWord, useHint, canHint, availableHints, completedAnswer, HINT_COST,
+  newGameState, layoutKey, submitWord, useHint, canHint, availableHints, completedAnswer, migrateState, HINT_COST,
 } from './game.js';
 import { dateKey } from './rng.js';
 import { loadDrops, dailyFor, getPuzzle, isReleased, randomPuzzle } from './drops.js';
@@ -59,7 +59,7 @@ function render() {
   hintBtn.disabled = !canHint(state);
   const hints = availableHints(state);
   hintBtn.textContent = hints > 1 ? `Hint ×${hints}` : 'Hint';
-  hintBtn.style.setProperty('--meter', String(Math.min(state.hintMeter, HINT_COST) / HINT_COST));
+  hintBtn.style.setProperty('--meter', String(state.hintMeter / HINT_COST));
   $('share-btn').hidden = !state.completed;
 }
 
@@ -87,7 +87,7 @@ function onSubmit(path) {
   saveProgress(state);
   if (SHAKE_ON.has(result.type)) shake();
   if (result.type === 'stepping-stone') flashMessage(`On theme: ${result.word}. +1 hint`);
-  else if (result.type === 'bonus') flashMessage(`Bonus word! (${state.hintMeter}/${HINT_COST} toward a hint)`);
+  else if (result.type === 'bonus') flashMessage(result.hintEarned ? 'Bonus word! Hint earned' : `Bonus word! (${state.hintMeter}/${HINT_COST} toward a hint)`);
   else if (MESSAGES[result.type]) flashMessage(MESSAGES[result.type]);
   else render();
 
@@ -170,6 +170,7 @@ function startPuzzle(puzzle) {
     saveStats(applyStart(loadStats()));
     saveProgress(state);
   }
+  state = migrateState(state);
   app.state = state;
   // Shown counts as played, so "New puzzle" serves unseen puzzles before ones the player skipped.
   markPlayed(puzzle.id);
