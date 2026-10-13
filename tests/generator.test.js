@@ -164,7 +164,7 @@ test('a rejected placement restores the unplaced answers', () => {
   assert.equal(c.place('CAT', [12, 13, 14]), null, 'CAT can still be placed');
 });
 
-const breads = JSON.parse(await readFile(new URL('../content/themes/breads.json', import.meta.url), 'utf8'));
+const breads = JSON.parse(await readFile(new URL('./fixtures/theme-breads.json', import.meta.url), 'utf8')); // frozen snapshot: seed-dependent tests must not track editable content
 const blockset = await loadBoardBlocklist();
 
 test('committed drop boards replay through the checker in any order without pruning', async () => {
