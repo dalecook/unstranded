@@ -237,6 +237,18 @@ test('checkPuzzle counts a stepping stone that can only be traced by crossing ov
   assert.equal(checkPuzzle(board, { answers: [], recognized: six }).reason, 'stones');
 });
 
+test('checkPuzzle counts an unchosen 4-5 letter answer as a stepping stone, a chosen one never', () => {
+  const board = bowtieBoard();
+  // IJLMN and DEFGH are answer candidates not chosen for this board; QRST and BOOK were chosen.
+  const theme = { answers: ['IJLMN', 'QRST', 'BOOK', 'DEFGH'], recognized: ['CDEF'] };
+  assert.deepEqual(checkPuzzle(board, theme), { ok: true, steppingStones: ['CDEF', 'DEFGH', 'IJLMN'] });
+  // Unchosen short answers count towards the limit of five.
+  const many = { answers: ['IJLMN', 'DEFGH', 'JLMNP'], recognized: ['CDEF', 'IJLM', 'JLMN'] };
+  assert.equal(checkPuzzle(board, many).reason, 'stones');
+  // A word listed in both is one stone.
+  assert.deepEqual(checkPuzzle(board, { answers: ['CDEF'], recognized: ['CDEF', 'IJLM'] }).steppingStones, BOWTIE_STONES);
+});
+
 test('checkPuzzle rejects a long decoy that can only be traced by crossing over', () => {
   const board = bowtieBoard();
   assert.equal(isTraceable(board.grid, 'BKQVRU'), false);
@@ -294,7 +306,7 @@ function fixtureLayout(words, paths) {
 }
 
 test('difficulty stays in [0,1], rewards bends and length, and adds 0.15 for obscure', () => {
-  const straight = fixtureLayout(['SPANGR', 'AAAAAA'], [[0, 1, 2, 3, 4, 5], [6, 7, 8, 9, 10, 11]]);
+  const straight = fixtureLayout(['SPANGR', 'AAAAA'], [[0, 1, 2, 3, 4, 5], [6, 7, 8, 9, 10]]);
   const bendy = fixtureLayout(
     ['SPANGRAMMING', 'BBBBBBBBBB'],
     [[0, 1, 2, 3, 4, 5, 11, 10, 9, 8, 7, 6], [12, 19, 14, 21, 16, 23, 18, 25, 20, 27]],
@@ -305,4 +317,33 @@ test('difficulty stays in [0,1], rewards bends and length, and adds 0.15 for obs
   assert.ok(b > s);
   assert.equal(s, 0);
   assert.ok(Math.abs(difficulty(straight, { obscure: true }) - s - 0.15) < 1e-9);
+});
+
+// Words of the given lengths on two-cell paths: no bends, so only the length and word-count
+// terms differ (difficulty reads lengths from the words and bends from the paths).
+function rowsLayout(lengths) {
+  return fixtureLayout(['SPANGR', ...lengths.map((n) => 'A'.repeat(n))], [[0, 1, 2, 3, 4, 5], ...lengths.map(() => [6, 7])]);
+}
+const near = (x, y) => assert.ok(Math.abs(x - y) < 1e-9, `${x} != ${y}`);
+const rowsScore = (lengths) => difficulty(rowsLayout(lengths), { obscure: false });
+
+test('difficulty normalises mean answer length over 5..10', () => {
+  near(rowsScore([5]), 0);
+  near(rowsScore([4]), 0);
+  near(rowsScore([6]), 0.25 * 0.2);
+  near(rowsScore([10]), 0.25);
+});
+
+test('difficulty rises with the number of theme words, up to 0.10 at eight', () => {
+  near(rowsScore([5, 5, 5, 5]), 0);
+  near(rowsScore([5, 5, 5, 5, 5, 5]), 0.05);
+  near(rowsScore([5, 5, 5, 5, 5, 5, 5, 5]), 0.10);
+  // The same mean length is not rated the same whatever the word count.
+  assert.ok(rowsScore([7, 7, 7, 7, 7]) > rowsScore([7, 7, 7, 7]));
+  const zigzag = [12, 19, 14, 21, 16, 23, 18, 25, 20, 27];
+  const hardest = fixtureLayout(
+    ['SPANGRAMMINGXX', ...Array(8).fill('BBBBBBBBBB')],
+    [[0, 1, 2, 3, 4, 5, 11, 10, 9, 8, 7, 6, 12, 13], ...Array(8).fill(zigzag)],
+  );
+  near(difficulty(hardest, { obscure: true }), 1);
 });

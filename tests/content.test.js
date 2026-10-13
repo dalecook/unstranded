@@ -63,14 +63,14 @@ for (const { file, theme } of themes) {
     // answers
     assert.ok(Array.isArray(theme.answers), 'answers must be an array');
     assert.ok(theme.answers.length >= 10, `only ${theme.answers.length} answers`);
-    for (const w of theme.answers) assert.match(w, /^[A-Z]{6,10}$/, `bad answer ${w}`);
+    for (const w of theme.answers) assert.match(w, /^[A-Z]{5,10}$/, `bad answer ${w}`);
 
     // recognized
     assert.ok(Array.isArray(theme.recognized), 'recognized must be an array');
     assert.ok(theme.recognized.length >= 25, `only ${theme.recognized.length} recognized words`);
     for (const w of theme.recognized) assert.match(w, /^[A-Z]{4,}$/, `bad recognized word ${w}`);
     const shortWords = theme.recognized.filter((w) => w.length <= 5);
-    assert.ok(shortWords.length >= 10, `only ${shortWords.length} recognized words of 4-5 letters`);
+    assert.ok(shortWords.length >= 8, `only ${shortWords.length} recognized words of 4-5 letters`);
 
     // familiar overrides
     if ('familiar' in theme) {

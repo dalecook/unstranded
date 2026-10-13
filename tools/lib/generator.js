@@ -3,6 +3,8 @@
 //
 // Answers count along non-self-crossing traces only; every other word (decoys, blocked words,
 // stepping stones) can be selected along any self-avoiding path, self-crossing included.
+// On-theme words that are not answers on this board are stepping stones (4-5 letters) or long
+// decoys (6+ letters), whether they come from the theme's recognized list or its unchosen answers.
 //
 // Every rule below is monotone while a board is being filled (cells only go from empty to a
 // letter, and an empty cell matches nothing, so a trace of either kind is never lost), so a
@@ -131,7 +133,8 @@ export function createBoardChecker({ chosen, answers = [], recognized = [], bloc
   const unplaced = new Map(chosen.map((w) => [w, entry(w)]));
   const decoys = [...new Set([...answers, ...recognized])]
     .filter((w) => w.length >= 6 && !chosenSet.has(w)).map(entry);
-  const stoneWords = [...new Set(recognized)]
+  // Stepping stones: on-theme words of 4-5 letters, unchosen answer candidates included.
+  const stoneWords = [...new Set([...recognized, ...answers])]
     .filter((w) => w.length >= 4 && w.length <= 5 && !chosenSet.has(w)).map(entry);
   const blocked = blockedEntries(blockset);
 

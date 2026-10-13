@@ -68,7 +68,7 @@ test('builds a drop whose puzzles all pass the checks', () => {
     const m = meta[p.id];
     const check = checkPuzzle(p, {
       answers: [...p.answers.map((a) => a.word), ...m.checkedLong],
-      recognized: m.recognizedShort,
+      recognized: m.stoneCandidates,
     });
     assert.equal(check.ok, true);
     assert.deepEqual(check.steppingStones, p.steppingStones);
@@ -88,10 +88,34 @@ test('meta snapshots the words the checks used', () => {
   const { drop, meta } = result();
   for (const p of drop.puzzles) {
     assert.ok(Array.isArray(meta[p.id].checkedLong));
-    assert.ok(meta[p.id].recognizedShort.length >= p.steppingStones.length);
+    assert.ok(meta[p.id].stoneCandidates.length >= p.steppingStones.length);
     assert.ok(meta[p.id].checkedLong.every((w) => w.length >= 6));
-    assert.ok(meta[p.id].recognizedShort.every((w) => w.length >= 4 && w.length <= 5));
+    assert.ok(meta[p.id].stoneCandidates.every((w) => w.length >= 4 && w.length <= 5));
   }
+});
+
+test('meta lists unchosen 4-5 letter answers among the stepping-stone candidates', () => {
+  // BOOK runs 0-6-7-1; the theme also offers IJLMN and STUDY as answers, not chosen here.
+  const grid = ['BKQRST', 'OOUVWY', 'CDEFGH', 'IJLMNP', 'DCFEHG', 'JILNPM', 'ECGDHF', 'LINJPM'].join('').split('');
+  const row = (r) => Array.from({ length: 6 }, (_, c) => r * 6 + c);
+  const paths = [row(2), [0, 6, 7, 1], [2, 3, 4, 5], [8, 9, 10, 11], row(3), row(4), row(5), row(6), row(7)];
+  const answers = paths.map((path, k) => ({ word: path.map((c) => grid[c]).join(''), path, isSpangram: k === 0 }));
+  const theme = {
+    id: 'rows', clue: 'Rows', spangram: 'CDEFGH', obscure: false,
+    answers: [...answers.slice(1).map((a) => a.word), 'IJLMN', 'STUDY'], recognized: ['CDEF', 'WXYZ', 'ABCDEFG'],
+  };
+  const { drop, meta } = buildDrop({
+    dropId: '2026-10', startDate: '2026-10-09', count: 1, dailies: 1, themes: [theme],
+    ranks: new Map(theme.answers.map((w) => [w, 1])),
+    search: () => ({ best: { variant: { grid, answers }, score: 0.5, steppingStones: ['CDEF', 'IJLMN'] } }),
+  });
+  const [p] = drop.puzzles;
+  assert.deepEqual(meta[p.id].stoneCandidates, ['CDEF', 'IJLMN', 'STUDY', 'WXYZ']);
+  assert.deepEqual(meta[p.id].checkedLong, ['ABCDEFG']);
+  const check = checkPuzzle(p, {
+    answers: [...p.answers.map((a) => a.word), ...meta[p.id].checkedLong], recognized: meta[p.id].stoneCandidates,
+  });
+  assert.deepEqual(check, { ok: true, steppingStones: ['CDEF', 'IJLMN'] });
 });
 
 test('themes already used in an existing drop are skipped', () => {

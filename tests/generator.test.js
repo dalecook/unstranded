@@ -106,6 +106,19 @@ test('a stepping stone traceable only by crossing over counts', () => {
   assert.equal(full.place('ABCDEF', HOOK), 'stones');
 });
 
+test('an unchosen 4-5 letter answer is a stepping stone; a chosen one is not', () => {
+  const row = [0, 1, 2, 3, 4, 5];
+  const c = checker({ chosen: ['ABCDEF'], answers: ['ABCD', 'BCDEF', 'ABCDEF'], recognized: ['CDEF', 'ABCD'] });
+  assert.equal(c.place('ABCDEF', row), null);
+  assert.deepEqual(c.stones(), ['ABCD', 'BCDEF', 'CDEF']);
+  const chosen = checker({ chosen: ['ABCDEF', 'QRST'], answers: ['QRST'] });
+  chosen.place('ABCDEF', row);
+  assert.equal(chosen.place('QRST', [6, 7, 8, 9]), null);
+  assert.deepEqual(chosen.stones(), []);
+  const full = checker({ chosen: ['ABCDEF'], answers: ['ABCD'], maxStones: 0 });
+  assert.equal(full.place('ABCDEF', row), 'stones');
+});
+
 test('self-crossing traces never make a chosen answer ambiguous', () => {
   // BOOK also reads 0-7-6-1, crossing itself.
   assert.equal(checker({ chosen: ['BOOK'] }).place('BOOK', [0, 6, 7, 1]), null);

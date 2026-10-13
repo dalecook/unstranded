@@ -156,7 +156,8 @@ export function buildDrop({
     meta[p.id] = {
       checkedLong: [...new Set([...theme.answers, ...theme.recognized])]
         .filter((w) => w.length >= 6 && !answerWords.has(w)).sort(),
-      recognizedShort: [...new Set(theme.recognized)]
+      // Stepping-stone candidates: recognized words and unchosen answers of 4-5 letters.
+      stoneCandidates: [...new Set([...theme.recognized, ...theme.answers])]
         .filter((w) => w.length >= 4 && w.length <= 5 && !answerWords.has(w)).sort(),
     };
     const known = new Set([...answerWords, ...theme.answers]);

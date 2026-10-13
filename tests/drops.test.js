@@ -60,15 +60,18 @@ if (!index) {
         assert.ok(verifyPuzzle(p), `${p.id} fails verifyPuzzle`);
         const m = meta[p.id];
         assert.ok(m, `${p.id} has meta`);
+        // stoneCandidates: on-theme words of 4-5 letters not chosen for the board (recognized
+        // words and unchosen short answers). Drops built before 5-letter answers were allowed
+        // call the same list recognizedShort.
         const result = checkPuzzle(p, {
           answers: [...p.answers.map((a) => a.word), ...m.checkedLong],
-          recognized: m.recognizedShort,
+          recognized: m.stoneCandidates ?? m.recognizedShort,
         });
         assert.equal(result.ok, true, `${p.id}: ${result.reason}`);
         assert.deepEqual(result.steppingStones, p.steppingStones, `${p.id} stepping stones`);
         assert.deepEqual(offensiveWordsOn(p.grid, blocklist, p.answers), [], `${p.id} spells a blocked word`);
         for (const a of p.answers.filter((x) => !x.isSpangram)) {
-          assert.ok(/^[A-Z]{6,10}$/.test(a.word), `${p.id}: ${a.word} must be 6-10 letters`);
+          assert.ok(/^[A-Z]{5,10}$/.test(a.word), `${p.id}: ${a.word} must be 5-10 letters`);
         }
       }
 

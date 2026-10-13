@@ -57,10 +57,13 @@ export function* directionVariants({ answers }) {
 // Exactly one non-self-crossing trace per chosen answer implies exactly one complete solution:
 // any full cover uses one such trace per answer, and each answer has only its own. Stepping
 // stones and long decoys are not answers, so any trace of them counts, self-crossing included.
+// Stepping stones are the on-theme words of 4-5 letters that are not answers on this board:
+// recognized words, and answer candidates (5 letters) that were not chosen for it.
 export function checkPuzzle(layout, theme) {
   const { grid, answers } = layout;
   const chosen = new Set(answers.map((a) => a.word));
-  const steppingStones = [...new Set(theme.recognized)]
+  const onTheme = new Set([...theme.answers, ...theme.recognized]);
+  const steppingStones = [...onTheme]
     .filter((w) => w.length >= 4 && w.length <= 5 && !chosen.has(w) && isTraceable(grid, w, ANY_TRACE))
     .sort();
   // Malformed paths are 'invalid', not 'crossing': validate shape before the crossing check.
@@ -72,7 +75,6 @@ export function checkPuzzle(layout, theme) {
   if (answers.some((a) => countTraces(grid, a.word, 2) !== 1)) {
     return { ok: false, reason: 'ambiguous', steppingStones };
   }
-  const onTheme = new Set([...theme.answers, ...theme.recognized]);
   for (const w of onTheme) {
     if (w.length >= 6 && !chosen.has(w) && isTraceable(grid, w, ANY_TRACE)) {
       return { ok: false, reason: 'long-decoy', steppingStones };
@@ -100,12 +102,21 @@ function bendiness(path) {
   return changes / (path.length - 2);
 }
 
+// Difficulty in [0,1], a weighted sum of five terms that are each in [0,1]:
+//   0.25  mean theme-word length, from 5 letters (0) to 10 (1)
+//   0.35  mean bendiness of the theme-word paths (share of steps that change direction)
+//   0.10  number of theme words, from 4 (0) to 8 (1)
+//   0.15  spangram length, from 6 letters (0) to 14 (1)
+//   0.15  obscure theme
+// The words always fill the same cells, so more words means shorter words; the word-count term
+// offsets part of that, so a board with many words to find is not simply rated easier.
 export function difficulty({ answers }, { obscure }) {
   const rest = answers.filter((a) => !a.isSpangram);
   const spangram = answers.find((a) => a.isSpangram);
   return (
-    0.35 * norm(mean(rest.map((a) => a.word.length)), 6, 10) +
+    0.25 * norm(mean(rest.map((a) => a.word.length)), 5, 10) +
     0.35 * mean(rest.map((a) => bendiness(a.path))) +
+    0.10 * norm(rest.length, 4, 8) +
     0.15 * norm(spangram.word.length, 6, 14) +
     0.15 * (obscure ? 1 : 0)
   );
