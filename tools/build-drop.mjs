@@ -4,11 +4,13 @@
 // Board variety. A drop should not be fifty boards of the same shape, so the build plans a
 // spread and then keeps to it as far as the themes allow:
 //   1. Plan (planDrop): each theme's feasible theme-word counts are worked out from its
-//      eligible answers (4-8 words that exactly fill the cells its spangram leaves), and every
+//      eligible answers (4-8 words that exactly fill the cells its spangram leaves; a count
+//      needs at least MIN_SETS distinct word sets unless the theme has no such count), and every
 //      theme is given a target count so the targets are spread as evenly as possible over 4-8.
 //   2. Search (searchTheme): boards are built with exactly the target number of words. If none
-//      passes, the nearest feasible counts are tried in turn and the fallback is reported. The
-//      hardest passing board is kept for each stepping-stone count (2-5).
+//      passes (the search gives a barren count up early), the nearest feasible counts are tried
+//      in turn and the fallback is reported. The hardest passing board is kept for each
+//      stepping-stone count (2-5).
 //   3. Select (selectBoards): themes are picked so the word counts stay balanced (each pick is
 //      the hardest remaining theme of the least-used count), obscure themes first up to their
 //      quota as before. Then each selected theme uses the board whose stepping-stone count is
@@ -25,11 +27,20 @@ import { generateBoard } from './lib/generator.js';
 import { checkPuzzle, difficulty, isTraceable, ANY_TRACE } from './lib/checks.js';
 import { loadRanks, eligibleAnswers } from './lib/familiarity.js';
 import { assembleDrop } from './lib/assemble.js';
-import { feasibleCounts, assignTargets, fallbackOrder, pickBalanced, spreadStones, tallyLine } from './lib/variety.js';
+import {
+  countWordSets, targetCounts, assignTargets, fallbackOrder, pickBalanced, spreadStones, tallyLine,
+} from './lib/variety.js';
 import { loadBoardBlocklist, offensiveWordsOn } from './lib/blocklist.js';
 
 // Passing boards collected per theme; the most difficult one of each stepping-stone count is kept.
 export const MAX_CANDIDATES = 30;
+// ...or fewer once the boards found already offer a choice of stepping-stone counts.
+const EARLY_CANDIDATES = 12;
+const EARLY_STONE_COUNTS = 3;
+// A word count with no passing board after this many attempts (or a tenth of the allowance, if
+// that is more) is given up; and no count gets more attempts than this many per word set.
+const GIVE_UP_ATTEMPTS = 200;
+const ATTEMPTS_PER_SET = 100;
 export const DEFAULT_ATTEMPTS = 6000;
 export const DEFAULT_SECONDS = 900;
 const MAX_OBSCURE = 10;
@@ -52,7 +63,7 @@ export function planDrop({ dropId, themes, ranks, existingDropThemeIds = [] }) {
       failures.push({ themeId: theme.id, reason: `only ${eligible.length} eligible answers` });
       continue;
     }
-    const feasible = feasibleCounts(theme.spangram, eligible);
+    const feasible = targetCounts(countWordSets(theme.spangram, eligible));
     if (!feasible.length) {
       failures.push({ themeId: theme.id, reason: 'no word set fills the board' });
       continue;
@@ -64,19 +75,39 @@ export function planDrop({ dropId, themes, ranks, existingDropThemeIds = [] }) {
   return { jobs, failures, rejections };
 }
 
+// Attempt limits for one word count with `sets` distinct word sets: `cap` attempts at most,
+// and none after `giveUp` attempts if no board has passed by then.
+export function searchLimits(attempts, sets) {
+  return {
+    cap: Math.min(attempts, ATTEMPTS_PER_SET * sets),
+    giveUp: Math.max(GIVE_UP_ATTEMPTS, Math.floor(attempts / 10)),
+  };
+}
+
+// Whether a theme has enough passing boards to stop searching: the maximum, or a dozen that
+// already cover three different stepping-stone counts.
+export function enoughCandidates(passes, stoneCounts, maxCandidates = MAX_CANDIDATES) {
+  return passes >= maxCandidates || (passes >= EARLY_CANDIDATES && stoneCounts >= EARLY_STONE_COUNTS);
+}
+
 // Passing puzzles for one theme, or { failure } explaining why there are none. Each attempt
 // picks exactly `target` words (a fresh random subset every time) and asks the check-as-you-go
 // generator for a finished board; every board is then verified with checkPuzzle and the
 // blocklist (a board failing either is a generator bug). If no board passes at the target, the
-// other feasible counts are tried, nearest first, with the same number of attempts each.
+// other feasible counts are tried, nearest first. A count gets up to `attempts` attempts, fewer
+// if it has few word sets, and is left early if nothing has passed (searchLimits); the theme is
+// finished as soon as it has enough boards (enoughCandidates; `earlyStop: false` insists on
+// `maxCandidates`).
 // Returns the hardest board per stepping-stone count (`candidates`, fewest stones first), the
 // hardest of all (`best`), and the word count used (`count`, which differs from `target` after
 // a fallback). Stopping is deterministic (attempt and candidate counts); the time cap is a
 // safety net only.
 export function searchTheme(theme, dropId, {
   attempts, seconds, eligible, blockset = new Set(), maxCandidates = MAX_CANDIDATES,
-  target = DEFAULT_TARGET, feasible = feasibleCounts(theme.spangram, eligible),
+  target = DEFAULT_TARGET, feasible = null, earlyStop = true,
 }) {
+  const sets = countWordSets(theme.spangram, eligible);
+  const enough = () => (earlyStop ? enoughCandidates(passes, byStones.size, maxCandidates) : passes >= maxCandidates);
   const rand = mulberry32(hashString(`${theme.id}:${dropId}`));
   const subject = { spangram: theme.spangram, words: eligible };
   const deadline = Date.now() + seconds * 1000;
@@ -88,8 +119,10 @@ export function searchTheme(theme, dropId, {
   let tried = 0;
   let capped = false;
 
-  for (const k of fallbackOrder(target, feasible)) {
-    for (let attempt = 0; attempt < attempts && passes < maxCandidates; attempt++) {
+  for (const k of fallbackOrder(target, feasible ?? targetCounts(sets))) {
+    const { cap, giveUp } = searchLimits(attempts, sets.get(k) ?? 0);
+    for (let attempt = 0; attempt < cap && !enough(); attempt++) {
+      if (!passes && attempt >= giveUp) break;
       if (Date.now() > deadline) { capped = true; break; }
       const words = chooseWords(subject, rand, { minCount: k, maxCount: k });
       if (!words) continue;
@@ -193,9 +226,15 @@ export function buildDrop({
   failures.sort((a, b) => a.themeId.localeCompare(b.themeId));
 
   const { selected, spares } = selectBoards(successes, count);
-  const fallbacks = successes
+  // Themes that ended up at another word count than planned: those in the drop, and the spares.
+  const fellBack = (list) => list
     .map((s) => ({ themeId: s.theme.id, target: s.target, count: s.candidates[0].variant.answers.length - 1 }))
-    .filter((f) => f.count !== f.target);
+    .filter((f) => f.count !== f.target)
+    .sort((a, b) => a.themeId.localeCompare(b.themeId));
+  const inDrop = new Set(selected.map((s) => s.theme.id));
+  const fallbacks = fellBack(successes.filter((s) => inDrop.has(s.theme.id)));
+  const spareFallbacks = fellBack(successes.filter((s) => !inDrop.has(s.theme.id)));
+  const arrows = (list) => list.map((f) => `${f.themeId} (${f.target}→${f.count})`).join(' ') || '(none)';
 
   const lines = [];
   if (selected.length < count) {
@@ -225,12 +264,15 @@ export function buildDrop({
   const variety = {
     wordCounts: drop.puzzles.map((p) => p.answers.length - 1).sort(),
     stoneCounts: drop.puzzles.map((p) => p.steppingStones.length).sort(),
+    planned: selected.map((s) => s.target).sort(),
     fallbacks,
+    spareFallbacks,
   };
   lines.push(`Drop ${dropId}: ${drop.puzzles.length} puzzles (${Object.keys(drop.schedule).length} scheduled, ${drop.library.length} library)`);
-  lines.push(`Theme words per board: ${tallyLine(variety.wordCounts)}`);
+  lines.push(`Theme words per board: ${tallyLine(variety.wordCounts)} (planned: ${tallyLine(variety.planned)})`);
   lines.push(`Stepping stones per board: ${tallyLine(variety.stoneCounts)}`);
-  lines.push(`Fell back from target word count: ${fallbacks.map((f) => `${f.themeId} (${f.target}→${f.count})`).join(' ') || '(none)'}`);
+  lines.push(`Fell back from target word count: ${arrows(fallbacks)}`);
+  lines.push(`Spares that fell back: ${arrows(spareFallbacks)}`);
   for (const p of drop.puzzles) {
     const theme = byTheme.get(p.themeId);
     const answerWords = new Set(p.answers.map((a) => a.word));

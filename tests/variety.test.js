@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { WORD_COUNTS, feasibleCounts, assignTargets, fallbackOrder, pickBalanced, spreadStones, tallyLine } from '../tools/lib/variety.js';
+import { WORD_COUNTS, MIN_SETS, SET_CAP, countWordSets, targetCounts, feasibleCounts, assignTargets, fallbackOrder, pickBalanced, spreadStones, tallyLine } from '../tools/lib/variety.js';
 import { mulberry32 } from '../js/rng.js';
 import { chooseWords } from '../tools/lib/layout.js';
 
@@ -119,4 +119,38 @@ test('spreadStones balances stone counts across themes, preferring harder boards
 test('tallyLine prints counts in key order', () => {
   assert.equal(tallyLine([5, 7, 5, 4, 5]), '4×1 5×3 7×1');
   assert.equal(tallyLine([]), '(none)');
+});
+
+test('countWordSets counts the distinct word sets that fill the board, per word count', () => {
+  // Spangram of 8 leaves 40 cells. Eight 5s: one set of eight. Four 10s: one set of four.
+  const sets = countWordSets('SPANGRAM', wordsOf(5, 5, 5, 5, 5, 5, 5, 5, 10, 10, 10, 10));
+  assert.deepEqual([...sets.keys()], WORD_COUNTS);
+  assert.equal(sets.get(8), 1);
+  assert.equal(sets.get(4), 1);
+  // Six words: four of the eight 5s with two of the four 10s = C(8,4) * C(4,2).
+  assert.equal(sets.get(6), 70 * 6);
+  // Seven words: six 5s and one 10 = C(8,6) * C(4,1).
+  assert.equal(sets.get(7), 28 * 4);
+  // Five words: two 5s and three 10s = C(8,2) * C(4,3).
+  assert.equal(sets.get(5), 28 * 4);
+  assert.deepEqual([...countWordSets('SPANGRAMS', wordsOf(6, 6, 6, 6, 6, 6, 6, 6)).values()], [0, 0, 0, 0, 0]);
+});
+
+test('countWordSets saturates at the cap instead of overflowing', () => {
+  const sets = countWordSets('SPANGRAM', wordsOf(...Array(60).fill(5)));
+  assert.equal(sets.get(8), SET_CAP);
+  assert.equal(sets.get(7), 0);
+  // The counts agree with feasibleCounts about what is possible at all.
+  const mixed = wordsOf(5, 5, 5, 5, 5, 5, 5, 5, 6, 7, 8, 9, 10, 10, 10, 10);
+  const counted = countWordSets('SPANGRAMS', mixed);
+  assert.deepEqual(WORD_COUNTS.filter((k) => counted.get(k) > 0), feasibleCounts('SPANGRAMS', mixed));
+});
+
+test('targetCounts keeps the counts with enough word sets, thinner ones only as a last resort', () => {
+  assert.equal(MIN_SETS, 15);
+  const sets = new Map([[4, 1], [5, 14], [6, 15], [7, 400], [8, 0]]);
+  assert.deepEqual(targetCounts(sets), [6, 7]);
+  assert.deepEqual(targetCounts(new Map([[4, 0], [5, 14], [6, 2], [7, 0], [8, 0]])), [5, 6]);
+  assert.deepEqual(targetCounts(new Map([[4, 0], [5, 0]])), []);
+  assert.deepEqual(targetCounts(sets, 1), [4, 5, 6, 7]);
 });

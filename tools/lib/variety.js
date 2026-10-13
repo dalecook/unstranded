@@ -7,20 +7,43 @@ import { hashString } from '../../js/rng.js';
 // the words fill 34-42 cells: fewer than 4 or more than 8 can never fit.
 export const WORD_COUNTS = [4, 5, 6, 7, 8];
 
+// A word count is a proper target only when at least this many distinct word sets fill the
+// board with it: with fewer, the search keeps laying out the same few sets and rarely passes.
+export const MIN_SETS = 15;
+// Word sets are counted up to this many (the exact number past it does not matter).
+export const SET_CAP = 1000;
+
+// How many distinct sets of exactly k of `words` fill the cells the spangram leaves: Map of
+// k -> number of sets (0 when none, at most SET_CAP), for each k in `counts`.
+export function countWordSets(spangram, words, counts = WORD_COUNTS) {
+  const cells = CELLS - spangram.length;
+  const max = Math.max(...counts);
+  // ways[k][s]: sets of exactly k words whose lengths total s.
+  const ways = Array.from({ length: max + 1 }, () => new Array(cells + 1).fill(0));
+  ways[0][0] = 1;
+  for (const word of new Set(words)) {
+    for (let k = max; k >= 1; k--) {
+      for (let s = cells; s >= word.length; s--) {
+        ways[k][s] = Math.min(SET_CAP, ways[k][s] + ways[k - 1][s - word.length]);
+      }
+    }
+  }
+  return new Map(counts.map((k) => [k, ways[k][cells]]));
+}
+
 // The counts k for which some k of `words` exactly fill the cells the spangram leaves. This is
 // the exact form of "5k <= cells <= 10k": it also needs the right lengths to be on offer.
 export function feasibleCounts(spangram, words, counts = WORD_COUNTS) {
-  const cells = CELLS - spangram.length;
-  const max = Math.max(...counts);
-  // sums[k]: totals reachable with exactly k words.
-  const sums = Array.from({ length: max + 1 }, () => new Set());
-  sums[0].add(0);
-  for (const word of words) {
-    for (let k = max; k >= 1; k--) {
-      for (const s of sums[k - 1]) if (s + word.length <= cells) sums[k].add(s + word.length);
-    }
-  }
-  return counts.filter((k) => sums[k].has(cells));
+  const sets = countWordSets(spangram, words, counts);
+  return counts.filter((k) => sets.get(k) > 0);
+}
+
+// The counts worth aiming for, given countWordSets' result: those with at least `min` word
+// sets, or, for a theme with none, every count that is possible at all.
+export function targetCounts(sets, min = MIN_SETS) {
+  const counts = [...sets.keys()].sort((a, b) => a - b);
+  const proper = counts.filter((k) => sets.get(k) >= min);
+  return proper.length ? proper : counts.filter((k) => sets.get(k) > 0);
 }
 
 // Target word count per theme: Map of id -> count for `themes` ({ id, feasible }), leaving out
