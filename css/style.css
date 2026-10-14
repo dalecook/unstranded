@@ -94,9 +94,15 @@ main {
 .theme-label { margin: 0; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; color: var(--muted); }
 .clue { margin: 2px 0 0; font-size: 1.15rem; font-weight: 700; }
 
+/* Fixed height in rem (not em) and a single line, so swapping between traced letters and a
+   message never changes the height and never shifts the board under a fast player's finger. */
 .current {
   margin: 0;
-  min-height: 1.6em;
+  height: 2.1rem;
+  line-height: 2.1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-size: 1.3rem;
   font-weight: 700;
   letter-spacing: 0.08em;
