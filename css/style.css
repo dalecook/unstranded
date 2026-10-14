@@ -7,6 +7,7 @@
   --theme: #aedfee;
   --spangram: #f8cd05;
   --selected: #dbd8c5;
+  --selected-solved: #6b6556;
   --hint: #1a1a1a;
   --accent: #1a1a1a;
   --accent-fg: #ffffff;
@@ -23,6 +24,7 @@
     --theme: #3d7f96;
     --spangram: #b8940a;
     --selected: #57534a;
+    --selected-solved: #d8d3c4;
     --hint: #f1f1f1;
     --accent: #f1f1f1;
     --accent-fg: #121212;
@@ -137,6 +139,7 @@ main {
 .line.theme { stroke: var(--theme); }
 .line.spangram { stroke: var(--spangram); }
 .line.selected { stroke: var(--selected); }
+.line.selected-solved { stroke: var(--selected-solved); }
 .line.hint { stroke: var(--hint); stroke-width: 0.05; stroke-dasharray: 0.14 0.1; }
 
 .tile {

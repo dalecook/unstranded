@@ -53,6 +53,15 @@ export function renderBoard(board, { puzzle, state, selection }) {
 
   const lines = foundAnswers.map((a) => polyline(a.path, `line ${a.isSpangram ? 'spangram' : 'theme'}`));
   if (hint && showOrder) lines.push(polyline(hint.path, 'line hint'));
-  if (selection.length > 1) lines.push(polyline(selection, 'line selected'));
+  if (selection.length > 1) {
+    lines.push(polyline(selection, 'line selected'));
+    // Steps that touch a solved letter are redrawn darker, or the pale line vanishes on top of
+    // the solved word's own line.
+    for (let i = 1; i < selection.length; i++) {
+      if (kind.has(selection[i - 1]) || kind.has(selection[i])) {
+        lines.push(polyline([selection[i - 1], selection[i]], 'line selected-solved'));
+      }
+    }
+  }
   board.svg.replaceChildren(...lines);
 }
