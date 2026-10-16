@@ -1,0 +1,6050 @@
+[
+  {
+    "id": "words-meaning-happy",
+    "concept": "Adjectives meaning happy or joyful",
+    "subject": "language & words",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "INHIGHSPIRITS",
+    "sampleAnswers": [
+      "CHEERFUL",
+      "JOYFUL",
+      "ELATED",
+      "JUBILANT",
+      "GLEEFUL",
+      "CONTENT"
+    ],
+    "batch": 4
+  },
+  {
+    "id": "words-meaning-sad",
+    "concept": "Adjectives meaning sad or low",
+    "subject": "language & words",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "FEELINGBLUE",
+    "sampleAnswers": [
+      "GLOOMY",
+      "MOROSE",
+      "DEJECTED",
+      "FORLORN",
+      "DOWNCAST",
+      "WISTFUL"
+    ],
+    "batch": 4
+  },
+  {
+    "id": "words-meaning-angry",
+    "concept": "Adjectives meaning very angry",
+    "subject": "language & words",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "SEEINGRED",
+    "sampleAnswers": [
+      "FURIOUS",
+      "IRATE",
+      "LIVID",
+      "ENRAGED",
+      "INCENSED",
+      "FUMING"
+    ],
+    "batch": 4
+  },
+  {
+    "id": "words-meaning-scared",
+    "concept": "Adjectives meaning frightened",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "SCAREDSTIFF",
+    "sampleAnswers": [
+      "AFRAID",
+      "FEARFUL",
+      "PETRIFIED",
+      "TERRIFIED",
+      "SPOOKED",
+      "JITTERY"
+    ],
+    "batch": 4
+  },
+  {
+    "id": "words-meaning-calm",
+    "concept": "Adjectives meaning calm and unbothered",
+    "subject": "language & words",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "KEEPYOURCOOL",
+    "sampleAnswers": [
+      "SERENE",
+      "PLACID",
+      "TRANQUIL",
+      "COMPOSED",
+      "UNRUFFLED",
+      "MELLOW"
+    ],
+    "batch": 4
+  },
+  {
+    "id": "words-meaning-tired",
+    "concept": "Adjectives meaning tired out",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "WORNOUT",
+    "sampleAnswers": [
+      "WEARY",
+      "DROWSY",
+      "EXHAUSTED",
+      "FATIGUED",
+      "DRAINED",
+      "BUSHED"
+    ],
+    "batch": 4
+  },
+  {
+    "id": "words-meaning-huge",
+    "concept": "Adjectives meaning enormous",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "KINGSIZE",
+    "sampleAnswers": [
+      "ENORMOUS",
+      "GIGANTIC",
+      "COLOSSAL",
+      "MAMMOTH",
+      "IMMENSE",
+      "MASSIVE"
+    ],
+    "batch": 2
+  },
+  {
+    "id": "words-meaning-tiny",
+    "concept": "Adjectives meaning very small",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "PINTSIZED",
+    "sampleAnswers": [
+      "PETITE",
+      "MINUTE",
+      "MINIATURE",
+      "TEENY",
+      "DINKY",
+      "DIMINUTIVE"
+    ],
+    "batch": 2
+  },
+  {
+    "id": "words-for-a-little-bit",
+    "concept": "Nouns for a tiny amount of something",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "JUSTATOUCH",
+    "sampleAnswers": [
+      "SMIDGEN",
+      "PINCH",
+      "SPECK",
+      "MORSEL",
+      "SLIVER",
+      "TRACE"
+    ],
+    "batch": 2
+  },
+  {
+    "id": "words-for-lots",
+    "concept": "Informal words for a large quantity",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "GALORE",
+    "sampleAnswers": [
+      "OODLES",
+      "HEAPS",
+      "LOADS",
+      "SCADS",
+      "STACKS",
+      "ZILLIONS"
+    ],
+    "batch": 2
+  },
+  {
+    "id": "words-meaning-fast",
+    "concept": "Adjectives meaning quick",
+    "subject": "language & words",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "LICKETYSPLIT",
+    "sampleAnswers": [
+      "RAPID",
+      "SWIFT",
+      "SPEEDY",
+      "BRISK",
+      "NIMBLE",
+      "ZIPPY"
+    ],
+    "batch": 12
+  },
+  {
+    "id": "words-meaning-slow",
+    "concept": "Adjectives meaning slow-moving",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "SNAILSPACE",
+    "sampleAnswers": [
+      "SLUGGISH",
+      "LEISURELY",
+      "PLODDING",
+      "DAWDLING",
+      "UNHURRIED",
+      "GLACIAL"
+    ],
+    "batch": 12
+  },
+  {
+    "id": "words-meaning-lazy",
+    "concept": "Adjectives meaning lazy or inactive",
+    "subject": "language & words",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "IDLEHANDS",
+    "sampleAnswers": [
+      "SLOTHFUL",
+      "INDOLENT",
+      "LETHARGIC",
+      "LISTLESS",
+      "TORPID",
+      "SHIFTLESS"
+    ],
+    "batch": 12
+  },
+  {
+    "id": "words-meaning-clever",
+    "concept": "Adjectives meaning intelligent",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "QUICKWITTED",
+    "sampleAnswers": [
+      "BRAINY",
+      "BRILLIANT",
+      "ASTUTE",
+      "SHREWD",
+      "CANNY",
+      "GIFTED"
+    ],
+    "batch": 1
+  },
+  {
+    "id": "words-for-a-fool",
+    "concept": "Gentle nouns for a silly person",
+    "subject": "language & words",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "DUNCESCAP",
+    "sampleAnswers": [
+      "NITWIT",
+      "DIMWIT",
+      "NINCOMPOOP",
+      "NUMBSKULL",
+      "BONEHEAD",
+      "CHUMP"
+    ],
+    "batch": 1
+  },
+  {
+    "id": "words-meaning-silly",
+    "concept": "Adjectives meaning daft or scatterbrained",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "SILLYBILLY",
+    "sampleAnswers": [
+      "FOOLISH",
+      "GOOFY",
+      "DOTTY",
+      "BATTY",
+      "LOOPY",
+      "SCATTY"
+    ],
+    "batch": 1
+  },
+  {
+    "id": "words-for-nonsense",
+    "concept": "Nouns meaning rubbish talk",
+    "subject": "language & words",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "FIDDLESTICKS",
+    "sampleAnswers": [
+      "DRIVEL",
+      "TWADDLE",
+      "BALDERDASH",
+      "GIBBERISH",
+      "POPPYCOCK",
+      "HOGWASH"
+    ],
+    "batch": 1
+  },
+  {
+    "id": "words-meaning-brave",
+    "concept": "Adjectives meaning courageous",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "LIONHEARTED",
+    "sampleAnswers": [
+      "DARING",
+      "HEROIC",
+      "VALIANT",
+      "FEARLESS",
+      "PLUCKY",
+      "INTREPID"
+    ],
+    "batch": 10
+  },
+  {
+    "id": "words-meaning-strange",
+    "concept": "Adjectives meaning odd or unusual",
+    "subject": "language & words",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "OFFTHEWALL",
+    "sampleAnswers": [
+      "BIZARRE",
+      "PECULIAR",
+      "QUIRKY",
+      "UNCANNY",
+      "OFFBEAT",
+      "SURREAL"
+    ],
+    "batch": 10
+  },
+  {
+    "id": "words-meaning-beautiful",
+    "concept": "Adjectives meaning good-looking",
+    "subject": "language & words",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "EASYONTHEEYE",
+    "sampleAnswers": [
+      "LOVELY",
+      "GORGEOUS",
+      "STUNNING",
+      "RADIANT",
+      "EXQUISITE",
+      "ELEGANT"
+    ],
+    "batch": 10
+  },
+  {
+    "id": "words-meaning-excellent",
+    "concept": "Adjectives meaning first-rate",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "TOPNOTCH",
+    "sampleAnswers": [
+      "SUPERB",
+      "TERRIFIC",
+      "FABULOUS",
+      "SPLENDID",
+      "STELLAR",
+      "MARVELOUS"
+    ],
+    "batch": 10
+  },
+  {
+    "id": "old-fashioned-praise",
+    "concept": "Dated slang words meaning great or cool",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "OLDSCHOOLCOOL",
+    "sampleAnswers": [
+      "GROOVY",
+      "SWELL",
+      "PEACHY",
+      "SPIFFY",
+      "NEATO",
+      "BODACIOUS"
+    ],
+    "batch": 10
+  },
+  {
+    "id": "words-meaning-loud",
+    "concept": "Adjectives meaning very noisy",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "EARSPLITTING",
+    "sampleAnswers": [
+      "RAUCOUS",
+      "BLARING",
+      "DEAFENING",
+      "BOOMING",
+      "THUNDEROUS",
+      "ROWDY"
+    ],
+    "batch": 2
+  },
+  {
+    "id": "words-meaning-quiet",
+    "concept": "Adjectives meaning silent or hushed",
+    "subject": "language & words",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "QUIETASAMOUSE",
+    "sampleAnswers": [
+      "SILENT",
+      "HUSHED",
+      "MUTED",
+      "SOUNDLESS",
+      "SUBDUED",
+      "NOISELESS"
+    ],
+    "batch": 2
+  },
+  {
+    "id": "sound-effect-words",
+    "concept": "Onomatopoeic words for noises (non-animal)",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "SOUNDEFFECTS",
+    "sampleAnswers": [
+      "SPLASH",
+      "SIZZLE",
+      "CRACKLE",
+      "WHOOSH",
+      "CLATTER",
+      "KERPLUNK"
+    ],
+    "batch": 2
+  },
+  {
+    "id": "words-meaning-rich",
+    "concept": "Adjectives meaning wealthy",
+    "subject": "language & words",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ROLLINGINIT",
+    "sampleAnswers": [
+      "WEALTHY",
+      "AFFLUENT",
+      "LOADED",
+      "MONEYED",
+      "OPULENT",
+      "FLUSH"
+    ],
+    "batch": 1
+  },
+  {
+    "id": "words-meaning-broke",
+    "concept": "Adjectives meaning without money",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "SHORTOFCASH",
+    "sampleAnswers": [
+      "SKINT",
+      "PENNILESS",
+      "DESTITUTE",
+      "STRAPPED",
+      "BANKRUPT",
+      "NEEDY"
+    ],
+    "batch": 1
+  },
+  {
+    "id": "slang-for-money",
+    "concept": "Slang nouns for money",
+    "subject": "language & words",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "FILTHYLUCRE",
+    "sampleAnswers": [
+      "DOUGH",
+      "MOOLAH",
+      "BUCKS",
+      "WONGA",
+      "CABBAGE",
+      "READIES"
+    ],
+    "batch": 1
+  },
+  {
+    "id": "words-meaning-cold",
+    "concept": "Adjectives meaning cold (weather or feel)",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "CHILLTOTHEBONE",
+    "sampleAnswers": [
+      "CHILLY",
+      "FREEZING",
+      "FROSTY",
+      "WINTRY",
+      "NIPPY",
+      "FRIGID"
+    ],
+    "batch": 4
+  },
+  {
+    "id": "words-meaning-hot",
+    "concept": "Adjectives meaning very hot",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "HEATWAVE",
+    "sampleAnswers": [
+      "SWELTERING",
+      "SCORCHING",
+      "SULTRY",
+      "BLAZING",
+      "BAKING",
+      "TORRID"
+    ],
+    "batch": 4
+  },
+  {
+    "id": "words-meaning-wet",
+    "concept": "Adjectives meaning soaked through",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "SOAKINGWET",
+    "sampleAnswers": [
+      "SOGGY",
+      "DRENCHED",
+      "SODDEN",
+      "SOPPING",
+      "SATURATED",
+      "DRIPPING"
+    ],
+    "batch": 4
+  },
+  {
+    "id": "words-meaning-dirty",
+    "concept": "Adjectives meaning grimy",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "NEEDSABATH",
+    "sampleAnswers": [
+      "FILTHY",
+      "GRIMY",
+      "GRUBBY",
+      "MUCKY",
+      "SOILED",
+      "SQUALID"
+    ],
+    "batch": 10
+  },
+  {
+    "id": "words-meaning-clean",
+    "concept": "Adjectives meaning spotless",
+    "subject": "language & words",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "SPICKANDSPAN",
+    "sampleAnswers": [
+      "SPOTLESS",
+      "IMMACULATE",
+      "PRISTINE",
+      "GLEAMING",
+      "HYGIENIC",
+      "SCRUBBED"
+    ],
+    "batch": 10
+  },
+  {
+    "id": "words-for-a-mess",
+    "concept": "Nouns for chaos and disorder",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "TOPSYTURVY",
+    "sampleAnswers": [
+      "CHAOS",
+      "CLUTTER",
+      "MAYHEM",
+      "JUMBLE",
+      "SHAMBLES",
+      "DISARRAY"
+    ],
+    "batch": 10
+  },
+  {
+    "id": "ways-to-chatter",
+    "concept": "Verbs for idle talking",
+    "subject": "language & words",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "GIFTOFTHEGAB",
+    "sampleAnswers": [
+      "CHATTER",
+      "NATTER",
+      "BABBLE",
+      "PRATTLE",
+      "JABBER",
+      "BLATHER"
+    ],
+    "batch": 5
+  },
+  {
+    "id": "ways-to-laugh",
+    "concept": "Verbs for kinds of laughing",
+    "subject": "language & words",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "HAHAHA",
+    "sampleAnswers": [
+      "GIGGLE",
+      "CHUCKLE",
+      "CHORTLE",
+      "GUFFAW",
+      "CACKLE",
+      "TITTER"
+    ],
+    "batch": 5
+  },
+  {
+    "id": "ways-to-cry",
+    "concept": "Verbs for crying",
+    "subject": "language & words",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "BOOHOO",
+    "sampleAnswers": [
+      "BLUBBER",
+      "WHIMPER",
+      "SNIVEL",
+      "SNIFFLE",
+      "BAWLING",
+      "WEEPS"
+    ],
+    "batch": 5
+  },
+  {
+    "id": "ways-to-complain",
+    "concept": "Verbs meaning to grumble",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "AIRGRIEVANCES",
+    "sampleAnswers": [
+      "GRUMBLE",
+      "WHINGE",
+      "GRIPE",
+      "GROUSE",
+      "BELLYACHE",
+      "KVETCH"
+    ],
+    "batch": 5
+  },
+  {
+    "id": "ways-to-praise",
+    "concept": "Verbs meaning to praise",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "PATONTHEBACK",
+    "sampleAnswers": [
+      "COMMEND",
+      "APPLAUD",
+      "ACCLAIM",
+      "EXTOL",
+      "SALUTE",
+      "COMPLIMENT"
+    ],
+    "batch": 5
+  },
+  {
+    "id": "ways-to-tease",
+    "concept": "Verbs meaning to mock",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "POKEFUNAT",
+    "sampleAnswers": [
+      "TAUNT",
+      "RIDICULE",
+      "DERIDE",
+      "LAMPOON",
+      "HECKLE",
+      "SNEER"
+    ],
+    "batch": 5
+  },
+  {
+    "id": "ways-to-walk",
+    "concept": "Verbs for ways of walking",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ONFOOT",
+    "sampleAnswers": [
+      "STROLL",
+      "AMBLE",
+      "SAUNTER",
+      "TRUDGE",
+      "MOSEY",
+      "WANDER"
+    ],
+    "batch": 11
+  },
+  {
+    "id": "ways-to-run",
+    "concept": "Verbs for moving fast on foot",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ATFULLTILT",
+    "sampleAnswers": [
+      "SPRINT",
+      "SCURRY",
+      "SCAMPER",
+      "HURTLE",
+      "GALLOP",
+      "SCUTTLE"
+    ],
+    "batch": 11
+  },
+  {
+    "id": "ways-to-fall",
+    "concept": "Verbs for falling over or down",
+    "subject": "language & words",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "DOWNYOUGO",
+    "sampleAnswers": [
+      "TUMBLE",
+      "TOPPLE",
+      "PLUMMET",
+      "PLUNGE",
+      "STUMBLE",
+      "COLLAPSE"
+    ],
+    "batch": 11
+  },
+  {
+    "id": "ways-to-throw",
+    "concept": "Verbs meaning to throw",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "LETITFLY",
+    "sampleAnswers": [
+      "FLING",
+      "CHUCK",
+      "HEAVE",
+      "CATAPULT",
+      "PITCH",
+      "SLING"
+    ],
+    "batch": 11
+  },
+  {
+    "id": "ways-to-hit",
+    "concept": "Verbs meaning to strike",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "PACKAPUNCH",
+    "sampleAnswers": [
+      "STRIKE",
+      "SMACK",
+      "WALLOP",
+      "THUMP",
+      "WHACK",
+      "THWACK"
+    ],
+    "batch": 11
+  },
+  {
+    "id": "ways-to-eat",
+    "concept": "Verbs for ways of eating",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "TUCKIN",
+    "sampleAnswers": [
+      "DEVOUR",
+      "GOBBLE",
+      "NIBBLE",
+      "MUNCH",
+      "CHOMP",
+      "GUZZLE"
+    ],
+    "batch": 12
+  },
+  {
+    "id": "ways-to-sleep",
+    "concept": "Verbs and nouns for sleeping",
+    "subject": "language & words",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "FORTYWINKS",
+    "sampleAnswers": [
+      "SNOOZE",
+      "SLUMBER",
+      "CATNAP",
+      "SIESTA",
+      "DROWSE",
+      "KIPPING"
+    ],
+    "batch": 12
+  },
+  {
+    "id": "ways-to-look",
+    "concept": "Verbs for ways of looking",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "TAKEALOOK",
+    "sampleAnswers": [
+      "STARE",
+      "GLANCE",
+      "GLIMPSE",
+      "SQUINT",
+      "GLARE",
+      "SURVEY"
+    ],
+    "batch": 12
+  },
+  {
+    "id": "ways-to-shine",
+    "concept": "Verbs for giving off light",
+    "subject": "language & words",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ALLAGLOW",
+    "sampleAnswers": [
+      "GLEAM",
+      "GLINT",
+      "SHIMMER",
+      "SPARKLE",
+      "TWINKLE",
+      "GLISTEN"
+    ],
+    "batch": 12
+  },
+  {
+    "id": "ways-to-steal",
+    "concept": "Verbs meaning to steal",
+    "subject": "language & words",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "STICKYFINGERS",
+    "sampleAnswers": [
+      "PILFER",
+      "SWIPE",
+      "PINCH",
+      "FILCH",
+      "PURLOIN",
+      "SNAFFLE"
+    ],
+    "batch": 12
+  },
+  {
+    "id": "words-for-a-friend",
+    "concept": "Nouns for a friend or companion",
+    "subject": "language & words",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "THICKASTHIEVES",
+    "sampleAnswers": [
+      "BUDDY",
+      "COMRADE",
+      "CRONY",
+      "CONFIDANT",
+      "SIDEKICK",
+      "COMPANION"
+    ],
+    "batch": 3
+  },
+  {
+    "id": "words-for-an-argument",
+    "concept": "Nouns for a quarrel",
+    "subject": "language & words",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "CROSSWORDS",
+    "sampleAnswers": [
+      "QUARREL",
+      "DISPUTE",
+      "SQUABBLE",
+      "WRANGLE",
+      "FALLINGOUT",
+      "BICKERING"
+    ],
+    "batch": 3
+  },
+  {
+    "id": "words-for-a-fight",
+    "concept": "Nouns for a physical scrap",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "FISTSFLYING",
+    "sampleAnswers": [
+      "BRAWL",
+      "SCUFFLE",
+      "MELEE",
+      "TUSSLE",
+      "SKIRMISH",
+      "FISTICUFFS"
+    ],
+    "batch": 3
+  },
+  {
+    "id": "words-for-a-party",
+    "concept": "Nouns for a party or celebration",
+    "subject": "language & words",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "LIVEITUP",
+    "sampleAnswers": [
+      "SHINDIG",
+      "SOIREE",
+      "FIESTA",
+      "HOOTENANNY",
+      "JAMBOREE",
+      "KNEESUP"
+    ],
+    "batch": 3
+  },
+  {
+    "id": "words-for-a-crowd",
+    "concept": "Nouns for a large crowd",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "PACKEDIN",
+    "sampleAnswers": [
+      "THRONG",
+      "HORDE",
+      "MULTITUDE",
+      "SWARM",
+      "LEGION",
+      "RABBLE"
+    ],
+    "batch": 3
+  },
+  {
+    "id": "words-for-a-rascal",
+    "concept": "Nouns for a mischievous child",
+    "subject": "language & words",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "LITTLETERROR",
+    "sampleAnswers": [
+      "RASCAL",
+      "SCAMP",
+      "URCHIN",
+      "SCALLYWAG",
+      "TEARAWAY",
+      "HELLION"
+    ],
+    "batch": 3
+  },
+  {
+    "id": "words-for-a-boss",
+    "concept": "Informal nouns for the person in charge",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "TOPDOG",
+    "sampleAnswers": [
+      "CHIEF",
+      "GAFFER",
+      "HONCHO",
+      "BIGWIG",
+      "SKIPPER",
+      "KINGPIN"
+    ],
+    "batch": 3
+  },
+  {
+    "id": "words-for-a-home",
+    "concept": "Nouns for a place to live",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "HOMESWEETHOME",
+    "sampleAnswers": [
+      "DWELLING",
+      "ABODE",
+      "RESIDENCE",
+      "DOMICILE",
+      "LODGINGS",
+      "QUARTERS"
+    ],
+    "batch": 6
+  },
+  {
+    "id": "words-for-a-journey",
+    "concept": "Nouns for a trip",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ONTHEROAD",
+    "sampleAnswers": [
+      "VOYAGE",
+      "EXPEDITION",
+      "ODYSSEY",
+      "PILGRIMAGE",
+      "EXCURSION",
+      "JAUNT"
+    ],
+    "batch": 6
+  },
+  {
+    "id": "words-for-a-mistake",
+    "concept": "Nouns for a blunder",
+    "subject": "language & words",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "HONESTMISTAKE",
+    "sampleAnswers": [
+      "BLUNDER",
+      "GAFFE",
+      "BLOOPER",
+      "HOWLER",
+      "CLANGER",
+      "OVERSIGHT"
+    ],
+    "batch": 6
+  },
+  {
+    "id": "words-for-a-con",
+    "concept": "Nouns for a trick or swindle",
+    "subject": "language & words",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "PULLAFASTONE",
+    "sampleAnswers": [
+      "SWINDLE",
+      "HUSTLE",
+      "FLIMFLAM",
+      "RACKET",
+      "DECEPTION",
+      "CHICANERY"
+    ],
+    "batch": 6
+  },
+  {
+    "id": "words-meaning-secret",
+    "concept": "Adjectives meaning secret",
+    "subject": "language & words",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "UNDERWRAPS",
+    "sampleAnswers": [
+      "HIDDEN",
+      "COVERT",
+      "CLASSIFIED",
+      "HUSHHUSH",
+      "UNDERCOVER",
+      "FURTIVE"
+    ],
+    "batch": 6
+  },
+  {
+    "id": "words-for-a-ghost",
+    "concept": "Nouns for a ghost (Halloween)",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": "10",
+    "spangramIdea": "HAUNTEDHOUSE",
+    "sampleAnswers": [
+      "SPECTER",
+      "PHANTOM",
+      "WRAITH",
+      "SPOOK",
+      "APPARITION",
+      "PHANTASM"
+    ],
+    "batch": 6
+  },
+  {
+    "id": "greetings",
+    "concept": "Words and phrases for saying hello",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "HITHERE",
+    "sampleAnswers": [
+      "HELLO",
+      "HOWDY",
+      "GREETINGS",
+      "ALOHA",
+      "WELCOME",
+      "GOODDAY"
+    ],
+    "batch": 7
+  },
+  {
+    "id": "farewells",
+    "concept": "Words and phrases for saying goodbye",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "PARTINGWORDS",
+    "sampleAnswers": [
+      "GOODBYE",
+      "FAREWELL",
+      "CHEERIO",
+      "ADIEU",
+      "TOODLES",
+      "SOLONG"
+    ],
+    "batch": 7
+  },
+  {
+    "id": "surprised-exclamations",
+    "concept": "Exclamations of surprise",
+    "subject": "language & words",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "WELLIDONEVER",
+    "sampleAnswers": [
+      "GOLLY",
+      "BLIMEY",
+      "CRIKEY",
+      "JEEPERS",
+      "WOWZERS",
+      "YIKES"
+    ],
+    "batch": 7
+  },
+  {
+    "id": "ways-to-say-yes",
+    "concept": "Words for agreeing or saying yes",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "THUMBSUP",
+    "sampleAnswers": [
+      "ABSOLUTELY",
+      "CERTAINLY",
+      "INDEED",
+      "DEFINITELY",
+      "OKEYDOKEY",
+      "AGREED"
+    ],
+    "batch": 7
+  },
+  {
+    "id": "yiddish-loanwords",
+    "concept": "Yiddish words that English borrowed",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "MAZELTOV",
+    "sampleAnswers": [
+      "CHUTZPAH",
+      "SCHMOOZE",
+      "KLUTZ",
+      "SCHLEP",
+      "MENSCH",
+      "SCHTICK"
+    ],
+    "batch": 7
+  },
+  {
+    "id": "punctuation-marks",
+    "concept": "Names of punctuation marks",
+    "subject": "language & words",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "FULLSTOPS",
+    "sampleAnswers": [
+      "COMMA",
+      "COLON",
+      "SEMICOLON",
+      "HYPHEN",
+      "APOSTROPHE",
+      "ELLIPSIS"
+    ],
+    "batch": 7
+  },
+  {
+    "id": "house-compounds",
+    "concept": "Words that precede HOUSE to make a compound (closed list)",
+    "subject": "language & words",
+    "type": "wordplay",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ONTHEHOUSE",
+    "sampleAnswers": [
+      "LIGHT",
+      "GREEN",
+      "POWER",
+      "COURT",
+      "STORE",
+      "COFFEE"
+    ],
+    "batch": 8
+  },
+  {
+    "id": "board-compounds",
+    "concept": "Words that precede BOARD to make a compound",
+    "subject": "language & words",
+    "type": "wordplay",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ABOVEBOARD",
+    "sampleAnswers": [
+      "SKATE",
+      "CHALK",
+      "SWITCH",
+      "BLACK",
+      "CHECKER",
+      "SPRING"
+    ],
+    "batch": 8
+  },
+  {
+    "id": "box-compounds",
+    "concept": "Words that precede BOX to make a compound",
+    "subject": "language & words",
+    "type": "wordplay",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "OUTOFTHEBOX",
+    "sampleAnswers": [
+      "LUNCH",
+      "MATCH",
+      "CHATTER",
+      "LETTER",
+      "BALLOT",
+      "TINDER"
+    ],
+    "batch": 8
+  },
+  {
+    "id": "line-compounds",
+    "concept": "Words that precede LINE to make a compound",
+    "subject": "language & words",
+    "type": "wordplay",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "TOETHELINE",
+    "sampleAnswers": [
+      "COAST",
+      "STORY",
+      "PUNCH",
+      "CLOTHES",
+      "SHORE",
+      "FAULT"
+    ],
+    "batch": 8
+  },
+  {
+    "id": "stone-compounds",
+    "concept": "Words that precede STONE to make a compound",
+    "subject": "language & words",
+    "type": "wordplay",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "SETINSTONE",
+    "sampleAnswers": [
+      "MILES",
+      "COBBLE",
+      "CORNER",
+      "GRAVE",
+      "GRIND",
+      "BIRTH"
+    ],
+    "batch": 8
+  },
+  {
+    "id": "work-compounds",
+    "concept": "Words that precede WORK to make a compound",
+    "subject": "language & words",
+    "type": "wordplay",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ALLINADAYSWORK",
+    "sampleAnswers": [
+      "HOUSE",
+      "CLOCK",
+      "PAPER",
+      "GUESS",
+      "PATCH",
+      "NEEDLE"
+    ],
+    "batch": 8
+  },
+  {
+    "id": "down-compounds",
+    "concept": "Words that precede DOWN to make a compound",
+    "subject": "language & words",
+    "type": "wordplay",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "UPSANDDOWNS",
+    "sampleAnswers": [
+      "BREAK",
+      "COUNT",
+      "TOUCH",
+      "CRACK",
+      "CLAMP",
+      "THUMBS"
+    ],
+    "batch": 5
+  },
+  {
+    "id": "back-compounds",
+    "concept": "Words that follow BACK to make a compound",
+    "subject": "language & words",
+    "type": "wordplay",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "BACKTOBACK",
+    "sampleAnswers": [
+      "GROUND",
+      "STAGE",
+      "STROKE",
+      "PEDAL",
+      "TRACK",
+      "WOODS"
+    ],
+    "batch": 5
+  },
+  {
+    "id": "head-compounds",
+    "concept": "Words that follow HEAD to make a compound",
+    "subject": "language & words",
+    "type": "wordplay",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "HEADSORTAILS",
+    "sampleAnswers": [
+      "PHONES",
+      "QUARTERS",
+      "START",
+      "MASTER",
+      "SCARF",
+      "LIGHTS"
+    ],
+    "batch": 9
+  },
+  {
+    "id": "foot-compounds",
+    "concept": "Words that follow FOOT to make a compound",
+    "subject": "language & words",
+    "type": "wordplay",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "FOOTTHEBILL",
+    "sampleAnswers": [
+      "PRINT",
+      "LIGHTS",
+      "LOOSE",
+      "HILLS",
+      "STOOL",
+      "BRIDGE"
+    ],
+    "batch": 9
+  },
+  {
+    "id": "hand-compounds",
+    "concept": "Words that follow HAND to make a compound",
+    "subject": "language & words",
+    "type": "wordplay",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "FIRSTHAND",
+    "sampleAnswers": [
+      "SHAKE",
+      "CUFFS",
+      "STAND",
+      "WRITING",
+      "KERCHIEF",
+      "BRAKE"
+    ],
+    "batch": 9
+  },
+  {
+    "id": "body-part-verbs",
+    "concept": "Body parts that double as everyday verbs (closed: body-part list)",
+    "subject": "language & words",
+    "type": "wordplay",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "BODYLANGUAGE",
+    "sampleAnswers": [
+      "ELBOW",
+      "SHOULDER",
+      "STOMACH",
+      "FINGER",
+      "THUMB",
+      "KNUCKLE"
+    ],
+    "batch": 9
+  },
+  {
+    "id": "time-compounds",
+    "concept": "Words that precede TIME to make a compound",
+    "subject": "language & words",
+    "type": "wordplay",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ABOUTTIME",
+    "sampleAnswers": [
+      "LUNCH",
+      "NIGHT",
+      "SPRING",
+      "SUMMER",
+      "DINNER",
+      "WINTER"
+    ],
+    "batch": 9
+  },
+  {
+    "id": "black-compounds",
+    "concept": "Words that follow BLACK to make a compound",
+    "subject": "language & words",
+    "type": "wordplay",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "INTHEBLACK",
+    "sampleAnswers": [
+      "BOARD",
+      "SMITH",
+      "BERRY",
+      "SHEEP",
+      "CURRANT",
+      "GUARD"
+    ],
+    "batch": 6
+  },
+  {
+    "id": "shades-of-green",
+    "concept": "Shades of green (St Patrick's Day)",
+    "subject": "other",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": "03",
+    "spangramIdea": "GREENWITHENVY",
+    "sampleAnswers": [
+      "OLIVE",
+      "FOREST",
+      "KELLY",
+      "SHAMROCK",
+      "CHARTREUSE",
+      "PISTACHIO"
+    ],
+    "batch": 5
+  },
+  {
+    "id": "french-phrases",
+    "concept": "Words that complete 'French ___'",
+    "subject": "language & words",
+    "type": "wordplay",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "PARDONMYFRENCH",
+    "sampleAnswers": [
+      "FRIES",
+      "TOAST",
+      "BRAID",
+      "POLISH",
+      "DRESSING",
+      "PRESS"
+    ],
+    "batch": 9
+  },
+  {
+    "id": "x-and-y-pairs",
+    "concept": "Second halves of fixed 'X and Y' pairs (salt and ___)",
+    "subject": "language & words",
+    "type": "wordplay",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "GOTOGETHER",
+    "sampleAnswers": [
+      "PEPPER",
+      "VINEGAR",
+      "SAUCER",
+      "MORTAR",
+      "CRANNIES",
+      "BOUNDS"
+    ],
+    "batch": 9
+  },
+  {
+    "id": "similes",
+    "concept": "Nouns that complete stock 'as ___ as a ___' similes",
+    "subject": "language & words",
+    "type": "wordplay",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "SIMILES",
+    "sampleAnswers": [
+      "FIDDLE",
+      "FEATHER",
+      "PANCAKE",
+      "DOORNAIL",
+      "WHISTLE",
+      "PEACOCK"
+    ],
+    "batch": 9
+  },
+  {
+    "id": "palindromes",
+    "concept": "Common palindromic words (closed list)",
+    "subject": "language & words",
+    "type": "wordplay",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "SAMEBOTHWAYS",
+    "sampleAnswers": [
+      "RACECAR",
+      "KAYAK",
+      "LEVEL",
+      "CIVIC",
+      "RADAR",
+      "ROTOR"
+    ],
+    "batch": 9
+  },
+  {
+    "id": "book-compounds",
+    "concept": "Words that precede BOOK to make a compound",
+    "subject": "language & words",
+    "type": "wordplay",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "BYTHEBOOK",
+    "sampleAnswers": [
+      "SCRAP",
+      "GUIDE",
+      "STORY",
+      "SKETCH",
+      "GUEST",
+      "CHECK"
+    ],
+    "batch": 9
+  },
+  {
+    "id": "sea-compounds",
+    "concept": "Words that follow SEA to make a compound",
+    "subject": "language & words",
+    "type": "wordplay",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ALLATSEA",
+    "sampleAnswers": [
+      "HORSE",
+      "SHELL",
+      "FARER",
+      "PLANE",
+      "WORTHY",
+      "FRONT"
+    ],
+    "batch": 11
+  },
+  {
+    "id": "water-compounds",
+    "concept": "Words that follow WATER to make a compound",
+    "subject": "language & words",
+    "type": "wordplay",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "INHOTWATER",
+    "sampleAnswers": [
+      "MELON",
+      "PROOF",
+      "COLOR",
+      "SLIDE",
+      "CRESS",
+      "TIGHT"
+    ],
+    "batch": 11
+  },
+  {
+    "id": "sun-compounds",
+    "concept": "Words that follow SUN to make a compound",
+    "subject": "language & words",
+    "type": "wordplay",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "PLACEINTHESUN",
+    "sampleAnswers": [
+      "FLOWER",
+      "GLASSES",
+      "SHINE",
+      "SCREEN",
+      "STROKE",
+      "LIGHT"
+    ],
+    "batch": 11
+  },
+  {
+    "id": "room-compounds",
+    "concept": "Words that precede ROOM to make a room name or compound",
+    "subject": "everyday objects & household",
+    "type": "wordplay",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ROOMTOSPARE",
+    "sampleAnswers": [
+      "CLASS",
+      "CLOAK",
+      "STORE",
+      "DINING",
+      "POWDER",
+      "BOARD"
+    ],
+    "batch": 3
+  },
+  {
+    "id": "paper-compounds",
+    "concept": "Words that precede PAPER to make a compound or kind of paper",
+    "subject": "everyday objects & household",
+    "type": "wordplay",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "PAPERTRAIL",
+    "sampleAnswers": [
+      "WRAPPING",
+      "TISSUE",
+      "TRACING",
+      "BLOTTING",
+      "GRAPH",
+      "CREPE"
+    ],
+    "batch": 12
+  },
+  {
+    "id": "card-compounds",
+    "concept": "Words that precede CARD to name a kind of card",
+    "subject": "everyday objects & household",
+    "type": "wordplay",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ONTHECARDS",
+    "sampleAnswers": [
+      "CREDIT",
+      "BUSINESS",
+      "GREETING",
+      "REPORT",
+      "FLASH",
+      "PLACE"
+    ],
+    "batch": 12
+  },
+  {
+    "id": "toiletries",
+    "concept": "Things you use at bath time",
+    "subject": "everyday objects & household",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "SCRUBADUB",
+    "sampleAnswers": [
+      "TOWEL",
+      "FLANNEL",
+      "LOOFAH",
+      "SHAMPOO",
+      "BATHMAT",
+      "TOOTHBRUSH"
+    ],
+    "batch": 9
+  },
+  {
+    "id": "bathroom-fixtures",
+    "concept": "Fixtures and fittings in a bathroom",
+    "subject": "everyday objects & household",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ENSUITE",
+    "sampleAnswers": [
+      "BATHTUB",
+      "SHOWER",
+      "TOILET",
+      "BASIN",
+      "BIDET",
+      "CISTERN"
+    ],
+    "batch": 9
+  },
+  {
+    "id": "bedding",
+    "concept": "Things on a made bed",
+    "subject": "everyday objects & household",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "BEDDING",
+    "sampleAnswers": [
+      "PILLOW",
+      "DUVET",
+      "BLANKET",
+      "QUILT",
+      "BOLSTER",
+      "VALANCE"
+    ],
+    "batch": 3
+  },
+  {
+    "id": "laundry",
+    "concept": "Things to do with doing the laundry",
+    "subject": "everyday objects & household",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "WASHDAY",
+    "sampleAnswers": [
+      "DETERGENT",
+      "SOFTENER",
+      "HAMPER",
+      "MANGLE",
+      "BLEACH",
+      "IRONING"
+    ],
+    "batch": 4
+  },
+  {
+    "id": "cleaning-gear",
+    "concept": "Equipment for cleaning the house",
+    "subject": "everyday objects & household",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "CLEANUP",
+    "sampleAnswers": [
+      "DUSTER",
+      "BROOM",
+      "BUCKET",
+      "VACUUM",
+      "DUSTPAN",
+      "SQUEEGEE"
+    ],
+    "batch": 4
+  },
+  {
+    "id": "lights-and-lamps",
+    "concept": "Kinds of lamps and light sources",
+    "subject": "everyday objects & household",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "LIGHTSOUT",
+    "sampleAnswers": [
+      "LANTERN",
+      "CHANDELIER",
+      "SCONCE",
+      "TORCH",
+      "CANDLE",
+      "FLASHLIGHT"
+    ],
+    "batch": 3
+  },
+  {
+    "id": "door-parts",
+    "concept": "Parts and fittings of a door",
+    "subject": "everyday objects & household",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "KNOCKKNOCK",
+    "sampleAnswers": [
+      "HINGE",
+      "KNOCKER",
+      "LATCH",
+      "THRESHOLD",
+      "LINTEL",
+      "PEEPHOLE"
+    ],
+    "batch": 2
+  },
+  {
+    "id": "house-parts",
+    "concept": "Parts and rooms of a house",
+    "subject": "everyday objects & household",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ROOFOVERHEAD",
+    "sampleAnswers": [
+      "ATTIC",
+      "CELLAR",
+      "CHIMNEY",
+      "GUTTER",
+      "PORCH",
+      "STAIRCASE"
+    ],
+    "batch": 2
+  },
+  {
+    "id": "window-types",
+    "concept": "Kinds of window",
+    "subject": "everyday objects & household",
+    "type": "plain-punny",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "WINDOWSHOPPING",
+    "sampleAnswers": [
+      "LOUVRE",
+      "DORMER",
+      "SKYLIGHT",
+      "CASEMENT",
+      "FANLIGHT",
+      "LATTICE"
+    ],
+    "batch": 2
+  },
+  {
+    "id": "stationery",
+    "concept": "Things on or in an office desk",
+    "subject": "everyday objects & household",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "DESKTOP",
+    "sampleAnswers": [
+      "STAPLER",
+      "ERASER",
+      "PENCIL",
+      "SHARPENER",
+      "ENVELOPE",
+      "THUMBTACK"
+    ],
+    "batch": 12
+  },
+  {
+    "id": "sewing-kit",
+    "concept": "Things in a sewing kit",
+    "subject": "everyday objects & household",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "STITCHINTIME",
+    "sampleAnswers": [
+      "NEEDLE",
+      "THIMBLE",
+      "BOBBIN",
+      "PINCUSHION",
+      "THREAD",
+      "SPOOL"
+    ],
+    "batch": 8
+  },
+  {
+    "id": "jewelry",
+    "concept": "Kinds of jewelry",
+    "subject": "everyday objects & household",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "BAUBLES",
+    "sampleAnswers": [
+      "NECKLACE",
+      "BRACELET",
+      "EARRING",
+      "PENDANT",
+      "BROOCH",
+      "LOCKET"
+    ],
+    "batch": 5
+  },
+  {
+    "id": "garment-parts",
+    "concept": "Parts of a shirt or jacket",
+    "subject": "everyday objects & household",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "TAILORMADE",
+    "sampleAnswers": [
+      "COLLAR",
+      "SLEEVE",
+      "POCKET",
+      "LAPEL",
+      "WAISTBAND",
+      "BUTTONHOLE"
+    ],
+    "batch": 5
+  },
+  {
+    "id": "accessories",
+    "concept": "Fashion accessories (not hats, shoes or coats)",
+    "subject": "everyday objects & household",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ACCESSORIZE",
+    "sampleAnswers": [
+      "SCARF",
+      "NECKTIE",
+      "SUSPENDERS",
+      "UMBRELLA",
+      "WALLET",
+      "GLOVES"
+    ],
+    "batch": 5
+  },
+  {
+    "id": "kinds-of-bag",
+    "concept": "Kinds of bag",
+    "subject": "everyday objects & household",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "PACKYOURBAGS",
+    "sampleAnswers": [
+      "SATCHEL",
+      "HOLDALL",
+      "DUFFEL",
+      "RUCKSACK",
+      "BRIEFCASE",
+      "KNAPSACK"
+    ],
+    "batch": 5
+  },
+  {
+    "id": "containers",
+    "concept": "Things that hold or store stuff",
+    "subject": "everyday objects & household",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "HOLDEVERYTHING",
+    "sampleAnswers": [
+      "CANISTER",
+      "CRATE",
+      "BARREL",
+      "CARTON",
+      "CASKET",
+      "FLASK"
+    ],
+    "batch": 6
+  },
+  {
+    "id": "fasteners",
+    "concept": "Things that fasten or do up",
+    "subject": "everyday objects & household",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "HOLDTIGHT",
+    "sampleAnswers": [
+      "BUCKLE",
+      "CLASP",
+      "TOGGLE",
+      "DRAWSTRING",
+      "POPPER",
+      "RIVET"
+    ],
+    "batch": 8
+  },
+  {
+    "id": "kitchen-appliances",
+    "concept": "Electrical kitchen appliances",
+    "subject": "everyday objects & household",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "PLUGGEDIN",
+    "sampleAnswers": [
+      "TOASTER",
+      "BLENDER",
+      "KETTLE",
+      "MICROWAVE",
+      "DISHWASHER",
+      "FREEZER"
+    ],
+    "batch": 6
+  },
+  {
+    "id": "tableware",
+    "concept": "Plates and serving pieces on a dining table",
+    "subject": "everyday objects & household",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "LAYTHETABLE",
+    "sampleAnswers": [
+      "PLATE",
+      "SAUCER",
+      "TUREEN",
+      "PLATTER",
+      "RAMEKIN",
+      "COASTER"
+    ],
+    "batch": 6
+  },
+  {
+    "id": "drinkware",
+    "concept": "Vessels you drink from",
+    "subject": "everyday objects & household",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "CHEERS",
+    "sampleAnswers": [
+      "TUMBLER",
+      "GOBLET",
+      "FLUTE",
+      "SNIFTER",
+      "TANKARD",
+      "CHALICE"
+    ],
+    "batch": 6
+  },
+  {
+    "id": "car-parts",
+    "concept": "Parts of a car",
+    "subject": "everyday objects & household",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "UNDERTHEHOOD",
+    "sampleAnswers": [
+      "BUMPER",
+      "BONNET",
+      "WINDSCREEN",
+      "EXHAUST",
+      "BATTERY",
+      "RADIATOR"
+    ],
+    "batch": 7
+  },
+  {
+    "id": "bicycle-parts",
+    "concept": "Parts of a bicycle",
+    "subject": "everyday objects & household",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ONYOURBIKE",
+    "sampleAnswers": [
+      "PEDAL",
+      "SADDLE",
+      "CHAIN",
+      "SPOKE",
+      "HANDLEBAR",
+      "SPROCKET"
+    ],
+    "batch": 7
+  },
+  {
+    "id": "ship-parts",
+    "concept": "Parts of a ship",
+    "subject": "everyday objects & household",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "ALLHANDSONDECK",
+    "sampleAnswers": [
+      "BULKHEAD",
+      "PORTHOLE",
+      "GALLEY",
+      "RUDDER",
+      "RIGGING",
+      "ANCHOR"
+    ],
+    "batch": 7
+  },
+  {
+    "id": "computer-parts",
+    "concept": "Computer hardware and peripherals",
+    "subject": "everyday objects & household",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "PLUGANDPLAY",
+    "sampleAnswers": [
+      "MONITOR",
+      "MOUSE",
+      "PRINTER",
+      "SCANNER",
+      "WEBCAM",
+      "LAPTOP"
+    ],
+    "batch": 7
+  },
+  {
+    "id": "first-aid-kit",
+    "concept": "Things in a first-aid kit",
+    "subject": "everyday objects & household",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "FIRSTAIDKIT",
+    "sampleAnswers": [
+      "BANDAGE",
+      "PLASTER",
+      "GAUZE",
+      "TWEEZERS",
+      "ANTISEPTIC",
+      "SPLINT"
+    ],
+    "batch": 9
+  },
+  {
+    "id": "camping-gear",
+    "concept": "Gear you take camping (summer holidays)",
+    "subject": "everyday objects & household",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": "08",
+    "spangramIdea": "UNDERCANVAS",
+    "sampleAnswers": [
+      "HAMMOCK",
+      "COMPASS",
+      "KINDLING",
+      "TENTPEG",
+      "CANTEEN",
+      "LANTERN"
+    ],
+    "batch": 10
+  },
+  {
+    "id": "clocks-and-timers",
+    "concept": "Kinds of clock and timer",
+    "subject": "everyday objects & household",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "TIMEKEEPERS",
+    "sampleAnswers": [
+      "ALARM",
+      "CUCKOO",
+      "SUNDIAL",
+      "HOURGLASS",
+      "STOPWATCH",
+      "EGGTIMER"
+    ],
+    "batch": 3
+  },
+  {
+    "id": "classic-toys",
+    "concept": "Traditional toys",
+    "subject": "everyday objects & household",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "PLAYTHINGS",
+    "sampleAnswers": [
+      "YOYOS",
+      "MARBLES",
+      "RATTLE",
+      "PUPPET",
+      "HULAHOOP",
+      "TEDDYBEAR"
+    ],
+    "batch": 11
+  },
+  {
+    "id": "garden-features",
+    "concept": "Features of a garden",
+    "subject": "everyday objects & household",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "GARDENPARTY",
+    "sampleAnswers": [
+      "PATIO",
+      "GAZEBO",
+      "PERGOLA",
+      "TRELLIS",
+      "ROCKERY",
+      "BIRDBATH"
+    ],
+    "batch": 10
+  },
+  {
+    "id": "grooming-tools",
+    "concept": "Tools for doing your hair",
+    "subject": "everyday objects & household",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "BADHAIRDAY",
+    "sampleAnswers": [
+      "HAIRBRUSH",
+      "CURLERS",
+      "HAIRDRYER",
+      "CLIPPERS",
+      "HAIRPIN",
+      "BARRETTE"
+    ],
+    "batch": 9
+  },
+  {
+    "id": "theater-parts",
+    "concept": "Parts of a theater building",
+    "subject": "arts/music/film/books",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "BREAKALEG",
+    "sampleAnswers": [
+      "CURTAIN",
+      "BALCONY",
+      "STALLS",
+      "FOYER",
+      "WINGS",
+      "BOXOFFICE"
+    ],
+    "batch": 9
+  },
+  {
+    "id": "kinds-of-play",
+    "concept": "Kinds of stage show",
+    "subject": "arts/music/film/books",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "TREADTHEBOARDS",
+    "sampleAnswers": [
+      "TRAGEDY",
+      "COMEDY",
+      "FARCE",
+      "MUSICAL",
+      "OPERA",
+      "PANTOMIME"
+    ],
+    "batch": 9
+  },
+  {
+    "id": "kinds-of-comedy",
+    "concept": "Forms and devices of comedy",
+    "subject": "arts/music/film/books",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "LAUGHTRACK",
+    "sampleAnswers": [
+      "STANDUP",
+      "SLAPSTICK",
+      "SKETCH",
+      "PARODY",
+      "SITCOM",
+      "DEADPAN"
+    ],
+    "batch": 9
+  },
+  {
+    "id": "book-genres",
+    "concept": "Genres of fiction",
+    "subject": "arts/music/film/books",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "PAGETURNERS",
+    "sampleAnswers": [
+      "MYSTERY",
+      "ROMANCE",
+      "THRILLER",
+      "FANTASY",
+      "HORROR",
+      "WESTERN"
+    ],
+    "batch": 3
+  },
+  {
+    "id": "book-parts",
+    "concept": "Parts of a book",
+    "subject": "arts/music/film/books",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "COVERTOCOVER",
+    "sampleAnswers": [
+      "CHAPTER",
+      "PREFACE",
+      "INDEX",
+      "GLOSSARY",
+      "APPENDIX",
+      "EPILOGUE"
+    ],
+    "batch": 3
+  },
+  {
+    "id": "poetry-forms",
+    "concept": "Forms of poem",
+    "subject": "arts/music/film/books",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "RHYMEANDREASON",
+    "sampleAnswers": [
+      "SONNET",
+      "HAIKU",
+      "LIMERICK",
+      "BALLAD",
+      "ELEGY",
+      "VILLANELLE"
+    ],
+    "batch": 3
+  },
+  {
+    "id": "figures-of-speech",
+    "concept": "Rhetorical and literary devices",
+    "subject": "arts/music/film/books",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "FIGUREOFSPEECH",
+    "sampleAnswers": [
+      "METAPHOR",
+      "IRONY",
+      "HYPERBOLE",
+      "OXYMORON",
+      "PARADOX",
+      "EUPHEMISM"
+    ],
+    "batch": 3
+  },
+  {
+    "id": "art-supplies",
+    "concept": "Artists' materials and kit",
+    "subject": "arts/music/film/books",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "PAINTBOX",
+    "sampleAnswers": [
+      "EASEL",
+      "CANVAS",
+      "PALETTE",
+      "CHARCOAL",
+      "PASTEL",
+      "GOUACHE"
+    ],
+    "batch": 6
+  },
+  {
+    "id": "art-movements",
+    "concept": "Movements and styles in art",
+    "subject": "arts/music/film/books",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "ARTHISTORY",
+    "sampleAnswers": [
+      "CUBISM",
+      "BAROQUE",
+      "ROCOCO",
+      "FAUVISM",
+      "FUTURISM",
+      "DADAISM"
+    ],
+    "batch": 6
+  },
+  {
+    "id": "kinds-of-picture",
+    "concept": "Kinds of artwork or picture",
+    "subject": "arts/music/film/books",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "GALLERYWALL",
+    "sampleAnswers": [
+      "PORTRAIT",
+      "LANDSCAPE",
+      "MURAL",
+      "FRESCO",
+      "COLLAGE",
+      "MOSAIC"
+    ],
+    "batch": 6
+  },
+  {
+    "id": "architecture-features",
+    "concept": "Architectural features of grand buildings",
+    "subject": "arts/music/film/books",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "ARCHESANDDOMES",
+    "sampleAnswers": [
+      "COLUMN",
+      "SPIRE",
+      "GARGOYLE",
+      "BUTTRESS",
+      "PORTICO",
+      "CUPOLA"
+    ],
+    "batch": 6
+  },
+  {
+    "id": "wind-and-brass",
+    "concept": "Woodwind and brass instruments",
+    "subject": "arts/music/film/books",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "WINDSECTION",
+    "sampleAnswers": [
+      "TRUMPET",
+      "TROMBONE",
+      "CLARINET",
+      "BASSOON",
+      "PICCOLO",
+      "SAXOPHONE"
+    ],
+    "batch": 8
+  },
+  {
+    "id": "keyboard-instruments",
+    "concept": "Instruments played with a keyboard",
+    "subject": "arts/music/film/books",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "EBONYANDIVORY",
+    "sampleAnswers": [
+      "PIANO",
+      "ORGAN",
+      "SPINET",
+      "ACCORDION",
+      "CELESTA",
+      "HARMONIUM"
+    ],
+    "batch": 8
+  },
+  {
+    "id": "voice-types",
+    "concept": "Singing voice types",
+    "subject": "arts/music/film/books",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "INHARMONY",
+    "sampleAnswers": [
+      "SOPRANO",
+      "TENOR",
+      "BARITONE",
+      "CONTRALTO",
+      "MEZZO",
+      "FALSETTO"
+    ],
+    "batch": 8
+  },
+  {
+    "id": "ways-to-sing",
+    "concept": "Verbs for kinds of singing",
+    "subject": "arts/music/film/books",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "SINGALONG",
+    "sampleAnswers": [
+      "CROON",
+      "WARBLE",
+      "YODEL",
+      "SERENADE",
+      "CHANT",
+      "TRILL"
+    ],
+    "batch": 8
+  },
+  {
+    "id": "music-notation",
+    "concept": "Symbols and terms in written music",
+    "subject": "arts/music/film/books",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "SHEETMUSIC",
+    "sampleAnswers": [
+      "MINIM",
+      "STAVE",
+      "CRESCENDO",
+      "FERMATA",
+      "QUAVER",
+      "CROTCHET"
+    ],
+    "batch": 10
+  },
+  {
+    "id": "classical-forms",
+    "concept": "Forms of classical composition",
+    "subject": "arts/music/film/books",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "OPUSNUMBERS",
+    "sampleAnswers": [
+      "SYMPHONY",
+      "CONCERTO",
+      "SONATA",
+      "OVERTURE",
+      "REQUIEM",
+      "NOCTURNE"
+    ],
+    "batch": 10
+  },
+  {
+    "id": "guitar-parts",
+    "concept": "Parts and accessories of a guitar",
+    "subject": "arts/music/film/books",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ROCKANDROLL",
+    "sampleAnswers": [
+      "FRETS",
+      "BRIDGE",
+      "HEADSTOCK",
+      "PICKUP",
+      "PLECTRUM",
+      "SOUNDHOLE"
+    ],
+    "batch": 10
+  },
+  {
+    "id": "ballet-terms",
+    "concept": "Ballet steps and terms",
+    "subject": "arts/music/film/books",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "ONPOINTE",
+    "sampleAnswers": [
+      "PIROUETTE",
+      "ARABESQUE",
+      "ENTRECHAT",
+      "FOUETTE",
+      "RELEVE",
+      "BARRE"
+    ],
+    "batch": 10
+  },
+  {
+    "id": "film-genres",
+    "concept": "Genres of film",
+    "subject": "arts/music/film/books",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "NOWSHOWING",
+    "sampleAnswers": [
+      "HORROR",
+      "COMEDY",
+      "THRILLER",
+      "ROMCOM",
+      "SLASHER",
+      "ANIMATION"
+    ],
+    "batch": 7
+  },
+  {
+    "id": "film-techniques",
+    "concept": "Film-making shots and techniques",
+    "subject": "arts/music/film/books",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "THATSAWRAP",
+    "sampleAnswers": [
+      "FLASHBACK",
+      "MONTAGE",
+      "CLOSEUP",
+      "CUTAWAY",
+      "VOICEOVER",
+      "DISSOLVE"
+    ],
+    "batch": 7
+  },
+  {
+    "id": "fairy-tale-elements",
+    "concept": "Stock things found in fairy tales",
+    "subject": "arts/music/film/books",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ONCEUPONATIME",
+    "sampleAnswers": [
+      "CASTLE",
+      "PRINCESS",
+      "DRAGON",
+      "WITCH",
+      "BEANSTALK",
+      "POTION"
+    ],
+    "batch": 11
+  },
+  {
+    "id": "nursery-rhyme-characters",
+    "concept": "Characters from traditional nursery rhymes",
+    "subject": "arts/music/film/books",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "MOTHERGOOSE",
+    "sampleAnswers": [
+      "HUMPTY",
+      "MUFFET",
+      "HUBBARD",
+      "BOPEEP",
+      "KINGCOLE",
+      "BOYBLUE"
+    ],
+    "batch": 11
+  },
+  {
+    "id": "composers",
+    "concept": "Famous classical composers",
+    "subject": "arts/music/film/books",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "GREATCOMPOSERS",
+    "sampleAnswers": [
+      "MOZART",
+      "HANDEL",
+      "CHOPIN",
+      "VIVALDI",
+      "BRAHMS",
+      "SCHUBERT"
+    ],
+    "batch": 4
+  },
+  {
+    "id": "painters",
+    "concept": "Famous painters",
+    "subject": "arts/music/film/books",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "GREATPAINTERS",
+    "sampleAnswers": [
+      "MONET",
+      "DEGAS",
+      "RENOIR",
+      "VERMEER",
+      "REMBRANDT",
+      "PICASSO"
+    ],
+    "batch": 4
+  },
+  {
+    "id": "authors",
+    "concept": "Famous classic authors",
+    "subject": "arts/music/film/books",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "LITERARYGREATS",
+    "sampleAnswers": [
+      "DICKENS",
+      "AUSTEN",
+      "TOLSTOY",
+      "ORWELL",
+      "BRONTE",
+      "TOLKIEN"
+    ],
+    "batch": 4
+  },
+  {
+    "id": "photography",
+    "concept": "Photography words",
+    "subject": "arts/music/film/books",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "SAYCHEESE",
+    "sampleAnswers": [
+      "APERTURE",
+      "TRIPOD",
+      "EXPOSURE",
+      "NEGATIVE",
+      "PANORAMA",
+      "DARKROOM"
+    ],
+    "batch": 6
+  },
+  {
+    "id": "circus-acts",
+    "concept": "Circus performers and acts",
+    "subject": "arts/music/film/books",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "BIGTOP",
+    "sampleAnswers": [
+      "JUGGLER",
+      "ACROBAT",
+      "CLOWN",
+      "TRAPEZE",
+      "TIGHTROPE",
+      "RINGMASTER"
+    ],
+    "batch": 5
+  },
+  {
+    "id": "magic-show",
+    "concept": "Words from a stage magic act",
+    "subject": "arts/music/film/books",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "NOWYOUSEEIT",
+    "sampleAnswers": [
+      "ILLUSION",
+      "SLEIGHT",
+      "LEVITATION",
+      "VANISH",
+      "TOPHAT",
+      "ESCAPOLOGY"
+    ],
+    "batch": 5
+  },
+  {
+    "id": "crafts",
+    "concept": "Craft hobbies",
+    "subject": "arts/music/film/books",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ARTSANDCRAFTS",
+    "sampleAnswers": [
+      "KNITTING",
+      "CROCHET",
+      "QUILTING",
+      "EMBROIDERY",
+      "MACRAME",
+      "ORIGAMI"
+    ],
+    "batch": 5
+  },
+  {
+    "id": "rivers",
+    "concept": "Great rivers of the world",
+    "subject": "nature & geography",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "GOWITHTHEFLOW",
+    "sampleAnswers": [
+      "AMAZON",
+      "DANUBE",
+      "THAMES",
+      "GANGES",
+      "MEKONG",
+      "ZAMBEZI"
+    ],
+    "batch": 11
+  },
+  {
+    "id": "seas-and-oceans",
+    "concept": "Named oceans and seas",
+    "subject": "nature & geography",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "SEVENSEAS",
+    "sampleAnswers": [
+      "PACIFIC",
+      "ATLANTIC",
+      "CARIBBEAN",
+      "BALTIC",
+      "ADRIATIC",
+      "CASPIAN"
+    ],
+    "batch": 11
+  },
+  {
+    "id": "lakes",
+    "concept": "Famous lakes",
+    "subject": "nature & geography",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "STILLWATERS",
+    "sampleAnswers": [
+      "SUPERIOR",
+      "VICTORIA",
+      "BAIKAL",
+      "TITICACA",
+      "GENEVA",
+      "WINDERMERE"
+    ],
+    "batch": 11
+  },
+  {
+    "id": "islands",
+    "concept": "Famous islands",
+    "subject": "nature & geography",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ISLANDHOPPING",
+    "sampleAnswers": [
+      "MADAGASCAR",
+      "ICELAND",
+      "SICILY",
+      "BORNEO",
+      "TAHITI",
+      "TASMANIA"
+    ],
+    "batch": 11
+  },
+  {
+    "id": "mountain-ranges",
+    "concept": "Mountain ranges",
+    "subject": "nature & geography",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "HIGHANDMIGHTY",
+    "sampleAnswers": [
+      "ANDES",
+      "HIMALAYAS",
+      "ROCKIES",
+      "PYRENEES",
+      "URALS",
+      "DOLOMITES"
+    ],
+    "batch": 12
+  },
+  {
+    "id": "famous-peaks",
+    "concept": "Famous individual mountains",
+    "subject": "nature & geography",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "TOPOFTHEWORLD",
+    "sampleAnswers": [
+      "EVEREST",
+      "MATTERHORN",
+      "ELBRUS",
+      "ACONCAGUA",
+      "EIGER",
+      "ANNAPURNA"
+    ],
+    "batch": 12
+  },
+  {
+    "id": "volcanoes",
+    "concept": "Famous volcanoes",
+    "subject": "nature & geography",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "RINGOFFIRE",
+    "sampleAnswers": [
+      "VESUVIUS",
+      "KRAKATOA",
+      "STROMBOLI",
+      "PINATUBO",
+      "KILAUEA",
+      "TAMBORA"
+    ],
+    "batch": 12
+  },
+  {
+    "id": "deserts",
+    "concept": "Named deserts of the world",
+    "subject": "nature & geography",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "HIGHANDDRY",
+    "sampleAnswers": [
+      "SAHARA",
+      "KALAHARI",
+      "MOJAVE",
+      "ATACAMA",
+      "SONORAN",
+      "NAMIB"
+    ],
+    "batch": 12
+  },
+  {
+    "id": "us-states",
+    "concept": "US states",
+    "subject": "nature & geography",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "UNITEDSTATES",
+    "sampleAnswers": [
+      "TEXAS",
+      "ALASKA",
+      "FLORIDA",
+      "NEVADA",
+      "OREGON",
+      "VERMONT"
+    ],
+    "batch": 2
+  },
+  {
+    "id": "us-cities",
+    "concept": "Big US cities",
+    "subject": "nature & geography",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "BIGCITYLIGHTS",
+    "sampleAnswers": [
+      "CHICAGO",
+      "BOSTON",
+      "DENVER",
+      "HOUSTON",
+      "SEATTLE",
+      "ATLANTA"
+    ],
+    "batch": 2
+  },
+  {
+    "id": "canadian-provinces",
+    "concept": "Canadian provinces and territories",
+    "subject": "nature & geography",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "TRUENORTH",
+    "sampleAnswers": [
+      "ONTARIO",
+      "QUEBEC",
+      "ALBERTA",
+      "MANITOBA",
+      "YUKON",
+      "NUNAVUT"
+    ],
+    "batch": 2
+  },
+  {
+    "id": "world-capitals",
+    "concept": "Capital cities outside Europe",
+    "subject": "nature & geography",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "WORLDCAPITALS",
+    "sampleAnswers": [
+      "TOKYO",
+      "BEIJING",
+      "CAIRO",
+      "NAIROBI",
+      "OTTAWA",
+      "CANBERRA"
+    ],
+    "batch": 4
+  },
+  {
+    "id": "african-countries",
+    "concept": "Countries of Africa",
+    "subject": "nature & geography",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "AFRICANNATIONS",
+    "sampleAnswers": [
+      "KENYA",
+      "NIGERIA",
+      "ETHIOPIA",
+      "MOROCCO",
+      "UGANDA",
+      "SENEGAL"
+    ],
+    "batch": 4
+  },
+  {
+    "id": "south-american-countries",
+    "concept": "Countries of South America",
+    "subject": "nature & geography",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "SOUTHAMERICA",
+    "sampleAnswers": [
+      "BRAZIL",
+      "ARGENTINA",
+      "CHILE",
+      "COLOMBIA",
+      "ECUADOR",
+      "URUGUAY"
+    ],
+    "batch": 4
+  },
+  {
+    "id": "asian-countries",
+    "concept": "Countries of Asia",
+    "subject": "nature & geography",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ASIANNATIONS",
+    "sampleAnswers": [
+      "JAPAN",
+      "NEPAL",
+      "BHUTAN",
+      "VIETNAM",
+      "THAILAND",
+      "MONGOLIA"
+    ],
+    "batch": 4
+  },
+  {
+    "id": "national-parks",
+    "concept": "Famous national parks",
+    "subject": "nature & geography",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "GREATOUTDOORS",
+    "sampleAnswers": [
+      "YOSEMITE",
+      "SEQUOIA",
+      "ACADIA",
+      "DENALI",
+      "EVERGLADES",
+      "SERENGETI"
+    ],
+    "batch": 2
+  },
+  {
+    "id": "weather-words",
+    "concept": "Weather conditions (not storms or clouds)",
+    "subject": "nature & geography",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "FORECAST",
+    "sampleAnswers": [
+      "DRIZZLE",
+      "SLEET",
+      "FROST",
+      "DROUGHT",
+      "SUNSHINE",
+      "RAINBOW"
+    ],
+    "batch": 3
+  },
+  {
+    "id": "times-of-day",
+    "concept": "Words for times of day",
+    "subject": "nature & geography",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "DAYANDNIGHT",
+    "sampleAnswers": [
+      "GLOAMING",
+      "DAYBREAK",
+      "MORNING",
+      "AFTERNOON",
+      "TWILIGHT",
+      "MIDNIGHT"
+    ],
+    "batch": 3
+  },
+  {
+    "id": "seashore",
+    "concept": "Things you find at the beach (summer)",
+    "subject": "nature & geography",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": "07",
+    "spangramIdea": "BEACHDAY",
+    "sampleAnswers": [
+      "SANDCASTLE",
+      "ROCKPOOL",
+      "PEBBLE",
+      "DRIFTWOOD",
+      "PROMENADE",
+      "LIFEGUARD"
+    ],
+    "batch": 3
+  },
+  {
+    "id": "houseplants",
+    "concept": "Popular houseplants",
+    "subject": "nature & geography",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "GREENFINGERS",
+    "sampleAnswers": [
+      "MONSTERA",
+      "POTHOS",
+      "BEGONIA",
+      "BONSAI",
+      "CALATHEA",
+      "ASPIDISTRA"
+    ],
+    "batch": 1
+  },
+  {
+    "id": "cacti-and-succulents",
+    "concept": "Cacti and succulents",
+    "subject": "nature & geography",
+    "type": "plain-punny",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "LOOKSHARP",
+    "sampleAnswers": [
+      "SAGUARO",
+      "AGAVE",
+      "YUCCA",
+      "ECHEVERIA",
+      "SEDUM",
+      "ALOEVERA"
+    ],
+    "batch": 1
+  },
+  {
+    "id": "mushrooms",
+    "concept": "Kinds of mushroom and fungus",
+    "subject": "nature & geography",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "WOODLANDFUNGI",
+    "sampleAnswers": [
+      "ENOKI",
+      "PORCINI",
+      "SHIITAKE",
+      "MOREL",
+      "TRUFFLE",
+      "PUFFBALL"
+    ],
+    "batch": 1
+  },
+  {
+    "id": "garden-weeds",
+    "concept": "Common weeds and wildflowers of lawns and verges",
+    "subject": "nature & geography",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "GARDENWEEDS",
+    "sampleAnswers": [
+      "DANDELION",
+      "THISTLE",
+      "NETTLE",
+      "CLOVER",
+      "BINDWEED",
+      "RAGWORT"
+    ],
+    "batch": 1
+  },
+  {
+    "id": "harvest-time",
+    "concept": "Things of autumn",
+    "subject": "nature & geography",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "HARVESTTIME",
+    "sampleAnswers": [
+      "ACORN",
+      "CONKER",
+      "PUMPKIN",
+      "SCARECROW",
+      "ORCHARD",
+      "HAYSTACK"
+    ],
+    "batch": 6
+  },
+  {
+    "id": "spring-awakening",
+    "concept": "Signs of spring",
+    "subject": "nature & geography",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": "05",
+    "spangramIdea": "INFULLBLOOM",
+    "sampleAnswers": [
+      "BLOSSOM",
+      "CATKIN",
+      "FROGSPAWN",
+      "SHOOTS",
+      "BLUEBELL",
+      "NESTING"
+    ],
+    "batch": 6
+  },
+  {
+    "id": "snow-compounds",
+    "concept": "Words that follow SNOW to make a compound (winter)",
+    "subject": "nature & geography",
+    "type": "wordplay",
+    "obscure": false,
+    "season": "12",
+    "spangramIdea": "LETITSNOW",
+    "sampleAnswers": [
+      "FLAKE",
+      "DRIFT",
+      "PLOUGH",
+      "MOBILE",
+      "GLOBE",
+      "BOUND"
+    ],
+    "batch": 6
+  },
+  {
+    "id": "berries",
+    "concept": "Kinds of berry",
+    "subject": "food & drink",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "BERRYPICKING",
+    "sampleAnswers": [
+      "STRAWBERRY",
+      "BLUEBERRY",
+      "RASPBERRY",
+      "GOOSEBERRY",
+      "MULBERRY",
+      "CRANBERRY"
+    ],
+    "batch": 7
+  },
+  {
+    "id": "orchard-fruit",
+    "concept": "Apples, pears and stone fruit",
+    "subject": "food & drink",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ORCHARDFRUIT",
+    "sampleAnswers": [
+      "APRICOT",
+      "NECTARINE",
+      "DAMSON",
+      "QUINCE",
+      "GREENGAGE",
+      "PEACH"
+    ],
+    "batch": 7
+  },
+  {
+    "id": "citrus",
+    "concept": "Citrus fruits",
+    "subject": "food & drink",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ZESTFORLIFE",
+    "sampleAnswers": [
+      "GRAPEFRUIT",
+      "TANGERINE",
+      "CLEMENTINE",
+      "SATSUMA",
+      "KUMQUAT",
+      "POMELO"
+    ],
+    "batch": 7
+  },
+  {
+    "id": "green-vegetables",
+    "concept": "Green vegetables",
+    "subject": "food & drink",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "EATYOURGREENS",
+    "sampleAnswers": [
+      "BROCCOLI",
+      "SPINACH",
+      "CABBAGE",
+      "ASPARAGUS",
+      "ZUCCHINI",
+      "ARTICHOKE"
+    ],
+    "batch": 9
+  },
+  {
+    "id": "beans-and-pulses",
+    "concept": "Beans, peas and lentils",
+    "subject": "food & drink",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "FULLOFBEANS",
+    "sampleAnswers": [
+      "LENTIL",
+      "CHICKPEA",
+      "KIDNEY",
+      "PINTO",
+      "HARICOT",
+      "CANNELLINI"
+    ],
+    "batch": 9
+  },
+  {
+    "id": "grains",
+    "concept": "Cereal grains and grain foods",
+    "subject": "food & drink",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "GRAINSTORE",
+    "sampleAnswers": [
+      "WHEAT",
+      "BARLEY",
+      "MILLET",
+      "SORGHUM",
+      "QUINOA",
+      "BUCKWHEAT"
+    ],
+    "batch": 9
+  },
+  {
+    "id": "potato-dishes",
+    "concept": "Ways potatoes are served",
+    "subject": "food & drink",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "HOTPOTATO",
+    "sampleAnswers": [
+      "CROQUETTE",
+      "ROSTI",
+      "GRATIN",
+      "WEDGES",
+      "LATKE",
+      "HASHBROWN"
+    ],
+    "batch": 9
+  },
+  {
+    "id": "soups",
+    "concept": "Kinds of soup",
+    "subject": "food & drink",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "SOUPOFTHEDAY",
+    "sampleAnswers": [
+      "MINESTRONE",
+      "GAZPACHO",
+      "BORSCHT",
+      "CHOWDER",
+      "BISQUE",
+      "CONSOMME"
+    ],
+    "batch": 10
+  },
+  {
+    "id": "sauces-and-condiments",
+    "concept": "Sauces and condiments",
+    "subject": "food & drink",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ONTHESIDE",
+    "sampleAnswers": [
+      "KETCHUP",
+      "MUSTARD",
+      "RELISH",
+      "CHUTNEY",
+      "PESTO",
+      "AIOLI"
+    ],
+    "batch": 10
+  },
+  {
+    "id": "breakfast",
+    "concept": "Breakfast foods",
+    "subject": "food & drink",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "RISEANDSHINE",
+    "sampleAnswers": [
+      "PANCAKE",
+      "WAFFLE",
+      "PORRIDGE",
+      "MUESLI",
+      "GRANOLA",
+      "KIPPER"
+    ],
+    "batch": 10
+  },
+  {
+    "id": "sandwiches",
+    "concept": "Kinds of sandwich",
+    "subject": "food & drink",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "LUNCHBREAK",
+    "sampleAnswers": [
+      "REUBEN",
+      "PANINI",
+      "HOAGIE",
+      "TOASTIE",
+      "SUBMARINE",
+      "CROQUE"
+    ],
+    "batch": 10
+  },
+  {
+    "id": "party-snacks",
+    "concept": "Party nibbles and canapes",
+    "subject": "food & drink",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "FINGERFOOD",
+    "sampleAnswers": [
+      "CANAPES",
+      "CRUDITES",
+      "SKEWERS",
+      "BLINIS",
+      "SLIDERS",
+      "VOLAUVENT"
+    ],
+    "batch": 10
+  },
+  {
+    "id": "salads",
+    "concept": "Named salads",
+    "subject": "food & drink",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "SALADDAYS",
+    "sampleAnswers": [
+      "CAESAR",
+      "WALDORF",
+      "NICOISE",
+      "CAPRESE",
+      "COLESLAW",
+      "TABBOULEH"
+    ],
+    "batch": 10
+  },
+  {
+    "id": "indian-dishes",
+    "concept": "Curry-house dishes",
+    "subject": "food & drink",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "CURRYHOUSE",
+    "sampleAnswers": [
+      "KORMA",
+      "BIRYANI",
+      "VINDALOO",
+      "JALFREZI",
+      "PAKORA",
+      "DHANSAK"
+    ],
+    "batch": 3
+  },
+  {
+    "id": "japanese-dishes",
+    "concept": "Japanese dishes",
+    "subject": "food & drink",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "JAPANESEMENU",
+    "sampleAnswers": [
+      "SASHIMI",
+      "TEMPURA",
+      "GYOZA",
+      "ONIGIRI",
+      "YAKITORI",
+      "TONKATSU"
+    ],
+    "batch": 3
+  },
+  {
+    "id": "mexican-dishes",
+    "concept": "Mexican dishes",
+    "subject": "food & drink",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "FIESTAFOOD",
+    "sampleAnswers": [
+      "ENCHILADA",
+      "QUESADILLA",
+      "GUACAMOLE",
+      "NACHOS",
+      "FAJITA",
+      "TAMALE"
+    ],
+    "batch": 3
+  },
+  {
+    "id": "chinese-dishes",
+    "concept": "Chinese restaurant dishes",
+    "subject": "food & drink",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "CHINATOWN",
+    "sampleAnswers": [
+      "CHOWMEIN",
+      "CHOPSUEY",
+      "WONTON",
+      "DIMSUM",
+      "EGGROLL",
+      "FRIEDRICE"
+    ],
+    "batch": 3
+  },
+  {
+    "id": "teas",
+    "concept": "Kinds of tea",
+    "subject": "food & drink",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "TEAPARTY",
+    "sampleAnswers": [
+      "EARLGREY",
+      "DARJEELING",
+      "OOLONG",
+      "MATCHA",
+      "CHAMOMILE",
+      "ROOIBOS"
+    ],
+    "batch": 8
+  },
+  {
+    "id": "beer-styles",
+    "concept": "Styles of beer",
+    "subject": "food & drink",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "BREWPUB",
+    "sampleAnswers": [
+      "LAGER",
+      "STOUT",
+      "PORTER",
+      "PILSNER",
+      "SAISON",
+      "LAMBIC"
+    ],
+    "batch": 8
+  },
+  {
+    "id": "soft-drinks",
+    "concept": "Non-alcoholic drinks",
+    "subject": "food & drink",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "SOFTDRINKS",
+    "sampleAnswers": [
+      "LEMONADE",
+      "SMOOTHIE",
+      "MILKSHAKE",
+      "CORDIAL",
+      "KOMBUCHA",
+      "SELTZER"
+    ],
+    "batch": 8
+  },
+  {
+    "id": "baking-ingredients",
+    "concept": "Baking ingredients",
+    "subject": "food & drink",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "BAKERSDOZEN",
+    "sampleAnswers": [
+      "FLOUR",
+      "YEAST",
+      "VANILLA",
+      "MOLASSES",
+      "MARGARINE",
+      "BUTTERMILK"
+    ],
+    "batch": 1
+  },
+  {
+    "id": "cured-meats",
+    "concept": "Cured meats and sausages",
+    "subject": "food & drink",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "CHARCUTERIE",
+    "sampleAnswers": [
+      "SALAMI",
+      "CHORIZO",
+      "PEPPERONI",
+      "PROSCIUTTO",
+      "PASTRAMI",
+      "MORTADELLA"
+    ],
+    "batch": 1
+  },
+  {
+    "id": "beef-cuts",
+    "concept": "Cuts of beef",
+    "subject": "food & drink",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "BUTCHERSHOP",
+    "sampleAnswers": [
+      "SIRLOIN",
+      "BRISKET",
+      "RIBEYE",
+      "TENDERLOIN",
+      "TOPSIDE",
+      "FLANK"
+    ],
+    "batch": 1
+  },
+  {
+    "id": "baby-animals",
+    "concept": "Names for young animals",
+    "subject": "animals",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "YOUNGSTERS",
+    "sampleAnswers": [
+      "KITTEN",
+      "PIGLET",
+      "DUCKLING",
+      "GOSLING",
+      "CYGNET",
+      "LEVERET"
+    ],
+    "batch": 2
+  },
+  {
+    "id": "male-and-female-animals",
+    "concept": "Names for male or female animals",
+    "subject": "animals",
+    "type": "plain-punny",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "BIRDSANDBEES",
+    "sampleAnswers": [
+      "VIXEN",
+      "STALLION",
+      "GANDER",
+      "DRAKE",
+      "ROOSTER",
+      "HEIFER"
+    ],
+    "batch": 2
+  },
+  {
+    "id": "animal-homes",
+    "concept": "Where animals live",
+    "subject": "animals",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ANIMALHOMES",
+    "sampleAnswers": [
+      "BURROW",
+      "WARREN",
+      "KENNEL",
+      "HUTCH",
+      "EYRIE",
+      "STABLE"
+    ],
+    "batch": 2
+  },
+  {
+    "id": "animal-sounds",
+    "concept": "Sounds animals make",
+    "subject": "animals",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ANIMALNOISES",
+    "sampleAnswers": [
+      "BLEAT",
+      "NEIGH",
+      "WHINNY",
+      "GROWL",
+      "SQUAWK",
+      "CHIRP"
+    ],
+    "batch": 2
+  },
+  {
+    "id": "collective-nouns",
+    "concept": "Collective nouns for groups of animals",
+    "subject": "animals",
+    "type": "plain-punny",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "INGOODCOMPANY",
+    "sampleAnswers": [
+      "PRIDE",
+      "MURDER",
+      "PARLIAMENT",
+      "GAGGLE",
+      "SKULK",
+      "TROOP"
+    ],
+    "batch": 2
+  },
+  {
+    "id": "animal-verbs",
+    "concept": "Animal names that are also everyday verbs",
+    "subject": "animals",
+    "type": "wordplay",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "MONKEYBUSINESS",
+    "sampleAnswers": [
+      "BADGER",
+      "HOUND",
+      "FERRET",
+      "PARROT",
+      "SQUIRREL",
+      "WEASEL"
+    ],
+    "batch": 2
+  },
+  {
+    "id": "words-for-a-dog",
+    "concept": "Informal words for a dog",
+    "subject": "animals",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "MANSBESTFRIEND",
+    "sampleAnswers": [
+      "POOCH",
+      "HOUND",
+      "MONGREL",
+      "PUPPY",
+      "CANINE",
+      "DOGGO"
+    ],
+    "batch": 2
+  },
+  {
+    "id": "cat-breeds",
+    "concept": "Breeds of cat",
+    "subject": "animals",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "CATSWHISKERS",
+    "sampleAnswers": [
+      "SIAMESE",
+      "PERSIAN",
+      "BENGAL",
+      "SPHYNX",
+      "RAGDOLL",
+      "BURMESE"
+    ],
+    "batch": 9
+  },
+  {
+    "id": "horse-breeds",
+    "concept": "Breeds and types of horse",
+    "subject": "animals",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "HORSESENSE",
+    "sampleAnswers": [
+      "ARABIAN",
+      "MUSTANG",
+      "CLYDESDALE",
+      "APPALOOSA",
+      "PALOMINO",
+      "SHETLAND"
+    ],
+    "batch": 9
+  },
+  {
+    "id": "farm-animals",
+    "concept": "Animals on a farm",
+    "subject": "animals",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "OLDMACDONALD",
+    "sampleAnswers": [
+      "CHICKEN",
+      "GOOSE",
+      "TURKEY",
+      "DONKEY",
+      "ALPACA",
+      "BULLOCK"
+    ],
+    "batch": 9
+  },
+  {
+    "id": "garden-birds",
+    "concept": "Common garden birds",
+    "subject": "animals",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "BIRDTABLE",
+    "sampleAnswers": [
+      "ROBIN",
+      "SPARROW",
+      "BLACKBIRD",
+      "THRUSH",
+      "STARLING",
+      "CHAFFINCH"
+    ],
+    "batch": 12
+  },
+  {
+    "id": "water-birds",
+    "concept": "Sea and water birds",
+    "subject": "animals",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "SHOREBIRDS",
+    "sampleAnswers": [
+      "PELICAN",
+      "PUFFIN",
+      "GANNET",
+      "CORMORANT",
+      "FLAMINGO",
+      "HERON"
+    ],
+    "batch": 12
+  },
+  {
+    "id": "parrots",
+    "concept": "Parrots and related birds",
+    "subject": "animals",
+    "type": "plain-punny",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "PRETTYPOLLY",
+    "sampleAnswers": [
+      "MACAW",
+      "COCKATOO",
+      "LORIKEET",
+      "COCKATIEL",
+      "PARAKEET",
+      "CONURE"
+    ],
+    "batch": 12
+  },
+  {
+    "id": "reptiles",
+    "concept": "Reptiles",
+    "subject": "animals",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "COLDBLOODED",
+    "sampleAnswers": [
+      "LIZARD",
+      "GECKO",
+      "IGUANA",
+      "CHAMELEON",
+      "TORTOISE",
+      "PYTHON"
+    ],
+    "batch": 1
+  },
+  {
+    "id": "amphibians",
+    "concept": "Frogs, toads, newts and kin",
+    "subject": "animals",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "AMPHIBIANS",
+    "sampleAnswers": [
+      "SALAMANDER",
+      "AXOLOTL",
+      "TADPOLE",
+      "BULLFROG",
+      "TREEFROG",
+      "NATTERJACK"
+    ],
+    "batch": 1
+  },
+  {
+    "id": "primates",
+    "concept": "Apes, monkeys and lemurs",
+    "subject": "animals",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "PRIMATES",
+    "sampleAnswers": [
+      "GORILLA",
+      "ORANGUTAN",
+      "GIBBON",
+      "LEMUR",
+      "MARMOSET",
+      "MANDRILL"
+    ],
+    "batch": 1
+  },
+  {
+    "id": "rodents",
+    "concept": "Rodents",
+    "subject": "animals",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "GNAWERS",
+    "sampleAnswers": [
+      "HAMSTER",
+      "GERBIL",
+      "BEAVER",
+      "CHIPMUNK",
+      "CAPYBARA",
+      "CHINCHILLA"
+    ],
+    "batch": 1
+  },
+  {
+    "id": "australian-animals",
+    "concept": "Animals native to Australia",
+    "subject": "animals",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "DOWNUNDER",
+    "sampleAnswers": [
+      "KANGAROO",
+      "KOALA",
+      "WOMBAT",
+      "WALLABY",
+      "QUOKKA",
+      "PLATYPUS"
+    ],
+    "batch": 1
+  },
+  {
+    "id": "deer",
+    "concept": "Kinds of deer",
+    "subject": "animals",
+    "type": "plain-punny",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "OHMYDEER",
+    "sampleAnswers": [
+      "REINDEER",
+      "CARIBOU",
+      "MOOSE",
+      "WAPITI",
+      "MUNTJAC",
+      "FALLOW"
+    ],
+    "batch": 1
+  },
+  {
+    "id": "nocturnal-animals",
+    "concept": "Animals active at night",
+    "subject": "animals",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "NIGHTSHIFT",
+    "sampleAnswers": [
+      "BADGER",
+      "HEDGEHOG",
+      "RACCOON",
+      "OPOSSUM",
+      "BUSHBABY",
+      "NIGHTJAR"
+    ],
+    "batch": 1
+  },
+  {
+    "id": "arctic-animals",
+    "concept": "Animals of the far north",
+    "subject": "animals",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ARCTIC",
+    "sampleAnswers": [
+      "WALRUS",
+      "NARWHAL",
+      "POLARBEAR",
+      "MUSKOX",
+      "PTARMIGAN",
+      "WOLVERINE"
+    ],
+    "batch": 1
+  },
+  {
+    "id": "animal-body-parts",
+    "concept": "Parts of animal bodies",
+    "subject": "animals",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "FURANDFEATHERS",
+    "sampleAnswers": [
+      "SNOUT",
+      "ANTLER",
+      "WHISKER",
+      "TALON",
+      "FLIPPER",
+      "MUZZLE"
+    ],
+    "batch": 2
+  },
+  {
+    "id": "extinct-animals",
+    "concept": "Extinct animals",
+    "subject": "animals",
+    "type": "plain-punny",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "DEADASADODO",
+    "sampleAnswers": [
+      "MAMMOTH",
+      "MASTODON",
+      "THYLACINE",
+      "AUROCHS",
+      "QUAGGA",
+      "GREATAUK"
+    ],
+    "batch": 1
+  },
+  {
+    "id": "gases",
+    "concept": "Gases",
+    "subject": "science",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "UPINTHEAIR",
+    "sampleAnswers": [
+      "OXYGEN",
+      "HYDROGEN",
+      "NITROGEN",
+      "HELIUM",
+      "METHANE",
+      "OZONE"
+    ],
+    "batch": 2
+  },
+  {
+    "id": "metals",
+    "concept": "Metallic elements",
+    "subject": "science",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "HEAVYMETAL",
+    "sampleAnswers": [
+      "COPPER",
+      "NICKEL",
+      "COBALT",
+      "TITANIUM",
+      "TUNGSTEN",
+      "PLATINUM"
+    ],
+    "batch": 2
+  },
+  {
+    "id": "rocks-and-minerals",
+    "concept": "Rocks and minerals",
+    "subject": "science",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ROCKSOLID",
+    "sampleAnswers": [
+      "GRANITE",
+      "BASALT",
+      "MARBLE",
+      "OBSIDIAN",
+      "PUMICE",
+      "QUARTZ"
+    ],
+    "batch": 2
+  },
+  {
+    "id": "organs",
+    "concept": "Organs of the human body",
+    "subject": "science",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "INNERWORKINGS",
+    "sampleAnswers": [
+      "HEART",
+      "LIVER",
+      "KIDNEY",
+      "SPLEEN",
+      "PANCREAS",
+      "BLADDER"
+    ],
+    "batch": 5
+  },
+  {
+    "id": "muscles",
+    "concept": "Named muscles",
+    "subject": "science",
+    "type": "plain-punny",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "MUSCLEMEMORY",
+    "sampleAnswers": [
+      "BICEPS",
+      "TRICEPS",
+      "DELTOID",
+      "PECTORAL",
+      "HAMSTRING",
+      "TRAPEZIUS"
+    ],
+    "batch": 5
+  },
+  {
+    "id": "eye-parts",
+    "concept": "Parts of the eye",
+    "subject": "science",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "APPLEOFMYEYE",
+    "sampleAnswers": [
+      "RETINA",
+      "PUPIL",
+      "CORNEA",
+      "EYELID",
+      "EYELASH",
+      "SCLERA"
+    ],
+    "batch": 5
+  },
+  {
+    "id": "teeth-and-dentistry",
+    "concept": "Teeth and dental words",
+    "subject": "science",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "OPENWIDE",
+    "sampleAnswers": [
+      "INCISOR",
+      "MOLAR",
+      "PREMOLAR",
+      "ENAMEL",
+      "FILLING",
+      "PLAQUE"
+    ],
+    "batch": 5
+  },
+  {
+    "id": "si-units",
+    "concept": "Scientific units named after people",
+    "subject": "science",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "UNITSOFMEASURE",
+    "sampleAnswers": [
+      "NEWTON",
+      "KELVIN",
+      "AMPERE",
+      "JOULE",
+      "HERTZ",
+      "PASCAL"
+    ],
+    "batch": 1
+  },
+  {
+    "id": "imperial-units",
+    "concept": "Imperial units of measure",
+    "subject": "science",
+    "type": "plain-punny",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "GIVEANINCH",
+    "sampleAnswers": [
+      "FURLONG",
+      "FATHOM",
+      "OUNCE",
+      "GALLON",
+      "BUSHEL",
+      "LEAGUE"
+    ],
+    "batch": 1
+  },
+  {
+    "id": "shapes",
+    "concept": "Geometric shapes and solids",
+    "subject": "science",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "INGOODSHAPE",
+    "sampleAnswers": [
+      "TRIANGLE",
+      "PENTAGON",
+      "HEXAGON",
+      "RHOMBUS",
+      "ELLIPSE",
+      "CYLINDER"
+    ],
+    "batch": 3
+  },
+  {
+    "id": "math-terms",
+    "concept": "Arithmetic and algebra terms",
+    "subject": "science",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "DOTHEMATH",
+    "sampleAnswers": [
+      "FRACTION",
+      "DECIMAL",
+      "INTEGER",
+      "QUOTIENT",
+      "EXPONENT",
+      "EQUATION"
+    ],
+    "batch": 3
+  },
+  {
+    "id": "big-numbers",
+    "concept": "Words for large numbers and counts",
+    "subject": "science",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "BIGNUMBERS",
+    "sampleAnswers": [
+      "HUNDRED",
+      "THOUSAND",
+      "MILLION",
+      "BILLION",
+      "GOOGOL",
+      "TRILLION"
+    ],
+    "batch": 3
+  },
+  {
+    "id": "physics-terms",
+    "concept": "Physics concepts",
+    "subject": "science",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "LAWSOFMOTION",
+    "sampleAnswers": [
+      "GRAVITY",
+      "FRICTION",
+      "MOMENTUM",
+      "INERTIA",
+      "VELOCITY",
+      "TORQUE"
+    ],
+    "batch": 4
+  },
+  {
+    "id": "lab-equipment",
+    "concept": "School laboratory equipment",
+    "subject": "science",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "SCIENCELAB",
+    "sampleAnswers": [
+      "BEAKER",
+      "TESTTUBE",
+      "PIPETTE",
+      "BURETTE",
+      "CRUCIBLE",
+      "PETRIDISH"
+    ],
+    "batch": 4
+  },
+  {
+    "id": "cell-biology",
+    "concept": "Parts and words of the living cell",
+    "subject": "science",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "CELLBIOLOGY",
+    "sampleAnswers": [
+      "NUCLEUS",
+      "CYTOPLASM",
+      "MEMBRANE",
+      "RIBOSOME",
+      "VACUOLE",
+      "ENZYME"
+    ],
+    "batch": 6
+  },
+  {
+    "id": "plant-anatomy",
+    "concept": "Parts of a plant or flower",
+    "subject": "science",
+    "type": "plain-punny",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "FLOWERPOWER",
+    "sampleAnswers": [
+      "STAMEN",
+      "PISTIL",
+      "SEPAL",
+      "POLLEN",
+      "ANTHER",
+      "TENDRIL"
+    ],
+    "batch": 6
+  },
+  {
+    "id": "microbes",
+    "concept": "Microscopic life",
+    "subject": "science",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "UNDERTHELENS",
+    "sampleAnswers": [
+      "BACTERIA",
+      "AMOEBA",
+      "PLANKTON",
+      "ALGAE",
+      "PARAMECIUM",
+      "DIATOM"
+    ],
+    "batch": 6
+  },
+  {
+    "id": "constellations",
+    "concept": "Constellations",
+    "subject": "science",
+    "type": "plain-punny",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "JOINTHEDOTS",
+    "sampleAnswers": [
+      "CASSIOPEIA",
+      "PEGASUS",
+      "ANDROMEDA",
+      "PERSEUS",
+      "CYGNUS",
+      "DRACO"
+    ],
+    "batch": 4
+  },
+  {
+    "id": "computing-terms",
+    "concept": "Computing words",
+    "subject": "science",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "BITSANDBYTES",
+    "sampleAnswers": [
+      "BROWSER",
+      "SERVER",
+      "PASSWORD",
+      "FIREWALL",
+      "CURSOR",
+      "PIXEL"
+    ],
+    "batch": 7
+  },
+  {
+    "id": "medical-kit",
+    "concept": "Medical instruments and equipment",
+    "subject": "science",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "DOCTORSORDERS",
+    "sampleAnswers": [
+      "SCALPEL",
+      "SYRINGE",
+      "STRETCHER",
+      "FORCEPS",
+      "TOURNIQUET",
+      "GURNEY"
+    ],
+    "batch": 7
+  },
+  {
+    "id": "energy-sources",
+    "concept": "Sources of energy",
+    "subject": "science",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "POWERSTATION",
+    "sampleAnswers": [
+      "SOLAR",
+      "NUCLEAR",
+      "HYDRO",
+      "GEOTHERMAL",
+      "BIOMASS",
+      "TIDAL"
+    ],
+    "batch": 7
+  },
+  {
+    "id": "branches-of-science",
+    "concept": "Branches of science",
+    "subject": "science",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "OLOGIES",
+    "sampleAnswers": [
+      "BIOLOGY",
+      "CHEMISTRY",
+      "PHYSICS",
+      "GEOLOGY",
+      "ASTRONOMY",
+      "BOTANY"
+    ],
+    "batch": 7
+  },
+  {
+    "id": "scientists",
+    "concept": "Famous scientists",
+    "subject": "science",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "EUREKAMOMENT",
+    "sampleAnswers": [
+      "EINSTEIN",
+      "DARWIN",
+      "CURIE",
+      "GALILEO",
+      "FARADAY",
+      "MENDEL"
+    ],
+    "batch": 7
+  },
+  {
+    "id": "ball-compounds",
+    "concept": "Words that precede BALL to make a compound",
+    "subject": "sport & games",
+    "type": "wordplay",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ONTHEBALL",
+    "sampleAnswers": [
+      "BASKET",
+      "VOLLEY",
+      "CANNON",
+      "PAINT",
+      "DODGE",
+      "SCREW"
+    ],
+    "batch": 8
+  },
+  {
+    "id": "soccer-terms",
+    "concept": "Soccer words",
+    "subject": "sport & games",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "BEAUTIFULGAME",
+    "sampleAnswers": [
+      "STRIKER",
+      "PENALTY",
+      "OFFSIDE",
+      "HEADER",
+      "DRIBBLE",
+      "CROSSBAR"
+    ],
+    "batch": 8
+  },
+  {
+    "id": "baseball-terms",
+    "concept": "Baseball words",
+    "subject": "sport & games",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "BALLPARK",
+    "sampleAnswers": [
+      "PITCHER",
+      "CATCHER",
+      "SHORTSTOP",
+      "BULLPEN",
+      "DUGOUT",
+      "INNING"
+    ],
+    "batch": 8
+  },
+  {
+    "id": "basketball-terms",
+    "concept": "Basketball words",
+    "subject": "sport & games",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "NOTHINGBUTNET",
+    "sampleAnswers": [
+      "LAYUP",
+      "REBOUND",
+      "ASSIST",
+      "FREETHROW",
+      "ALLEYOOP",
+      "JUMPSHOT"
+    ],
+    "batch": 8
+  },
+  {
+    "id": "american-football",
+    "concept": "American football words",
+    "subject": "sport & games",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "GRIDIRON",
+    "sampleAnswers": [
+      "FUMBLE",
+      "BLITZ",
+      "HUDDLE",
+      "ENDZONE",
+      "LINEBACKER",
+      "FIELDGOAL"
+    ],
+    "batch": 8
+  },
+  {
+    "id": "tennis-terms",
+    "concept": "Tennis words",
+    "subject": "sport & games",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "GAMESETMATCH",
+    "sampleAnswers": [
+      "DEUCE",
+      "ADVANTAGE",
+      "BACKHAND",
+      "FOREHAND",
+      "TIEBREAK",
+      "TOPSPIN"
+    ],
+    "batch": 6
+  },
+  {
+    "id": "golf-terms",
+    "concept": "Golf words",
+    "subject": "sport & games",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "TEETIME",
+    "sampleAnswers": [
+      "BIRDIE",
+      "EAGLE",
+      "BOGEY",
+      "FAIRWAY",
+      "BUNKER",
+      "CADDIE"
+    ],
+    "batch": 6
+  },
+  {
+    "id": "cricket-terms",
+    "concept": "Cricket words",
+    "subject": "sport & games",
+    "type": "plain-punny",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "HOWZAT",
+    "sampleAnswers": [
+      "WICKET",
+      "BOUNDARY",
+      "STUMPS",
+      "CREASE",
+      "YORKER",
+      "GOOGLY"
+    ],
+    "batch": 6
+  },
+  {
+    "id": "bat-and-racket-sports",
+    "concept": "Sports played with a bat, stick or racket",
+    "subject": "sport & games",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "BATSANDRACKETS",
+    "sampleAnswers": [
+      "SQUASH",
+      "BADMINTON",
+      "PINGPONG",
+      "PICKLEBALL",
+      "CROQUET",
+      "LACROSSE"
+    ],
+    "batch": 6
+  },
+  {
+    "id": "ice-hockey",
+    "concept": "Ice hockey words",
+    "subject": "sport & games",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ONTHINICE",
+    "sampleAnswers": [
+      "GOALIE",
+      "FACEOFF",
+      "SLAPSHOT",
+      "POWERPLAY",
+      "ICING",
+      "BODYCHECK"
+    ],
+    "batch": 4
+  },
+  {
+    "id": "winter-sports",
+    "concept": "Winter sports",
+    "subject": "sport & games",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "WINTERGAMES",
+    "sampleAnswers": [
+      "SKIING",
+      "BOBSLEIGH",
+      "CURLING",
+      "SKELETON",
+      "BIATHLON",
+      "SLALOM"
+    ],
+    "batch": 4
+  },
+  {
+    "id": "water-sports",
+    "concept": "Water sports",
+    "subject": "sport & games",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "MAKEASPLASH",
+    "sampleAnswers": [
+      "SURFING",
+      "ROWING",
+      "KAYAKING",
+      "WATERPOLO",
+      "SNORKELING",
+      "RAFTING"
+    ],
+    "batch": 11
+  },
+  {
+    "id": "martial-arts",
+    "concept": "Martial arts",
+    "subject": "sport & games",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "SENSEI",
+    "sampleAnswers": [
+      "KARATE",
+      "TAEKWONDO",
+      "AIKIDO",
+      "JUJITSU",
+      "KICKBOXING",
+      "CAPOEIRA"
+    ],
+    "batch": 11
+  },
+  {
+    "id": "gymnastics",
+    "concept": "Gymnastics moves and apparatus",
+    "subject": "sport & games",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "PERFECTTEN",
+    "sampleAnswers": [
+      "VAULT",
+      "POMMEL",
+      "CARTWHEEL",
+      "SOMERSAULT",
+      "TUMBLING",
+      "ROUNDOFF"
+    ],
+    "batch": 11
+  },
+  {
+    "id": "gym-exercises",
+    "concept": "Gym exercises (New Year resolutions)",
+    "subject": "sport & games",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": "01",
+    "spangramIdea": "NOPAINNOGAIN",
+    "sampleAnswers": [
+      "PUSHUP",
+      "SQUAT",
+      "LUNGE",
+      "PLANK",
+      "BURPEE",
+      "DEADLIFT"
+    ],
+    "batch": 11
+  },
+  {
+    "id": "horse-racing",
+    "concept": "Horse riding and racing words",
+    "subject": "sport & games",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "HOMESTRAIGHT",
+    "sampleAnswers": [
+      "DRESSAGE",
+      "GALLOP",
+      "CANTER",
+      "JOCKEY",
+      "PADDOCK",
+      "STIRRUP"
+    ],
+    "batch": 11
+  },
+  {
+    "id": "cycling-race",
+    "concept": "Road cycling and track racing words",
+    "subject": "sport & games",
+    "type": "plain-punny",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "TOURDEFORCE",
+    "sampleAnswers": [
+      "PELOTON",
+      "BREAKAWAY",
+      "VELODROME",
+      "DOMESTIQUE",
+      "TANDEM",
+      "SPRINTER"
+    ],
+    "batch": 11
+  },
+  {
+    "id": "playground-games",
+    "concept": "Playground games",
+    "subject": "sport & games",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "PLAYGROUND",
+    "sampleAnswers": [
+      "HOPSCOTCH",
+      "LEAPFROG",
+      "SKIPPING",
+      "CONKERS",
+      "TUGOFWAR",
+      "MARBLES"
+    ],
+    "batch": 12
+  },
+  {
+    "id": "party-games",
+    "concept": "Party games",
+    "subject": "sport & games",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "PARTYGAMES",
+    "sampleAnswers": [
+      "CHARADES",
+      "LIMBO",
+      "SARDINES",
+      "PINATA",
+      "STATUES",
+      "BINGO"
+    ],
+    "batch": 12
+  },
+  {
+    "id": "pub-games",
+    "concept": "Pub and table games",
+    "subject": "sport & games",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "PUBGAMES",
+    "sampleAnswers": [
+      "DARTS",
+      "SKITTLES",
+      "BILLIARDS",
+      "SNOOKER",
+      "DOMINOES",
+      "QUOITS"
+    ],
+    "batch": 12
+  },
+  {
+    "id": "puzzles",
+    "concept": "Kinds of puzzle",
+    "subject": "sport & games",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "BRAINTEASERS",
+    "sampleAnswers": [
+      "CROSSWORD",
+      "SUDOKU",
+      "JIGSAW",
+      "RIDDLE",
+      "REBUS",
+      "WORDSEARCH"
+    ],
+    "batch": 12
+  },
+  {
+    "id": "sports-kit",
+    "concept": "Sports equipment",
+    "subject": "sport & games",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "KITBAG",
+    "sampleAnswers": [
+      "HELMET",
+      "RACKET",
+      "DUMBBELL",
+      "KETTLEBELL",
+      "MOUTHGUARD",
+      "SHINPAD"
+    ],
+    "batch": 12
+  },
+  {
+    "id": "sports-venues",
+    "concept": "Places where sport is played",
+    "subject": "sport & games",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "PLAYINGFIELDS",
+    "sampleAnswers": [
+      "STADIUM",
+      "ARENA",
+      "COURT",
+      "PITCH",
+      "VELODROME",
+      "GYMNASIUM"
+    ],
+    "batch": 12
+  },
+  {
+    "id": "valentines-day",
+    "concept": "Things of Valentine's Day",
+    "subject": "history/culture/holidays",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": "02",
+    "spangramIdea": "BEMYVALENTINE",
+    "sampleAnswers": [
+      "ROSES",
+      "CHOCOLATES",
+      "CUPID",
+      "SWEETHEART",
+      "ROMANCE",
+      "ADMIRER"
+    ],
+    "batch": 7
+  },
+  {
+    "id": "easter",
+    "concept": "Things of Easter",
+    "subject": "history/culture/holidays",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": "04",
+    "spangramIdea": "EGGSTRAVAGANZA",
+    "sampleAnswers": [
+      "BUNNY",
+      "EGGHUNT",
+      "BONNET",
+      "SIMNEL",
+      "CHICKS",
+      "BASKET"
+    ],
+    "batch": 7
+  },
+  {
+    "id": "graduation",
+    "concept": "Things of a graduation day",
+    "subject": "history/culture/holidays",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": "06",
+    "spangramIdea": "CAPANDGOWN",
+    "sampleAnswers": [
+      "DIPLOMA",
+      "TASSEL",
+      "ALUMNI",
+      "YEARBOOK",
+      "CEREMONY",
+      "DEGREE"
+    ],
+    "batch": 7
+  },
+  {
+    "id": "halloween",
+    "concept": "Things of Halloween",
+    "subject": "history/culture/holidays",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": "10",
+    "spangramIdea": "TRICKORTREAT",
+    "sampleAnswers": [
+      "PUMPKIN",
+      "COSTUME",
+      "CAULDRON",
+      "BROOMSTICK",
+      "VAMPIRE",
+      "COBWEB"
+    ],
+    "batch": 5
+  },
+  {
+    "id": "thanksgiving",
+    "concept": "Things of Thanksgiving",
+    "subject": "history/culture/holidays",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": "11",
+    "spangramIdea": "GIVINGTHANKS",
+    "sampleAnswers": [
+      "TURKEY",
+      "STUFFING",
+      "CRANBERRY",
+      "PILGRIM",
+      "CASSEROLE",
+      "WISHBONE"
+    ],
+    "batch": 5
+  },
+  {
+    "id": "christmas",
+    "concept": "Things of Christmas",
+    "subject": "history/culture/holidays",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": "12",
+    "spangramIdea": "DECKTHEHALLS",
+    "sampleAnswers": [
+      "TINSEL",
+      "STOCKING",
+      "SLEIGH",
+      "MISTLETOE",
+      "BAUBLE",
+      "WREATH"
+    ],
+    "batch": 5
+  },
+  {
+    "id": "pirates",
+    "concept": "Pirate words (Talk Like a Pirate Day)",
+    "subject": "history/culture/holidays",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": "09",
+    "spangramIdea": "YOHOHO",
+    "sampleAnswers": [
+      "BUCCANEER",
+      "CUTLASS",
+      "DOUBLOON",
+      "GALLEON",
+      "EYEPATCH",
+      "TREASURE"
+    ],
+    "batch": 7
+  },
+  {
+    "id": "knights",
+    "concept": "Knights and their kit",
+    "subject": "history/culture/holidays",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "SHININGARMOR",
+    "sampleAnswers": [
+      "SQUIRE",
+      "JOUST",
+      "LANCE",
+      "CHAINMAIL",
+      "GAUNTLET",
+      "TOURNAMENT"
+    ],
+    "batch": 10
+  },
+  {
+    "id": "royal-titles",
+    "concept": "Royal and noble titles",
+    "subject": "history/culture/holidays",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "BLUEBLOOD",
+    "sampleAnswers": [
+      "PRINCE",
+      "DUCHESS",
+      "EMPEROR",
+      "BARON",
+      "MARQUIS",
+      "VISCOUNT"
+    ],
+    "batch": 10
+  },
+  {
+    "id": "age-compounds",
+    "concept": "Words that precede AGE to name an era",
+    "subject": "history/culture/holidays",
+    "type": "wordplay",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "THROUGHTHEAGES",
+    "sampleAnswers": [
+      "STONE",
+      "BRONZE",
+      "GOLDEN",
+      "ATOMIC",
+      "GILDED",
+      "SPACE"
+    ],
+    "batch": 10
+  },
+  {
+    "id": "ancient-civilizations",
+    "concept": "Ancient civilizations and peoples",
+    "subject": "history/culture/holidays",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "ANCIENTWORLD",
+    "sampleAnswers": [
+      "AZTEC",
+      "VIKING",
+      "SUMERIAN",
+      "PHOENICIAN",
+      "MINOAN",
+      "ETRUSCAN"
+    ],
+    "batch": 11
+  },
+  {
+    "id": "ancient-egypt",
+    "concept": "Ancient Egypt",
+    "subject": "history/culture/holidays",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "VALLEYOFKINGS",
+    "sampleAnswers": [
+      "PHARAOH",
+      "PAPYRUS",
+      "SCARAB",
+      "OBELISK",
+      "CARTOUCHE",
+      "HIEROGLYPH"
+    ],
+    "batch": 11
+  },
+  {
+    "id": "ancient-rome",
+    "concept": "Ancient Rome",
+    "subject": "history/culture/holidays",
+    "type": "plain-punny",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "WHENINROME",
+    "sampleAnswers": [
+      "GLADIATOR",
+      "CHARIOT",
+      "CENTURION",
+      "AQUEDUCT",
+      "AMPHORA",
+      "TRIBUNE"
+    ],
+    "batch": 11
+  },
+  {
+    "id": "norse-myth",
+    "concept": "Norse gods and myth",
+    "subject": "history/culture/holidays",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "NORSEMYTHS",
+    "sampleAnswers": [
+      "FREYA",
+      "HEIMDALL",
+      "VALHALLA",
+      "ASGARD",
+      "VALKYRIE",
+      "RAGNAROK"
+    ],
+    "batch": 1
+  },
+  {
+    "id": "mythical-creatures",
+    "concept": "Creatures of myth and legend",
+    "subject": "history/culture/holidays",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "FABULOUSBEASTS",
+    "sampleAnswers": [
+      "UNICORN",
+      "GRIFFIN",
+      "PHOENIX",
+      "MERMAID",
+      "CENTAUR",
+      "KRAKEN"
+    ],
+    "batch": 1
+  },
+  {
+    "id": "mythic-heroes",
+    "concept": "Heroes of Greek and Roman myth",
+    "subject": "history/culture/holidays",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "MYTHICHEROES",
+    "sampleAnswers": [
+      "HERCULES",
+      "PERSEUS",
+      "THESEUS",
+      "ACHILLES",
+      "ODYSSEUS",
+      "ATALANTA"
+    ],
+    "batch": 1
+  },
+  {
+    "id": "landmarks",
+    "concept": "Famous world landmarks",
+    "subject": "history/culture/holidays",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "LANDMARKS",
+    "sampleAnswers": [
+      "ACROPOLIS",
+      "PARTHENON",
+      "STONEHENGE",
+      "TAJMAHAL",
+      "PETRA",
+      "ALHAMBRA"
+    ],
+    "batch": 9
+  },
+  {
+    "id": "explorers",
+    "concept": "Famous explorers",
+    "subject": "history/culture/holidays",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "UNCHARTED",
+    "sampleAnswers": [
+      "COLUMBUS",
+      "MAGELLAN",
+      "AMUNDSEN",
+      "SHACKLETON",
+      "MARCOPOLO",
+      "VESPUCCI"
+    ],
+    "batch": 9
+  },
+  {
+    "id": "world-festivals",
+    "concept": "Festivals around the world",
+    "subject": "history/culture/holidays",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "LETSCELEBRATE",
+    "sampleAnswers": [
+      "DIWALI",
+      "HANUKKAH",
+      "CARNIVAL",
+      "MARDIGRAS",
+      "HOGMANAY",
+      "KWANZAA"
+    ],
+    "batch": 9
+  },
+  {
+    "id": "weddings",
+    "concept": "Things of a wedding",
+    "subject": "history/culture/holidays",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "TIETHEKNOT",
+    "sampleAnswers": [
+      "BRIDESMAID",
+      "BESTMAN",
+      "CONFETTI",
+      "GARTER",
+      "HONEYMOON",
+      "RECEPTION"
+    ],
+    "batch": 8
+  },
+  {
+    "id": "birthday-party",
+    "concept": "Things of a birthday party",
+    "subject": "history/culture/holidays",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "HAPPYBIRTHDAY",
+    "sampleAnswers": [
+      "CANDLES",
+      "BALLOONS",
+      "PRESENTS",
+      "PARTYHAT",
+      "STREAMERS",
+      "BUNTING"
+    ],
+    "batch": 8
+  },
+  {
+    "id": "wild-west",
+    "concept": "The Wild West",
+    "subject": "history/culture/holidays",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "HIGHNOON",
+    "sampleAnswers": [
+      "SHERIFF",
+      "SALOON",
+      "STAGECOACH",
+      "HOLSTER",
+      "TUMBLEWEED",
+      "PROSPECTOR"
+    ],
+    "batch": 8
+  },
+  {
+    "id": "espionage",
+    "concept": "Spy words",
+    "subject": "history/culture/holidays",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "CLOAKANDDAGGER",
+    "sampleAnswers": [
+      "DEADDROP",
+      "CIPHER",
+      "DISGUISE",
+      "INFORMANT",
+      "CODENAME",
+      "DEFECTOR"
+    ],
+    "batch": 8
+  },
+  {
+    "id": "star-compounds",
+    "concept": "Words that precede STAR to make a phrase or compound",
+    "subject": "pop culture & media",
+    "type": "wordplay",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "WISHUPONASTAR",
+    "sampleAnswers": [
+      "SUPER",
+      "SHOOTING",
+      "MORNING",
+      "FALLING",
+      "LUCKY",
+      "MOVIE"
+    ],
+    "batch": 10
+  },
+  {
+    "id": "fame-words",
+    "concept": "Words of celebrity and fame",
+    "subject": "pop culture & media",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "FIFTEENMINUTES",
+    "sampleAnswers": [
+      "CELEBRITY",
+      "PAPARAZZI",
+      "AUTOGRAPH",
+      "LIMELIGHT",
+      "REDCARPET",
+      "ENTOURAGE"
+    ],
+    "batch": 10
+  },
+  {
+    "id": "tv-formats",
+    "concept": "Kinds of TV programme",
+    "subject": "pop culture & media",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "PRIMETIME",
+    "sampleAnswers": [
+      "SITCOM",
+      "GAMESHOW",
+      "TALKSHOW",
+      "CARTOON",
+      "MINISERIES",
+      "TELENOVELA"
+    ],
+    "batch": 10
+  },
+  {
+    "id": "songwriting",
+    "concept": "Parts and terms of a pop song",
+    "subject": "pop culture & media",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "HITPARADE",
+    "sampleAnswers": [
+      "VERSE",
+      "CHORUS",
+      "BRIDGE",
+      "OUTRO",
+      "REFRAIN",
+      "MELODY"
+    ],
+    "batch": 10
+  },
+  {
+    "id": "fairy-tale-characters",
+    "concept": "Characters from classic fairy tales",
+    "subject": "pop culture & media",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "EVERAFTER",
+    "sampleAnswers": [
+      "CINDERELLA",
+      "RAPUNZEL",
+      "GOLDILOCKS",
+      "PINOCCHIO",
+      "THUMBELINA",
+      "GRETEL"
+    ],
+    "batch": 4
+  },
+  {
+    "id": "superpowers",
+    "concept": "Comic-book superpowers",
+    "subject": "pop culture & media",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "SUPERPOWERS",
+    "sampleAnswers": [
+      "FLIGHT",
+      "TELEPATHY",
+      "STRENGTH",
+      "XRAYVISION",
+      "TELEPORT",
+      "FORCEFIELD"
+    ],
+    "batch": 4
+  },
+  {
+    "id": "fictional-detectives",
+    "concept": "Classic fictional detectives",
+    "subject": "pop culture & media",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ELEMENTARY",
+    "sampleAnswers": [
+      "HOLMES",
+      "POIROT",
+      "MARPLE",
+      "MAIGRET",
+      "COLUMBO",
+      "MARLOWE"
+    ],
+    "batch": 4
+  },
+  {
+    "id": "story-archetypes",
+    "concept": "Stock roles in a story",
+    "subject": "pop culture & media",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ARCHETYPES",
+    "sampleAnswers": [
+      "ORACLE",
+      "VILLAIN",
+      "MENTOR",
+      "TRICKSTER",
+      "ANTIHERO",
+      "NARRATOR"
+    ],
+    "batch": 4
+  },
+  {
+    "id": "magic-users",
+    "concept": "Words for a magic user",
+    "subject": "pop culture & media",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "SPELLBOUND",
+    "sampleAnswers": [
+      "WIZARD",
+      "SORCERER",
+      "WARLOCK",
+      "ENCHANTER",
+      "CONJURER",
+      "ALCHEMIST"
+    ],
+    "batch": 4
+  },
+  {
+    "id": "sci-fi-words",
+    "concept": "Science fiction staples",
+    "subject": "pop culture & media",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "SCIENCEFICTION",
+    "sampleAnswers": [
+      "ROBOT",
+      "ANDROID",
+      "CYBORG",
+      "HOLOGRAM",
+      "STARSHIP",
+      "WARPDRIVE"
+    ],
+    "batch": 4
+  },
+  {
+    "id": "video-game-terms",
+    "concept": "Video game words",
+    "subject": "pop culture & media",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "GAMEOVER",
+    "sampleAnswers": [
+      "LEVEL",
+      "CHECKPOINT",
+      "RESPAWN",
+      "AVATAR",
+      "JOYSTICK",
+      "HIGHSCORE"
+    ],
+    "batch": 7
+  },
+  {
+    "id": "funfair",
+    "concept": "Funfair rides and stalls",
+    "subject": "pop culture & media",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "FUNFAIR",
+    "sampleAnswers": [
+      "DODGEMS",
+      "CAROUSEL",
+      "GHOSTTRAIN",
+      "CANDYFLOSS",
+      "WALTZER",
+      "HOOPLA"
+    ],
+    "batch": 7
+  },
+  {
+    "id": "famous-ships",
+    "concept": "Famous ships of history and fiction",
+    "subject": "pop culture & media",
+    "type": "plain-punny",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "SHIPSHAPE",
+    "sampleAnswers": [
+      "TITANIC",
+      "MAYFLOWER",
+      "BEAGLE",
+      "ENDEAVOUR",
+      "BOUNTY",
+      "NAUTILUS"
+    ],
+    "batch": 7
+  },
+  {
+    "id": "hairstyles",
+    "concept": "Hairstyles",
+    "subject": "pop culture & media",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "HAIRRAISING",
+    "sampleAnswers": [
+      "MOHAWK",
+      "MULLET",
+      "PONYTAIL",
+      "BEEHIVE",
+      "CORNROWS",
+      "POMPADOUR"
+    ],
+    "batch": 8
+  },
+  {
+    "id": "dresses-and-skirts",
+    "concept": "Dresses, skirts and robes",
+    "subject": "pop culture & media",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "DRESSEDTOKILL",
+    "sampleAnswers": [
+      "SUNDRESS",
+      "BALLGOWN",
+      "PINAFORE",
+      "KIMONO",
+      "SARONG",
+      "CAFTAN"
+    ],
+    "batch": 8
+  },
+  {
+    "id": "makeup",
+    "concept": "Makeup products",
+    "subject": "pop culture & media",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "GLAMOUR",
+    "sampleAnswers": [
+      "MASCARA",
+      "LIPSTICK",
+      "EYELINER",
+      "BLUSHER",
+      "CONCEALER",
+      "BRONZER"
+    ],
+    "batch": 8
+  },
+  {
+    "id": "theater-jobs",
+    "concept": "Jobs in the theater",
+    "subject": "people & jobs",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "CURTAINCALL",
+    "sampleAnswers": [
+      "UNDERSTUDY",
+      "STAGEHAND",
+      "PROMPTER",
+      "USHER",
+      "PLAYWRIGHT",
+      "DRESSER"
+    ],
+    "batch": 12
+  },
+  {
+    "id": "music-performers",
+    "concept": "Musicians named by instrument or role",
+    "subject": "people & jobs",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "ONEMANBAND",
+    "sampleAnswers": [
+      "PIANIST",
+      "VIOLINIST",
+      "DRUMMER",
+      "CELLIST",
+      "HARPIST",
+      "BUSKER"
+    ],
+    "batch": 12
+  },
+  {
+    "id": "writers",
+    "concept": "People who write for a living",
+    "subject": "people & jobs",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "INKSLINGERS",
+    "sampleAnswers": [
+      "NOVELIST",
+      "JOURNALIST",
+      "COLUMNIST",
+      "BIOGRAPHER",
+      "LYRICIST",
+      "SCRIBE"
+    ],
+    "batch": 12
+  },
+  {
+    "id": "restaurant-jobs",
+    "concept": "Jobs in a restaurant",
+    "subject": "people & jobs",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "FRONTOFHOUSE",
+    "sampleAnswers": [
+      "SOUSCHEF",
+      "WAITER",
+      "SOMMELIER",
+      "MAITRED",
+      "BARTENDER",
+      "HOSTESS"
+    ],
+    "batch": 6
+  },
+  {
+    "id": "hotel-jobs",
+    "concept": "Jobs in a hotel",
+    "subject": "people & jobs",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "DONOTDISTURB",
+    "sampleAnswers": [
+      "CONCIERGE",
+      "BELLHOP",
+      "DOORMAN",
+      "PORTER",
+      "VALET",
+      "BUTLER"
+    ],
+    "batch": 6
+  },
+  {
+    "id": "medical-jobs",
+    "concept": "Medical professions",
+    "subject": "people & jobs",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "BEDSIDEMANNER",
+    "sampleAnswers": [
+      "SURGEON",
+      "DENTIST",
+      "MIDWIFE",
+      "PARAMEDIC",
+      "PHARMACIST",
+      "OPTICIAN"
+    ],
+    "batch": 5
+  },
+  {
+    "id": "emergency-services",
+    "concept": "Emergency and rescue workers",
+    "subject": "people & jobs",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "TOTHERESCUE",
+    "sampleAnswers": [
+      "MOUNTIE",
+      "LIFEGUARD",
+      "COASTGUARD",
+      "DISPATCHER",
+      "DETECTIVE",
+      "CONSTABLE"
+    ],
+    "batch": 5
+  },
+  {
+    "id": "tradespeople",
+    "concept": "Skilled tradespeople",
+    "subject": "people & jobs",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "HANDYMAN",
+    "sampleAnswers": [
+      "PLUMBER",
+      "ROOFER",
+      "CARPENTER",
+      "BRICKLAYER",
+      "PLASTERER",
+      "GLAZIER"
+    ],
+    "batch": 2
+  },
+  {
+    "id": "old-trades",
+    "concept": "Traditional or historic trades",
+    "subject": "people & jobs",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "BYGONETRADES",
+    "sampleAnswers": [
+      "COOPER",
+      "COBBLER",
+      "CHANDLER",
+      "FLETCHER",
+      "FARRIER",
+      "THATCHER"
+    ],
+    "batch": 2
+  },
+  {
+    "id": "outdoor-jobs",
+    "concept": "Jobs on the land or outdoors",
+    "subject": "people & jobs",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "OUTOFDOORS",
+    "sampleAnswers": [
+      "SHEPHERD",
+      "GAMEKEEPER",
+      "FORESTER",
+      "LUMBERJACK",
+      "BEEKEEPER",
+      "RANCHER"
+    ],
+    "batch": 2
+  },
+  {
+    "id": "military-ranks",
+    "concept": "Military ranks",
+    "subject": "people & jobs",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "CHAINOFCOMMAND",
+    "sampleAnswers": [
+      "CORPORAL",
+      "SERGEANT",
+      "LIEUTENANT",
+      "CAPTAIN",
+      "COLONEL",
+      "ADMIRAL"
+    ],
+    "batch": 11
+  },
+  {
+    "id": "office-jobs",
+    "concept": "Office jobs",
+    "subject": "people & jobs",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "NINETOFIVE",
+    "sampleAnswers": [
+      "SECRETARY",
+      "ACCOUNTANT",
+      "CLERK",
+      "ANALYST",
+      "INTERN",
+      "CONSULTANT"
+    ],
+    "batch": 11
+  },
+  {
+    "id": "sports-officials",
+    "concept": "Officials and backroom roles in sport",
+    "subject": "people & jobs",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "WHISTLEBLOWER",
+    "sampleAnswers": [
+      "REFEREE",
+      "UMPIRE",
+      "LINESMAN",
+      "COACH",
+      "STARTER",
+      "TIMEKEEPER"
+    ],
+    "batch": 11
+  },
+  {
+    "id": "academic-jobs",
+    "concept": "Academic and research jobs",
+    "subject": "people & jobs",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "IVORYTOWER",
+    "sampleAnswers": [
+      "PROFESSOR",
+      "LECTURER",
+      "RESEARCHER",
+      "LIBRARIAN",
+      "ARCHIVIST",
+      "CURATOR"
+    ],
+    "batch": 11
+  },
+  {
+    "id": "family-members",
+    "concept": "Family relations",
+    "subject": "people & jobs",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "FAMILYTREE",
+    "sampleAnswers": [
+      "COUSIN",
+      "NEPHEW",
+      "NIECE",
+      "GRANDMA",
+      "SIBLING",
+      "GODMOTHER"
+    ],
+    "batch": 7
+  },
+  {
+    "id": "personality-types",
+    "concept": "Idiomatic labels for kinds of people",
+    "subject": "people & jobs",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "TYPECAST",
+    "sampleAnswers": [
+      "BOOKWORM",
+      "NIGHTOWL",
+      "WALLFLOWER",
+      "DAREDEVIL",
+      "HOMEBODY",
+      "WORRYWART"
+    ],
+    "batch": 7
+  },
+  {
+    "id": "legal-terms",
+    "concept": "Courtroom and legal words",
+    "subject": "other",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "INTHEDOCK",
+    "sampleAnswers": [
+      "VERDICT",
+      "PLAINTIFF",
+      "DEFENDANT",
+      "SUBPOENA",
+      "AFFIDAVIT",
+      "TESTIMONY"
+    ],
+    "batch": 3
+  },
+  {
+    "id": "banking-words",
+    "concept": "Banking and personal-finance words",
+    "subject": "other",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "MONEYMATTERS",
+    "sampleAnswers": [
+      "INTEREST",
+      "DEPOSIT",
+      "MORTGAGE",
+      "OVERDRAFT",
+      "DIVIDEND",
+      "PENSION"
+    ],
+    "batch": 3
+  },
+  {
+    "id": "street-words",
+    "concept": "Road and street features",
+    "subject": "other",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "STREETSMART",
+    "sampleAnswers": [
+      "JUNCTION",
+      "ROUNDABOUT",
+      "CROSSWALK",
+      "PAVEMENT",
+      "SPEEDBUMP",
+      "UNDERPASS"
+    ],
+    "batch": 3
+  },
+  {
+    "id": "airport-words",
+    "concept": "Words of air travel",
+    "subject": "other",
+    "type": "plain-punny",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "JETSETTERS",
+    "sampleAnswers": [
+      "PASSPORT",
+      "LUGGAGE",
+      "CUSTOMS",
+      "TERMINAL",
+      "RUNWAY",
+      "LAYOVER"
+    ],
+    "batch": 8
+  },
+  {
+    "id": "zodiac-signs",
+    "concept": "Signs of the zodiac",
+    "subject": "other",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "STARSIGNS",
+    "sampleAnswers": [
+      "ARIES",
+      "TAURUS",
+      "GEMINI",
+      "SCORPIO",
+      "CAPRICORN",
+      "AQUARIUS"
+    ],
+    "batch": 5
+  },
+  {
+    "id": "spa-treatments",
+    "concept": "Spa and wellness treatments",
+    "subject": "other",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "PAMPERED",
+    "sampleAnswers": [
+      "MASSAGE",
+      "SAUNA",
+      "FACIAL",
+      "PEDICURE",
+      "STEAMROOM",
+      "MUDWRAP"
+    ],
+    "batch": 5
+  },
+  {
+    "id": "yoga-poses",
+    "concept": "Yoga poses",
+    "subject": "other",
+    "type": "plain-literal",
+    "obscure": true,
+    "season": null,
+    "spangramIdea": "NAMASTE",
+    "sampleAnswers": [
+      "COBRA",
+      "WARRIOR",
+      "LOTUS",
+      "PIGEON",
+      "CORPSE",
+      "MOUNTAIN"
+    ],
+    "batch": 5
+  },
+  {
+    "id": "shades-of-blue",
+    "concept": "Shades of blue",
+    "subject": "other",
+    "type": "plain-literal",
+    "obscure": false,
+    "season": null,
+    "spangramIdea": "OUTOFTHEBLUE",
+    "sampleAnswers": [
+      "AZURE",
+      "CERULEAN",
+      "INDIGO",
+      "COBALT",
+      "PERIWINKLE",
+      "TURQUOISE"
+    ],
+    "batch": 5
+  }
+]
