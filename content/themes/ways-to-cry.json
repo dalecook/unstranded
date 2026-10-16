@@ -1,0 +1,9 @@
+{
+  "id": "ways-to-cry",
+  "clue": "Tears before bedtime",
+  "spangram": "WATERWORKS",
+  "obscure": false,
+  "answers": ["BLUBBER", "WHIMPER", "SNIVEL", "SNIFFLE", "SOBBING", "WEEPING", "BAWLING", "WAILING", "BOOHOO", "LAMENT"],
+  "recognized": ["SOBS", "WEEPS", "WAILS", "BAWLS", "CRIES", "MEWL", "PULE", "MOAN", "KEEN", "WEPT", "HOWL", "YOWL", "KEENING", "MEWLING", "WHIMPERING", "BLUBBERING", "SNIVELLING", "SNIVELING", "SNIFFLING", "CRYING", "LAMENTING", "TEARUP", "WELLUP", "SOBBED", "WAILED", "BAWLED", "BLUBBING", "SHEDTEARS", "BREAKDOWN", "WHINE", "WHINING", "GREETING", "SNUFFLE"],
+  "familiar": ["SNIVEL", "SNIFFLE", "BOOHOO"]
+}

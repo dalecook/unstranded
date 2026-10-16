@@ -1,0 +1,9 @@
+{
+  "id": "ways-to-complain",
+  "clue": "Verbs for complaining",
+  "spangram": "AIRGRIEVANCES",
+  "obscure": false,
+  "answers": ["GRUMBLE", "WHINGE", "GRIPE", "GROUSE", "BELLYACHE", "KVETCH", "WHINE", "PROTEST", "OBJECT", "GROAN"],
+  "recognized": ["MOAN", "CARP", "BEEF", "FUSS", "RAIL", "BLEAT", "MOANS", "CARPS", "BEEFS", "CRAB", "GRIPES", "BEMOAN", "BEWAIL", "LAMENT", "CRITICIZE", "CRITICISE", "NITPICK", "REMONSTRATE", "GRUMBLING", "GRUMBLED", "WHINGING", "WHINGEING", "GRIPING", "GROUSING", "KVETCHING", "MOANING", "WHINING", "PROTESTING", "OBJECTING", "GROANING", "GRIZZLING", "BELLYACHING", "MUTTER", "CHUNTER", "COMPLAIN", "SQUAWK", "CARPING", "BEEFING", "KICKUPAFUSS", "GRIZZLE"],
+  "familiar": ["WHINGE", "KVETCH", "BELLYACHE"]
+}

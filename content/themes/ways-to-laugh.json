@@ -1,0 +1,9 @@
+{
+  "id": "ways-to-laugh",
+  "clue": "Cracking up",
+  "spangram": "INSTITCHES",
+  "obscure": false,
+  "answers": ["GIGGLE", "CHUCKLE", "CHORTLE", "GUFFAW", "CACKLE", "TITTER", "SNICKER", "SNORT", "HOWLING", "ROARING"],
+  "recognized": ["HOOT", "LAUGH", "HAHA", "HEHE", "HOOTS", "HOWLS", "ROARS", "LAUGHS", "SNORTS", "GIGGLES", "LAUGHTER", "LAUGHING", "CHUCKLED", "CHORTLED", "HYSTERICS", "CRACKUP", "TITTERING", "GIGGLING", "SNICKERING", "CACKLING", "CHUCKLING", "GUFFAWING", "HOOTING", "SNORTING", "CRACKINGUP", "CHUCKLES", "GUFFAWS", "CACKLED", "GIGGLED", "BELLYLAUGH", "TEHEE"],
+  "familiar": ["CHORTLE", "GUFFAW", "TITTER"]
+}

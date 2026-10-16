@@ -1,0 +1,9 @@
+{
+  "id": "words-for-a-dog",
+  "clue": "Who's a good boy?",
+  "spangram": "MANSBESTFRIEND",
+  "obscure": false,
+  "answers": ["POOCH", "MONGREL", "DOGGO", "DOGGY", "DOGGIE", "PUPPER", "ROVER", "FLEABAG", "BOWWOW", "PUPPY", "LAPDOG"],
+  "recognized": ["CANINE", "HOUND", "MUTT", "TYKE", "TIKE", "FIDO", "SPOT", "CANID", "PUPPO", "DOGE", "STRAY", "WHELP", "FLOOF", "GUNDOG", "SHEEPDOG", "WATCHDOG", "GUARDDOG", "HOUNDDOG", "PUPPYDOG", "CROSSBREED", "BOWSER", "LASSIE", "GOODBOY", "GOODGIRL", "FURBABY", "WOOFER", "TAILWAGGER", "BARKER", "YAPPER"],
+  "familiar": ["DOGGO", "PUPPER", "FLEABAG", "BOWWOW", "LAPDOG"]
+}

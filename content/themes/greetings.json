@@ -1,0 +1,9 @@
+{
+  "id": "greetings",
+  "clue": "Ways to say hi",
+  "spangram": "HITHERE",
+  "obscure": false,
+  "answers": ["HELLO", "HOWDY", "GREETINGS", "ALOHA", "WELCOME", "GOODDAY", "BONJOUR", "NAMASTE", "SHALOM", "YOOHOO", "WOTCHER"],
+  "recognized": ["HIYA", "CIAO", "AHOY", "GDAY", "HALLO", "HULLO", "HAIL", "SALVE", "HEYA", "HOWDYDO", "HELLOTHERE", "HEYTHERE", "SALUTATIONS", "WOTCHA", "EVENING", "AFTERNOON", "GOODMORNING", "GOODEVENING", "GOODAFTERNOON", "HOWDOYOUDO", "WASSUP", "WHATSUP", "SALAAM", "KONNICHIWA", "GUTENTAG", "BUONGIORNO", "HOWZIT", "HALLOO", "ALRIGHT", "MORNIN", "WELCOMES", "BUENOSDIAS", "MORNING"],
+  "familiar": ["GOODDAY", "YOOHOO", "WOTCHER"]
+}

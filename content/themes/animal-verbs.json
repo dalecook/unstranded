@@ -1,0 +1,8 @@
+{
+  "id": "animal-verbs",
+  "clue": "Creatures you can do",
+  "spangram": "MONKEYBUSINESS",
+  "obscure": false,
+  "answers": ["BADGER", "FERRET", "PARROT", "SQUIRREL", "WEASEL", "FLOUNDER", "QUAIL", "SNIPE", "SNAKE", "HOUND", "DRONE", "SHRIMP"],
+  "recognized": ["TOMCAT", "SMELT", "PERCH", "SKATE", "HORSE", "BEAVER", "CHICKEN", "GOOSE", "CRANE", "GROUSE", "SWALLOW", "DUCK", "WOLF", "CROW", "BEAR", "HAWK", "GULL", "ROOK", "CARP", "CLAM", "LARK", "WORM", "SLUG", "BUCK", "PONY", "TICK", "SEAL", "CHAR", "HARE", "SHARK", "WHALE", "STEER", "LEECH", "LOUSE", "EAGLE", "FAWN", "GRUB", "WHELP", "FOAL", "RAVEN", "BUFFALO", "BEETLE", "RABBIT", "PEACOCK", "TURTLE"]
+}

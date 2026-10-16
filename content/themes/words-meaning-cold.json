@@ -1,0 +1,9 @@
+{
+  "id": "words-meaning-cold",
+  "clue": "Bitter weather",
+  "spangram": "CHILLTOTHEBONE",
+  "obscure": false,
+  "answers": ["CHILLY", "FREEZING", "FROSTY", "WINTRY", "NIPPY", "FRIGID", "POLAR", "BITING", "FROZEN", "PERISHING", "WINTERY", "SUBZERO"],
+  "recognized": ["GLACIAL", "BRISK", "ARCTIC", "COLD", "COOL", "ICED", "GELID", "PARKY", "ALGID", "RIMY", "SNOWY", "SHIVERY", "BALTIC", "HYPOTHERMIC", "NUMBING", "PIERCING", "BONECHILLING", "ICECOLD", "STONECOLD", "ICEBOUND", "FROSTBITTEN", "COOLISH", "COLDISH", "SLEETY", "FROSTED", "CHILLED", "BLEAK", "BRUMAL", "BOREAL"],
+  "familiar": ["WINTERY"]
+}

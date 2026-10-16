@@ -1,0 +1,8 @@
+{
+  "id": "room-compounds",
+  "clue": "Make room for these",
+  "spangram": "MAKEROOM",
+  "obscure": false,
+  "answers": ["DINING", "LIVING", "SITTING", "STOCK", "PANIC", "WAITING", "BOILER", "CHANGING", "UTILITY", "RUMPUS", "STAFF", "ESCAPE", "FITTING", "CONTROL"],
+  "recognized": ["BATH", "BALL", "BACK", "SHOW", "MUSH", "HEAD", "CHAT", "MAIL", "SALE", "WASH", "REST", "DARK", "PLAY", "NEWS", "SICK", "TOOL", "ANTE", "SPARE", "LUNCH", "MUSIC", "GAMES", "STEAM", "STATE", "GUARD", "CLEAN", "PUMP", "CHART", "FAMILY", "COMMON", "MORNING", "STRONG", "LUMBER", "SCHOOL", "READING", "WIGGLE", "BREATHING", "OPERATING", "EMERGENCY", "SERVER", "MEETING", "SMOKING", "SEWING", "RECOVERY", "DELIVERY", "STANDING", "CLOAK", "POWDER", "BOARD", "ENGINE", "ELBOW", "LOCKER", "COURT", "DRESSING", "CLASS", "STORE", "DRAWING", "GREEN", "GUEST"]
+}

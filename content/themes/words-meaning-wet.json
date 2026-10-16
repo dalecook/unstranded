@@ -1,0 +1,9 @@
+{
+  "id": "words-meaning-wet",
+  "clue": "Soaked through",
+  "spangram": "SOAKINGWET",
+  "obscure": false,
+  "answers": ["SOGGY", "DRENCHED", "SODDEN", "SOPPING", "SATURATED", "DRIPPING", "SOAKED", "SWAMPED", "DOUSED", "FLOODED", "SQUELCHY", "STEEPED"],
+  "recognized": ["SOUSED", "DAMP", "MOIST", "DEWY", "MUDDY", "MIRY", "BOGGY", "DANK", "AWASH", "WATERY", "SOPPINGWET", "DRIPPINGWET", "WRINGINGWET", "WRINGING", "SODDENED", "DROOKIT", "MARSHY", "SWAMPY", "SPONGY", "SQUISHY", "SQUELCHING", "CLAMMY", "HUMID", "DUNKED", "DIPPED", "BATHED", "RAINSOAKED", "WATERLOGGED", "SOAKEDTHROUGH", "WETTED", "WETTISH", "DRIPPY", "DROWNED", "IMMERSED", "SUBMERGED", "SLOPPY"],
+  "familiar": ["SOPPING", "SQUELCHY"]
+}

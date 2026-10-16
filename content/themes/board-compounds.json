@@ -1,0 +1,8 @@
+{
+  "id": "board-compounds",
+  "clue": "Get on BOARD with these",
+  "spangram": "ABOVEBOARD",
+  "obscure": false,
+  "answers": ["SWITCH", "BLACK", "CHECKER", "CUTTING", "LEADER", "CHEESE", "SKIRTING", "NOTICE", "BULLETIN", "SANDWICH", "MESSAGE", "SOUND", "PASTE", "EMERY"],
+  "recognized": ["CLIP", "DASH", "SURF", "SNOW", "DART", "BILL", "CARD", "FLOOR", "SIDE", "STAR", "OVER", "HARD", "BASE", "HEAD", "FOOT", "BACK", "CHIP", "WASH", "BODY", "KICK", "SIGN", "DUCK", "WALL", "CLAP", "FREE", "STORY", "SKIM", "WAKE", "LONG", "HOVER", "CORK", "MOOD", "FIBRE", "FIBER", "FINGER", "PLASTER", "RUNNING", "DRAWING", "CHOPPING", "PARTICLE", "SOUNDING", "DRAUGHT", "DRAUGHTS", "CHESS", "SHUFFLE", "DRAINING", "CLAPPER", "KEEL", "SKATE", "CHALK", "WHITE", "SPRING", "IRONING", "DIVING", "CIRCUIT", "SCORE", "BREAD", "MOTHER", "MORTAR", "PADDLE"]
+}

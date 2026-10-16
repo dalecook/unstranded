@@ -1,0 +1,8 @@
+{
+  "id": "stone-compounds",
+  "clue": "Leave none of these unturned",
+  "spangram": "SETINSTONE",
+  "obscure": false,
+  "answers": ["COBBLE", "GRIND", "BIRTH", "PAVING", "ROSETTA", "BLARNEY", "STEPPING", "PRECIOUS", "CORNER", "STANDING", "BLOOD"],
+  "recognized": ["MILE", "HAIL", "LIME", "SAND", "FLAG", "BRIM", "HEAD", "TOMB", "MOON", "LODE", "CURB", "KERB", "WHET", "SOAP", "IRON", "FREE", "GALL", "MILL", "RUNE", "PEACH", "FLINT", "FOUNDATION", "PHILOSOPHER", "PHILOSOPHERS", "SEMIPRECIOUS", "HEARTH", "WISHING", "PORTLAND", "MEMORIAL", "GRAVE", "KIDNEY", "TOUCH", "RHINE", "FIELD", "PUMICE", "CURLING", "CHERRY"]
+}

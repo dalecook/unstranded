@@ -1,0 +1,9 @@
+{
+  "id": "bathroom-fixtures",
+  "clue": "Plumbed in or fixed to the wall",
+  "spangram": "ENSUITE",
+  "obscure": false,
+  "answers": ["BATHTUB", "SHOWER", "TOILET", "BASIN", "BIDET", "CISTERN", "MIRROR", "URINAL", "VANITY", "FAUCET", "PLUGHOLE", "TOWELRAIL"],
+  "recognized": ["SINK", "TAPS", "TUBS", "DRAIN", "TILES", "TILE", "SEAT", "FLUSH", "SHELF", "HOOK", "HOOKS", "RAILS", "LAVATORY", "WASHBASIN", "HANDBASIN", "SHOWERHEAD", "SHOWERTRAY", "SHOWERSCREEN", "SHOWERCURTAIN", "CURTAIN", "PEDESTAL", "SPLASHBACK", "EXTRACTOR", "RADIATOR", "HANDRAIL", "TOWELRACK", "JACUZZI", "HOTTUB", "MIXERTAP", "TOILETSEAT", "CABINET", "SHELVES", "WASHSTAND"],
+  "familiar": ["TOWELRAIL", "PLUGHOLE"]
+}

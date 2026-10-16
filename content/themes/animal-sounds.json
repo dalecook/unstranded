@@ -1,0 +1,9 @@
+{
+  "id": "animal-sounds",
+  "clue": "Noises from the barnyard and beyond",
+  "spangram": "ANIMALNOISES",
+  "obscure": false,
+  "answers": ["BLEAT", "NEIGH", "WHINNY", "GROWL", "SQUAWK", "CHIRP", "QUACK", "CLUCK", "CROAK", "BELLOW", "TWEET", "GRUNT", "SNARL", "SQUEAK", "CHEEP", "RIBBIT", "HEEHAW"],
+  "recognized": ["TRUMPET", "WARBLE", "WHIMPER", "SNORT", "GOBBLE", "CACKLE", "HOWL", "BARK", "OINK", "HOOT", "PURR", "ROAR", "HISS", "BRAY", "BUZZ", "WOOF", "YELP", "CROW", "HONK", "MEOW", "YOWL", "TRILL", "WHINE", "MIAOW", "MIAOU", "RUFF", "SCREECH", "CHATTER", "CHITTER", "TWITTER", "WHICKER", "NICKER", "CATERWAUL", "GIBBER", "BOWWOW", "CHIRRUP", "COCKADOODLEDOO", "SNUFFLE", "TUWHOO", "CHIRR", "CHUCKLE", "HOOTING", "BRAYING", "BARKING", "ROARING", "HOWLING", "PURRING"],
+  "familiar": ["WHINNY", "RIBBIT", "HEEHAW"]
+}

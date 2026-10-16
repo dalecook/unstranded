@@ -1,0 +1,8 @@
+{
+  "id": "house-compounds",
+  "clue": "Moving in ahead of HOUSE",
+  "spangram": "ONTHEHOUSE",
+  "obscure": false,
+  "answers": ["POWER", "STORE", "COFFEE", "ROUND", "STEAK", "HALFWAY", "BOARDING", "SLAUGHTER", "PUBLIC", "MANOR", "COUNTING", "CUSTOM", "CLEARING", "CARRIAGE", "MEETING", "PACKING"],
+  "recognized": ["BOAT", "FARM", "TREE", "DOLL", "BATH", "ROAD", "FIRE", "PLAY", "TOWN", "WORK", "ALMS", "POOR", "WASH", "BAKE", "BREW", "CHOP", "FLOP", "BUNK", "FULL", "OPEN", "SAFE", "BIRD", "PENT", "GATE", "COOK", "FREE", "CLUB", "WARE", "PUMP", "DOSS", "LONG", "COACH", "SMOKE", "WENDY", "FIELD", "STATE", "DOLLS", "CHARNEL", "COUNTRY", "SCHOOL", "LODGING", "ROOMING", "CHAPTER", "LIGHT", "GREEN", "COURT", "OPERA", "GUEST", "GLASS", "SUMMER", "WHEEL", "ROUGH", "GUARD"]
+}

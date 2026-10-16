@@ -1,0 +1,9 @@
+{
+  "id": "sun-compounds",
+  "clue": "SUN ___",
+  "spangram": "PLACEINTHESUN",
+  "obscure": false,
+  "answers": ["FLOWER", "GLASSES", "BATHE", "BLOCK", "LOUNGER", "SHADE", "BAKED", "DOWNER", "BURNT", "TANNED"],
+  "recognized": ["RISE", "DIAL", "DECK", "BEAM", "SPOT", "ROOF", "LAMP", "TRAP", "BEDS", "BURNS", "BURNED", "SETS", "HATS", "FISH", "BLIND", "BLINDS", "PORCH", "CREAM", "STRUCK", "DRENCHED", "SOAKED", "SPOTS", "BEAMS", "LIGHTS", "TANS", "TANNING", "BATHING", "BATHER", "BATHERS", "BATHED", "DIALS", "FLOWERS", "SCREENS", "STROKES", "BONNETS", "LOUNGERS", "DRESSES", "SHADES", "BLOCKS", "ROOM", "ROOMS", "SUIT", "SUITS", "VISOR", "VISORS", "BELT", "WARD", "WARDS", "BIRD", "BIRDS", "LESS", "DECKS", "ROOFS", "LAMPS", "TRAPS", "RISES", "SHINY", "DAYS", "DAES", "KISSED", "GODS", "SPOTTED", "SCORCHED", "BOWS", "STONE", "CATCHER", "STROKE", "LIGHT", "DRESS", "BONNET", "SCREEN", "SHINE"],
+  "familiar": []
+}

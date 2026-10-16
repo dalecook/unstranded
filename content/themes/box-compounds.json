@@ -1,0 +1,8 @@
+{
+  "id": "box-compounds",
+  "clue": "Thinking inside the BOX",
+  "spangram": "OUTOFTHEBOX",
+  "obscure": false,
+  "answers": ["LETTER", "BALLOT", "TINDER", "JUICE", "MUSIC", "WITNESS", "CIGAR", "SENTRY", "SNUFF", "WINDOW", "LITTER", "BENTO", "SHADOW", "PIZZA"],
+  "recognized": ["JUKE", "SOAP", "SHOE", "TOOL", "GEAR", "SAND", "MAIL", "PILL", "POST", "CASH", "BOOM", "DROP", "FUSE", "LOCK", "CALL", "TUCK", "SOUND", "PHONE", "IDIOT", "SWEAT", "HORSE", "BLACK", "PAINT", "CHECK", "TEXT", "PRESS", "NEST", "BREAD", "LIGHT", "SALT", "BAND", "FIRE", "TICK", "COOL", "MONEY", "PILLAR", "POLICE", "SIGNAL", "GOGGLE", "PENALTY", "JEWELRY", "JEWELLERY", "TRINKET", "CEREAL", "NESTING", "SQUEEZE", "SEARCH", "DIALOG", "DIALOGUE", "TELEPHONE", "BATTERS", "LUNCH", "MATCH", "CHATTER", "GLOVE", "STRONG"]
+}

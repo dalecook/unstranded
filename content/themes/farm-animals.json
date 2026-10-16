@@ -1,0 +1,8 @@
+{
+  "id": "farm-animals",
+  "clue": "Down on the farm",
+  "spangram": "OLDMACDONALD",
+  "obscure": false,
+  "answers": ["CHICKEN", "GOOSE", "TURKEY", "DONKEY", "ALPACA", "SHEEP", "HORSE", "CATTLE", "ROOSTER", "PIGLET", "HEIFER", "LLAMA", "STEER", "STALLION", "GANDER", "BANTAM"],
+  "recognized": ["COWS", "PIGS", "GOAT", "GOATS", "DUCK", "DUCKS", "HENS", "LAMB", "LAMBS", "CALF", "BULL", "BULLS", "MULE", "MULES", "OXEN", "BOAR", "PONY", "FOAL", "MARE", "EWES", "RAMS", "SOWS", "HOGS", "KIDS", "BULLOCK", "CHICKS", "CALVES", "PIGLETS", "PONIES", "CHICKENS", "GEESE", "TURKEYS", "DONKEYS", "DAIRYCOW", "DUCKLING", "GOSLING", "FILLY", "COLT", "HOGGET", "WETHER", "CAPON", "PULLET", "STEERS", "HEIFERS", "COCKEREL", "DRAKE", "ALPACAS", "LLAMAS", "ROOSTERS", "GANDERS", "BANTAMS", "HORSES", "STALLIONS", "DUCKLINGS", "GOSLINGS", "LAMBKIN"]
+}

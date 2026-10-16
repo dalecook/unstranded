@@ -1,0 +1,8 @@
+{
+  "id": "garment-parts",
+  "clue": "Parts of a shirt or jacket",
+  "spangram": "TAILORMADE",
+  "obscure": false,
+  "answers": ["COLLAR", "SLEEVE", "POCKET", "LAPEL", "BUTTON", "PLACKET", "LINING", "ZIPPER", "PLEAT", "GUSSET", "NECKLINE"],
+  "recognized": ["CUFF", "CUFFS", "YOKE", "SEAM", "SEAMS", "HOOD", "VENT", "DART", "FLAP", "LABEL", "LOOP", "DARTS", "VENTS", "PLEATS", "BUTTONHOLE", "HEMLINE", "SHIRTTAIL", "SHIRTTAILS", "SHOULDERPAD", "LAPELS", "COLLARS", "SLEEVES", "POCKETS", "BUTTONS", "WAISTBAND", "FACING", "DRAWSTRING", "ARMHOLE", "EPAULET", "BREASTPOCKET", "NECKBAND", "DRAWCORD", "ELBOWPATCH", "SHOULDER", "BACKVENT", "ZIPPERS", "ZIPFLY", "BUTTONHOLES", "EPAULETTE"]
+}

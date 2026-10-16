@@ -1,0 +1,9 @@
+{
+  "id": "baby-animals",
+  "clue": "Little ones of the animal kingdom",
+  "spangram": "YOUNGSTERS",
+  "obscure": false,
+  "answers": ["KITTEN", "PIGLET", "DUCKLING", "GOSLING", "CYGNET", "CHICK", "OWLET", "EAGLET", "FLEDGLING", "NESTLING", "YEARLING", "HATCHLING"],
+  "recognized": ["ELVER", "LEVERET", "FILLY", "TADPOLE", "CALF", "FOAL", "LAMB", "JOEY", "FAWN", "COLT", "POULT", "SQUAB", "LARVA", "SPAT", "KITTY", "WHELP", "NYMPH", "GRUB", "SMOLT", "PARR", "CRIA", "EYAS", "PUPPY", "SPIDERLING", "CATERPILLAR", "LAMBKIN", "PIGLING", "KITLING", "CODLING", "FINGERLING", "GRILSE", "WEANER", "WEANLING", "SUCKLING", "HEIFER", "COCKEREL", "PULLET", "HOGLET", "PUGGLE", "POLLIWOG", "POLLYWOG", "SQUEAKER", "CHICKLING", "MAGGOT"],
+  "familiar": ["OWLET", "EAGLET"]
+}

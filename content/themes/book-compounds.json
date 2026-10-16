@@ -1,0 +1,8 @@
+{
+  "id": "book-compounds",
+  "clue": "Read the words before a book",
+  "spangram": "BYTHEBOOK",
+  "obscure": false,
+  "answers": ["SCRAP", "GUIDE", "STORY", "GUEST", "CHECK", "PHONE", "COMIC", "PRAYER", "EXERCISE", "RECIPE", "ADDRESS", "PHRASE", "AUDIO", "MATCH", "SPELL"],
+  "recognized": ["PASS", "NOTE", "TEXT", "CASE", "COOK", "HAND", "YEAR", "HYMN", "DATE", "SONG", "CODE", "RULE", "WORK", "PLAY", "BANK", "ORDER", "BLACK", "GOOD", "CHEQUE", "PICTURE", "SKETCH", "COLORING", "COLOURING", "HISTORY", "JUNGLE", "SCHOOL", "POCKET", "COUPON", "ACCOUNT", "RECORD", "STORYBOOK"]
+}

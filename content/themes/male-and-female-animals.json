@@ -1,0 +1,9 @@
+{
+  "id": "male-and-female-animals",
+  "clue": "He said, she said",
+  "spangram": "BIRDSANDBEES",
+  "obscure": true,
+  "answers": ["VIXEN", "TIGRESS", "LIONESS", "PEAHEN", "PEACOCK", "COCKEREL", "PULLET", "NANNY", "BILLY", "JENNY", "TOMCAT"],
+  "recognized": ["ROEBUCK", "DRONE", "DRAKE", "HEIFER", "ROOSTER", "GANDER", "STALLION", "BOAR", "BUCK", "STAG", "HIND", "MARE", "BULL", "JILL", "GILT", "SIRE", "COLT", "JACK", "QUEEN", "FILLY", "HART", "GOOSE", "STEER", "NANNYGOAT", "BILLYGOAT", "BULLOCK", "GELDING", "BARROW", "CAPON", "WETHER", "DOGFOX", "SHEWOLF", "QUEENBEE", "BROODMARE", "JENNET"],
+  "familiar": ["PEAHEN"]
+}

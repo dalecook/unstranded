@@ -1,0 +1,8 @@
+{
+  "id": "line-compounds",
+  "clue": "Queue up ahead of LINE",
+  "spangram": "TOETHELINE",
+  "obscure": false,
+  "answers": ["COAST", "CLOTHES", "BOTTOM", "WAIST", "FINISH", "PICKET", "STREAM", "FIRING", "FISHING", "ASSEMBLY", "DOTTED", "UNDER", "PARTY"],
+  "recognized": ["HEAD", "DEAD", "LIFE", "HAIR", "TIME", "DATE", "SIDE", "BASE", "HELP", "MAIN", "PIPE", "NECK", "TREE", "SNOW", "TIDE", "GOAL", "HARD", "FLAT", "PLOT", "LAND", "TRAM", "FINE", "BREAD", "POWER", "CONGA", "CHALK", "TOUCH", "CHORUS", "BIKINI", "STARTING", "PRODUCTION", "BRANCH", "DRAGLINE", "STRAIGHT", "PLIMSOLL", "STORY", "PUNCH", "SHORE", "FAULT", "FRONT", "WATER", "GUIDE", "BLOOD"]
+}

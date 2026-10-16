@@ -1,0 +1,8 @@
+{
+  "id": "words-for-a-crowd",
+  "clue": "Lots and lots of people",
+  "spangram": "SEAOFFACES",
+  "obscure": false,
+  "answers": ["THRONG", "HORDE", "MULTITUDE", "RABBLE", "CRUSH", "DROVES", "SCRUM", "AUDIENCE", "GATHERING", "TURNOUT"],
+  "recognized": ["CROWD", "HOST", "MASS", "ARMY", "HERD", "PACK", "TIDE", "PRESS", "TROOP", "BEVY", "MOBS", "BAND", "CROWDS", "HORDES", "THRONGS", "SWARMS", "MULTITUDES", "LEGIONS", "FLOCKS", "MASSES", "ASSEMBLAGE", "CONGREGATION", "HOIPOLLOI", "RIFFRAFF", "SPECTATORS", "ONLOOKERS", "SEAOFPEOPLE", "TROUPE", "STAMPEDE", "CROWDING", "MOBBED", "AUDIENCES", "CROWDED", "THRONGING", "HUDDLE", "CONCOURSE", "LEGION", "SWARM", "FLOCK", "ASSEMBLY"]
+}

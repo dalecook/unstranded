@@ -1,0 +1,8 @@
+{
+  "id": "palindromes",
+  "clue": "Forwards, backwards, no change",
+  "spangram": "SAMEBOTHWAYS",
+  "obscure": false,
+  "answers": ["RACECAR", "KAYAK", "CIVIC", "RADAR", "ROTOR", "REFER", "MADAM", "SOLOS", "STATS", "TENET", "ROTATOR", "REDDER", "SAGAS"],
+  "recognized": ["LEVEL", "DEIFIED", "NOON", "DEED", "PEEP", "POOP", "TOOT", "SEES", "NAAN", "KOOK", "OTTO", "ANNA", "ABBA", "ELLE", "STETS", "ALULA", "SHAHS", "MINIM", "PULLUP", "PUTUP", "REPAPER", "REVIVER", "ROTAVATOR", "REDIVIDER", "MALAYALAM", "HANNAH", "DENNED", "TERRET", "TATTARRATTAT", "SEXES", "BOOB"]
+}

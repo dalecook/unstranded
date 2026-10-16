@@ -1,0 +1,9 @@
+{
+  "id": "animal-homes",
+  "clue": "Where creatures lay their heads",
+  "spangram": "ANIMALHOMES",
+  "obscure": false,
+  "answers": ["BURROW", "WARREN", "KENNEL", "HUTCH", "EYRIE", "LODGE", "ROOST", "AVIARY", "PIGSTY", "ANTHILL", "COCOON", "STALL", "HENHOUSE"],
+  "recognized": ["CORRAL", "STABLE", "NEST", "LAIR", "HIVE", "SETT", "DREY", "HOLT", "FORM", "BYRE", "COOP", "FOLD", "CAVE", "BARN", "CAGE", "COTE", "SHELL", "EARTH", "HOLE", "MOUND", "AERIE", "BEEHIVE", "NESTBOX", "BIRDHOUSE", "BIRDCAGE", "MOLEHILL", "TERMITEMOUND", "DOVECOTE", "DOVECOT", "SHEEPFOLD", "PIGPEN", "COWSHED", "FISHBOWL", "AQUARIUM", "TERRARIUM", "VIVARIUM", "FORMICARY", "HOLLOW", "CATTERY", "CHICKENCOOP", "HENCOOP", "RABBITHUTCH", "DOGHOUSE", "SPIDERWEB", "COBWEB", "ROOKERY", "HERONRY", "PADDOCK", "MENAGERIE", "ENCLOSURE", "HABITAT", "BIRDBOX"],
+  "familiar": ["EYRIE", "PIGSTY", "HENHOUSE"]
+}
