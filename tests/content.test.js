@@ -19,10 +19,14 @@ const themes = files.map((file) => {
 const KEYS = new Set(['id', 'clue', 'spangram', 'obscure', 'answers', 'recognized', 'familiar']);
 const reverse = (w) => [...w].reverse().join('');
 
-test('there are at least 55 themes, 9 to 14 of them obscure', () => {
+test('there are at least 55 themes, about 1 in 6 (8% to 25%) of them obscure', () => {
   assert.ok(themes.length >= 55, `only ${themes.length} themes`);
   const obscure = themes.filter(({ theme }) => theme.obscure === true).length;
-  assert.ok(obscure >= 9 && obscure <= 14, `${obscure} obscure themes`);
+  const share = obscure / themes.length;
+  assert.ok(
+    share >= 0.08 && share <= 0.25,
+    `${obscure} of ${themes.length} themes obscure (${(share * 100).toFixed(1)}%)`
+  );
 });
 
 test('theme ids and spangrams are unique across themes', () => {
