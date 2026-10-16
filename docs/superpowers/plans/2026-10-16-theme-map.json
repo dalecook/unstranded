@@ -1568,22 +1568,23 @@
     "batch": 9
   },
   {
-    "id": "palindromes",
-    "concept": "Common palindromic words (closed list)",
+    "id": "acronyms",
+    "concept": "Acronyms said as words (closed list)",
     "subject": "language & words",
     "type": "wordplay",
     "obscure": false,
     "season": null,
-    "spangramIdea": "SAMEBOTHWAYS",
+    "spangramIdea": "ACRONYMS",
     "sampleAnswers": [
-      "RACECAR",
-      "KAYAK",
-      "LEVEL",
-      "CIVIC",
-      "RADAR",
-      "ROTOR"
+      "LASER",
+      "SCUBA",
+      "SONAR",
+      "TASER",
+      "NIMBY",
+      "UNESCO"
     ],
-    "batch": 9
+    "batch": 9,
+    "replaces": "palindromes"
   },
   {
     "id": "book-compounds",
@@ -2973,23 +2974,23 @@
     "batch": 2
   },
   {
-    "id": "canadian-places",
-    "concept": "Provinces, territories and cities of Canada",
+    "id": "european-countries",
+    "concept": "Countries of Europe",
     "subject": "nature & geography",
     "type": "plain-literal",
-    "obscure": true,
+    "obscure": false,
     "season": null,
-    "spangramIdea": "TRUENORTH",
+    "spangramIdea": "EUROTRIP",
     "sampleAnswers": [
-      "ONTARIO",
-      "QUEBEC",
-      "ALBERTA",
-      "MANITOBA",
-      "NUNAVUT",
-      "NOVASCOTIA"
+      "FRANCE",
+      "SPAIN",
+      "SWEDEN",
+      "NORWAY",
+      "POLAND",
+      "GERMANY"
     ],
     "batch": 2,
-    "replaces": "canadian-provinces"
+    "replaces": "canadian-places"
   },
   {
     "id": "world-capitals",
@@ -3263,22 +3264,23 @@
     "batch": 6
   },
   {
-    "id": "berries",
-    "concept": "Kinds of berry",
+    "id": "spirits",
+    "concept": "Distilled spirits",
     "subject": "food & drink",
     "type": "plain-literal",
     "obscure": false,
     "season": null,
-    "spangramIdea": "BERRYPICKING",
+    "spangramIdea": "TOPSHELF",
     "sampleAnswers": [
-      "STRAWBERRY",
-      "BLUEBERRY",
-      "RASPBERRY",
-      "GOOSEBERRY",
-      "MULBERRY",
-      "CRANBERRY"
+      "VODKA",
+      "WHISKY",
+      "BRANDY",
+      "TEQUILA",
+      "BOURBON",
+      "COGNAC"
     ],
-    "batch": 7
+    "batch": 7,
+    "replaces": "berries"
   },
   {
     "id": "orchard-fruit",

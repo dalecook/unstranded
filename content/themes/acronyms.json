@@ -1,0 +1,9 @@
+{
+  "id": "acronyms",
+  "clue": "Initials you say as a word",
+  "spangram": "ACRONYMS",
+  "obscure": false,
+  "answers": ["LASER", "SCUBA", "SONAR", "TASER", "NIMBY", "YUPPIE", "UNESCO", "UNICEF", "NASCAR", "NASDAQ", "CAPTCHA", "POTUS", "NAFTA", "ASCII", "SCOTUS", "LASIK"],
+  "recognized": ["RADAR", "NASA", "NATO", "AWOL", "ASAP", "OPEC", "FIFA", "UEFA", "SWAT", "WASP", "DINK", "DINKS", "YOLO", "FOMO", "MASER", "LIDAR", "JPEG", "CERN", "NORAD", "ASEAN", "IKEA", "FUBAR", "SNAFU", "QANGO", "GULAG", "AIDS", "SARS", "MERS", "COVID", "NAAFI", "SEATO", "BAFTA", "ANZAC", "OFCOM", "DEFRA", "FLOTUS", "OFSTED", "GESTAPO", "INTERPOL", "WYSIWYG", "FORTRAN", "COBOL", "ARPANET", "AMTRAK", "BENELUX", "ZIPCODE", "RADARS", "LASERS", "TASERS", "YUPPIES", "NIMBYS", "MASERS"],
+  "familiar": []
+}
