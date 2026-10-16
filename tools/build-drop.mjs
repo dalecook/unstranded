@@ -11,6 +11,9 @@
 //      passes (the search gives a barren count up early), the nearest feasible counts are tried
 //      in turn and the fallback is reported. The hardest passing board is kept for each
 //      stepping-stone count (2-5).
+//   Theme reuse. Dailies must use a theme that was never a daily in an earlier drop; library
+//   puzzles may reuse any theme, but on a different board: a word subset that is not contained in
+//   an earlier board's answers (as few of them as possible), and never an earlier grid.
 //   3. Select (selectBoards): themes are picked so the word counts stay balanced (each pick is
 //      the hardest remaining theme of the least-used count), obscure themes first up to their
 //      quota as before. Then each selected theme uses the board whose stepping-stone count is
@@ -47,16 +50,35 @@ const MAX_OBSCURE = 10;
 // Word count aimed for when a caller gives searchTheme no target.
 const DEFAULT_TARGET = 6;
 
+// What earlier drops used: `dailyThemeIds` (themes that were ever a daily) and `boards`
+// (theme id -> [{ words, grid }]: the non-spangram answers and the grid string of each board).
+export function earlierUse(drops) {
+  const dailyThemeIds = [];
+  const boards = {};
+  for (const drop of drops) {
+    const scheduled = new Set(Object.values(drop.schedule ?? {}));
+    for (const p of drop.puzzles) {
+      if (scheduled.has(p.id)) dailyThemeIds.push(p.themeId);
+      (boards[p.themeId] ??= []).push({
+        words: p.answers.filter((a) => !a.isSpangram).map((a) => a.word),
+        grid: p.grid.join(''),
+      });
+    }
+  }
+  return { dailyThemeIds: [...new Set(dailyThemeIds)], boards };
+}
+
 // Which themes to search, and the number of theme words each should aim for. Returns the jobs
-// ({ theme, eligible, feasible, target }, in theme id order) plus the themes that cannot be
-// searched at all and the answers rejected as unfamiliar.
-export function planDrop({ dropId, themes, ranks, existingDropThemeIds = [] }) {
-  const skipped = new Set(existingDropThemeIds);
+// ({ theme, eligible, feasible, target, fresh, avoid }, in theme id order) plus the themes that
+// cannot be searched at all and the answers rejected as unfamiliar. `fresh` is true for a theme
+// never used as a daily; `avoid` lists its earlier boards. Throws if fewer than `dailies`
+// fresh themes can be searched.
+export function planDrop({ dropId, themes, ranks, earlier = {}, dailies = 0 }) {
+  const wasDaily = new Set(earlier.dailyThemeIds ?? []);
   const failures = [];
   const rejections = [];
   const jobs = [];
   for (const theme of [...themes].sort((a, b) => a.id.localeCompare(b.id))) {
-    if (skipped.has(theme.id)) continue;
     const { eligible, rejected } = eligibleAnswers(theme, ranks);
     if (rejected.length) rejections.push({ themeId: theme.id, words: rejected });
     if (eligible.length < 4) {
@@ -68,11 +90,18 @@ export function planDrop({ dropId, themes, ranks, existingDropThemeIds = [] }) {
       failures.push({ themeId: theme.id, reason: 'no word set fills the board' });
       continue;
     }
-    jobs.push({ theme, eligible, feasible });
+    jobs.push({ theme, eligible, feasible, fresh: !wasDaily.has(theme.id), avoid: earlier.boards?.[theme.id] ?? [] });
   }
+  requireFreshThemes(jobs.filter((j) => j.fresh).length, dailies, failures);
   const targets = assignTargets(jobs.map((j) => ({ id: j.theme.id, feasible: j.feasible })), dropId);
   for (const job of jobs) job.target = targets.get(job.theme.id);
   return { jobs, failures, rejections };
+}
+
+function requireFreshThemes(have, dailies, failures = []) {
+  if (have >= dailies) return;
+  const why = failures.map((f) => `${f.themeId}: ${f.reason}`).join('; ');
+  throw new Error(`Not enough fresh themes for the dailies: ${dailies} needed, ${have} never used as a daily and searchable${why ? ` (skipped: ${why})` : ''}. Add themes to content/themes/.`);
 }
 
 // Attempt limits for one word count with `sets` distinct word sets: `cap` attempts at most,
@@ -104,7 +133,7 @@ export function enoughCandidates(passes, stoneCounts, maxCandidates = MAX_CANDID
 // safety net only.
 export function searchTheme(theme, dropId, {
   attempts, seconds, eligible, blockset = new Set(), maxCandidates = MAX_CANDIDATES,
-  target = DEFAULT_TARGET, feasible = null, earlyStop = true,
+  target = DEFAULT_TARGET, feasible = null, earlyStop = true, avoid = [],
 }) {
   const sets = countWordSets(theme.spangram, eligible);
   const enough = () => (earlyStop ? enoughCandidates(passes, byStones.size, maxCandidates) : passes >= maxCandidates);
@@ -114,6 +143,27 @@ export function searchTheme(theme, dropId, {
   const pruned = {};
   const checked = { answers: theme.answers, recognized: theme.recognized };
   const byStones = new Map();
+  const earlierSets = avoid.map((b) => new Set(b.words));
+  const earlierGrids = new Set(avoid.map((b) => b.grid));
+  const everUsed = new Set(avoid.flatMap((b) => b.words));
+  const freshSubject = { spangram: theme.spangram, words: eligible.filter((w) => !everUsed.has(w)) };
+  const overlapOf = (ws) => earlierSets.reduce((n, set) => n + ws.filter((w) => set.has(w)).length, 0);
+  const repeats = (ws) => earlierSets.some((set) => ws.every((w) => set.has(w)));
+  // The word subset for one attempt: for a reused theme, the least overlapping of a few draws
+  // (one from the words no earlier board used), never one contained in an earlier board.
+  const draw = (k) => {
+    if (!avoid.length) return { words: chooseWords(subject, rand, { minCount: k, maxCount: k }), overlap: 0 };
+    const drawn = [];
+    if (freshSubject.words.length) drawn.push(chooseWords(freshSubject, rand, { minCount: k, maxCount: k }));
+    for (let i = 0; i < 3; i++) drawn.push(chooseWords(subject, rand, { minCount: k, maxCount: k }));
+    let best = null;
+    for (const ws of drawn) {
+      if (!ws || repeats(ws)) continue;
+      const overlap = overlapOf(ws);
+      if (!best || overlap < best.overlap) best = { words: ws, overlap };
+    }
+    return best ?? { words: null, overlap: 0 };
+  };
   let count = null;
   let passes = 0;
   let tried = 0;
@@ -124,11 +174,11 @@ export function searchTheme(theme, dropId, {
     for (let attempt = 0; attempt < cap && !enough(); attempt++) {
       if (!passes && attempt >= giveUp) break;
       if (Date.now() > deadline) { capped = true; break; }
-      const words = chooseWords(subject, rand, { minCount: k, maxCount: k });
+      const { words, overlap } = draw(k);
       if (!words) continue;
       tried++;
       const board = generateBoard(theme, words, rand, { blockset, stats: pruned });
-      if (!board) continue;
+      if (!board || earlierGrids.has(board.grid.join(''))) continue;
       const result = checkPuzzle(board, checked);
       const offensive = offensiveWordsOn(board.grid, blockset, board.answers);
       if (!result.ok || offensive.length || result.steppingStones.join() !== board.steppingStones.join()) {
@@ -138,8 +188,9 @@ export function searchTheme(theme, dropId, {
       const variant = { grid: board.grid, answers: board.answers };
       const score = difficulty(variant, { obscure: !!theme.obscure });
       const stones = result.steppingStones.length;
-      if (!byStones.has(stones) || score > byStones.get(stones).score) {
-        byStones.set(stones, { variant, score, steppingStones: result.steppingStones });
+      const held = byStones.get(stones);
+      if (!held || overlap < held.overlap || (overlap === held.overlap && score > held.score)) {
+        byStones.set(stones, { variant, score, steppingStones: result.steppingStones, overlap });
       }
     }
     if (passes) { count = k; break; }
@@ -151,9 +202,11 @@ export function searchTheme(theme, dropId, {
       : 'no word set fills the board';
     return { failure: `${why}${capped ? '; time cap hit' : ''}`, capped };
   }
-  const candidates = [...byStones.keys()].sort((a, b) => a - b).map((n) => byStones.get(n));
+  const leastOverlap = Math.min(...[...byStones.values()].map((c) => c.overlap));
+  const candidates = [...byStones.keys()].sort((a, b) => a - b).map((n) => byStones.get(n))
+    .filter((c) => c.overlap === leastOverlap);
   const best = candidates.reduce((a, b) => (b.score > a.score ? b : a));
-  return { best, candidates, passes, attempts: tried, capped, count, target };
+  return { best, candidates, passes, attempts: tried, capped, count, target, overlap: leastOverlap };
 }
 
 // Choose `count` boards from the themes that produced one. `successes` are { theme, candidates }
@@ -161,7 +214,11 @@ export function searchTheme(theme, dropId, {
 // keep the theme-word counts balanced, taking up to MAX_OBSCURE obscure themes first, then
 // familiar themes, then any obscure ones left if more are needed. Each selected theme then
 // gets `chosen`, the candidate whose stepping-stone count balances the drop.
-export function selectBoards(successes, count) {
+//
+// With `dailies` given, the first `dailies` picks (returned as `daily`) come only from fresh
+// themes (success.fresh !== false), with obscure themes limited to what the schedule has slots
+// for; the rest (the library) come from the themes left, fresh or reused.
+export function selectBoards(successes, count, { dailies = 0 } = {}) {
   const byScore = (a, b) => b.score - a.score || a.theme.id.localeCompare(b.theme.id);
   const ranked = successes.map((s) => ({
     ...s,
@@ -170,10 +227,33 @@ export function selectBoards(successes, count) {
   }));
   const used = new Map();
   const pick = (list, n) => pickBalanced(list, n, (s) => s.count, used);
-  const obscure = pick(ranked.filter((s) => s.theme.obscure).sort(byScore), Math.min(MAX_OBSCURE, count));
-  const familiar = pick(ranked.filter((s) => !s.theme.obscure).sort(byScore), count - obscure.picked.length);
-  const extra = pick(obscure.left, count - obscure.picked.length - familiar.picked.length);
-  const selected = [...obscure.picked, ...familiar.picked, ...extra.picked];
+  // Obscure themes first up to `quota`, then familiar, then any obscure left.
+  const tier = (pool, n, quota) => {
+    const obscure = pick(pool.filter((s) => s.theme.obscure).sort(byScore), Math.min(quota, n));
+    const familiar = pick(pool.filter((s) => !s.theme.obscure).sort(byScore), n - obscure.picked.length);
+    const extra = pick(obscure.left, n - obscure.picked.length - familiar.picked.length);
+    return {
+      picked: [...obscure.picked, ...familiar.picked, ...extra.picked],
+      left: [...familiar.left, ...extra.left],
+      obscure: obscure.picked.length,
+    };
+  };
+  let daily = [];
+  let selected;
+  let left;
+  if (dailies) {
+    const slots = Math.floor((dailies + 6) / 7);
+    const first = tier(ranked.filter((s) => s.fresh !== false), dailies, Math.min(MAX_OBSCURE, slots));
+    const taken = new Set(first.picked);
+    const rest = tier(ranked.filter((s) => !taken.has(s)), count - first.picked.length, Math.max(0, MAX_OBSCURE - first.obscure));
+    daily = first.picked;
+    selected = [...first.picked, ...rest.picked];
+    left = rest.left;
+  } else {
+    const only = tier(ranked, count, MAX_OBSCURE);
+    selected = only.picked;
+    left = only.left;
+  }
   const stones = spreadStones(selected.map((s) => ({
     id: s.theme.id,
     options: s.candidates.map((c) => ({ stones: c.steppingStones.length, score: c.score })),
@@ -181,7 +261,7 @@ export function selectBoards(successes, count) {
   for (const s of selected) {
     s.chosen = s.candidates.find((c) => c.steppingStones.length === stones.get(s.theme.id));
   }
-  return { selected, spares: [...familiar.left, ...extra.left].map((s) => s.theme.id) };
+  return { selected, daily, spares: left.map((s) => s.theme.id) };
 }
 
 // Dictionary words of 6+ letters a player could select: any self-avoiding path, self-crossing
@@ -205,27 +285,29 @@ function tracedDictionaryWords(grid, dictionaryWords, exclude) {
 
 export function buildDrop({
   dropId, startDate, count = 50, dailies = 30, attempts = DEFAULT_ATTEMPTS, seconds = DEFAULT_SECONDS,
-  themes, ranks, existingDropThemeIds = [], dictionaryWords = [], blockset = new Set(),
+  themes, ranks, earlier = {}, dictionaryWords = [], blockset = new Set(),
   search = null,
 }) {
-  const { jobs, failures, rejections } = planDrop({ dropId, themes, ranks, existingDropThemeIds });
+  const { jobs, failures, rejections } = planDrop({ dropId, themes, ranks, earlier, dailies });
   const cappedThemes = [];
   const successes = [];
 
-  for (const { theme, eligible, feasible, target } of jobs) {
+  for (const { theme, eligible, feasible, target, fresh, avoid } of jobs) {
     const found = search
       ? search(theme)
-      : searchTheme(theme, dropId, { attempts, seconds, eligible, blockset, target, feasible });
+      : searchTheme(theme, dropId, { attempts, seconds, eligible, blockset, target, feasible, avoid });
     if (found.capped) cappedThemes.push(theme.id);
     if (found.failure) {
       failures.push({ themeId: theme.id, reason: found.failure });
       continue;
     }
-    successes.push({ theme, target, candidates: found.candidates ?? [found.best] });
+    successes.push({ theme, target, fresh, candidates: found.candidates ?? [found.best] });
   }
   failures.sort((a, b) => a.themeId.localeCompare(b.themeId));
 
-  const { selected, spares } = selectBoards(successes, count);
+  const freshFound = successes.filter((s) => s.fresh).length;
+  requireFreshThemes(freshFound, dailies, failures);
+  const { selected, daily, spares } = selectBoards(successes, count, { dailies });
   // Themes that ended up at another word count than planned: those in the drop, and the spares.
   const fellBack = (list) => list
     .map((s) => ({ themeId: s.theme.id, target: s.target, count: s.candidates[0].variant.answers.length - 1 }))
@@ -243,19 +325,21 @@ export function buildDrop({
     return { drop: null, meta: null, report: lines.join('\n'), failures, spares, variety: null };
   }
 
-  const puzzles = selected
-    .sort((a, b) => a.theme.id.localeCompare(b.theme.id))
-    .map(({ theme, chosen }) => ({
-      themeId: theme.id,
-      clue: theme.clue,
-      obscure: !!theme.obscure,
-      grid: chosen.variant.grid,
-      answers: chosen.variant.answers,
-      steppingStones: chosen.steppingStones,
-      difficulty: Math.round(chosen.score * 100) / 100,
-    }));
+  const toPuzzle = ({ theme, chosen }) => ({
+    themeId: theme.id,
+    clue: theme.clue,
+    obscure: !!theme.obscure,
+    grid: chosen.variant.grid,
+    answers: chosen.variant.answers,
+    steppingStones: chosen.steppingStones,
+    difficulty: Math.round(chosen.score * 100) / 100,
+  });
+  const byId = (a, b) => a.theme.id.localeCompare(b.theme.id);
+  const dailySet = new Set(daily);
+  const puzzles = daily.slice().sort(byId).map(toPuzzle);
+  const library = selected.filter((s) => !dailySet.has(s)).sort(byId).map(toPuzzle);
   const drop = assembleDrop({
-    id: dropId, startDate, puzzles, dailies, rand: mulberry32(hashString(`assemble:${dropId}`)),
+    id: dropId, startDate, puzzles, library, dailies, rand: mulberry32(hashString(`assemble:${dropId}`)),
   });
 
   const byTheme = new Map(selected.map((s) => [s.theme.id, s.theme]));
@@ -356,13 +440,13 @@ export function runInWorkers(jobs, { blockset, workers }) {
 // Same output as buildDrop, with the per-theme searches farmed out to a runner.
 export async function buildDropParallel(opts, { workers = 1, runner } = {}) {
   const { dropId, attempts = DEFAULT_ATTEMPTS, seconds = DEFAULT_SECONDS, blockset = new Set() } = opts;
-  const jobs = planDrop(opts).jobs.map((job) => ({ ...job, dropId, attempts, seconds }));
+  const jobs = planDrop({ dailies: 30, ...opts }).jobs.map((job) => ({ ...job, dropId, attempts, seconds }));
   const run = runner ?? (workers > 1 ? runInWorkers : runSequential);
   const started = performance.now();
   const results = await run(jobs, { blockset, workers });
   const wallMs = performance.now() - started;
   const timings = jobs.map((j) => ({ themeId: j.theme.id, ms: results.get(j.theme.id).ms }));
-  const built = buildDrop({ ...opts, search: (theme) => results.get(theme.id).result });
+  const built = buildDrop({ dailies: 30, ...opts, search: (theme) => results.get(theme.id).result });
   return { ...built, timings, wallMs };
 }
 
@@ -410,11 +494,9 @@ async function main() {
   const files = (await readdir(args.content)).filter((f) => f.endsWith('.json')).sort();
   const themes = await Promise.all(files.map((f) => readJson(join(args.content, f))));
   const index = await readJson('drops/index.json', []);
-  const existingDropThemeIds = [];
-  for (const id of index.filter((i) => i !== args.id)) {
-    const old = await readJson(`drops/${id}.json`);
-    existingDropThemeIds.push(...old.puzzles.map((p) => p.themeId));
-  }
+  const earlierDrops = [];
+  for (const id of index.filter((i) => i !== args.id)) earlierDrops.push(await readJson(`drops/${id}.json`));
+  const earlier = earlierUse(earlierDrops);
   const dictionaryWords = (await readFile('data/words.txt', 'utf8'))
     .split('\n').map((w) => w.trim().toUpperCase()).filter(Boolean);
   const ranks = await loadRanks();
@@ -422,7 +504,7 @@ async function main() {
   const result = await buildDropParallel({
     dropId: args.id, startDate: args.start, count: args.count,
     attempts: args.attempts, seconds: args.seconds,
-    themes, ranks, existingDropThemeIds, dictionaryWords, blockset,
+    themes, ranks, earlier, dictionaryWords, blockset,
   }, { workers: args.workers });
   console.log(`${timingHeader(result.timings, result.wallMs, args.workers)}
 ${result.report}`);

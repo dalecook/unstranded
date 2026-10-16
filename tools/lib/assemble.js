@@ -27,7 +27,9 @@ function obscureSlots(dates, count) {
   return slots;
 }
 
-export function assembleDrop({ id, startDate, puzzles, dailies = 30, rand }) {
+// `puzzles` fill the schedule (any left over go to the library); `library` puzzles are library
+// only, in the order given, after those.
+export function assembleDrop({ id, startDate, puzzles, library = [], dailies = 30, rand }) {
   if (puzzles.length < dailies) {
     throw new Error(`Need at least ${dailies} puzzles, got ${puzzles.length}`);
   }
@@ -58,6 +60,7 @@ export function assembleDrop({ id, startDate, puzzles, dailies = 30, rand }) {
     ...daily,
     ...obscure.slice(slots.length),
     ...familiar.slice(familiarCount),
+    ...library,
   ];
   const out = ordered.map((p, i) => ({ ...p, id: `${id}-p${String(i + 1).padStart(2, '0')}` }));
   const schedule = {};

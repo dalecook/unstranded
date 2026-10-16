@@ -52,8 +52,10 @@ test('planDrop gives every theme a feasible target and spreads the targets', () 
   assert.deepEqual(failures, []);
   const again = planDrop({ ...OPTS, themes: [...VARIED].reverse() });
   assert.deepEqual(again.jobs.map((j) => j.target), jobs.map((j) => j.target));
-  const skipped = planDrop({ ...OPTS, existingDropThemeIds: ['gems'] });
-  assert.deepEqual(skipped.jobs.map((j) => j.theme.id), ['birds', 'fruits', 'trees']);
+  const reused = planDrop({ ...OPTS, earlier: { dailyThemeIds: ['gems'], boards: { gems: [{ words: ['JASPER'], grid: 'X' }] } } });
+  assert.deepEqual(reused.jobs.map((j) => j.theme.id), ['birds', 'fruits', 'gems', 'trees']);
+  assert.deepEqual(reused.jobs.map((j) => j.fresh), [true, true, false, true]);
+  assert.deepEqual(reused.jobs[2].avoid, [{ words: ['JASPER'], grid: 'X' }]);
 });
 
 test('planDrop reports a theme whose words cannot fill the board', () => {

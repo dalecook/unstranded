@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { buildDrop, buildDropParallel, parseArgs, searchTheme, DEFAULT_ATTEMPTS, DEFAULT_SECONDS } from '../tools/build-drop.mjs';
+import { buildDrop, buildDropParallel, parseArgs, searchTheme, earlierUse, planDrop, DEFAULT_ATTEMPTS, DEFAULT_SECONDS } from '../tools/build-drop.mjs';
 import { verifyPuzzle } from '../tools/lib/layout.js';
 import { checkPuzzle } from '../tools/lib/checks.js';
 
@@ -46,7 +46,7 @@ function run(overrides = {}) {
     seconds: 60,
     themes: THEMES,
     ranks,
-    existingDropThemeIds: ['gems'],
+    earlier: { dailyThemeIds: ['gems'] },
     dictionaryWords: ['TRIPLET', 'CARDINAL'],
     ...overrides,
   });
@@ -118,12 +118,60 @@ test('meta lists unchosen 4-5 letter answers among the stepping-stone candidates
   assert.deepEqual(check, { ok: true, steppingStones: ['CDEF', 'IJLMN'] });
 });
 
-test('themes already used in an existing drop are skipped', () => {
+const dailyThemes = (drop) => new Set(drop.puzzles.filter((p) => Object.values(drop.schedule).includes(p.id)).map((p) => p.themeId));
+
+test('dailies come only from themes never used as a daily', () => {
   const { drop } = result();
-  assert.ok(!drop.puzzles.some((p) => p.themeId === 'gems'));
-  const alt = run({ existingDropThemeIds: ['gems', 'birds'] });
-  assert.equal(alt.drop, null);
-  assert.match(alt.report, /FAILED/);
+  assert.ok(!dailyThemes(drop).has('gems'));
+  // only trees is left when three themes are spent, short of two dailies.
+  assert.throws(() => run({ earlier: { dailyThemeIds: ['gems', 'birds', 'fruits'] } }), /Not enough fresh themes/);
+});
+
+test('library puzzles may reuse a theme that was an earlier daily', () => {
+  const { drop } = run({ count: 4, dailies: 3, earlier: { dailyThemeIds: ['gems'] } });
+  const library = new Set(drop.library);
+  const lib = drop.puzzles.filter((p) => library.has(p.id));
+  assert.deepEqual(lib.map((p) => p.themeId), ['gems']);
+  assert.ok(!dailyThemes(drop).has('gems'));
+});
+
+test('a reused theme gets a different word set and grid from its earlier boards', () => {
+  const birds = THEMES[0];
+  const first = searchTheme(birds, '2026-09', { attempts: 200, seconds: 60, eligible: birds.answers, target: 6 }).best.variant;
+  const prior = { words: first.answers.filter((a) => !a.isSpangram).map((a) => a.word), grid: first.grid.join('') };
+  const { drop } = run({ count: 4, dailies: 3, earlier: { dailyThemeIds: ['birds'], boards: { birds: [prior] } } });
+  const again = drop.puzzles.find((p) => p.themeId === 'birds');
+  assert.ok(drop.library.includes(again.id));
+  const words = again.answers.filter((a) => !a.isSpangram).map((a) => a.word);
+  assert.ok(!words.every((w) => prior.words.includes(w)), 'not contained in the earlier answers');
+  assert.notEqual(again.grid.join(''), prior.grid);
+  assert.ok(verifyPuzzle(again));
+});
+
+test('earlierUse reads daily themes and per-theme boards from earlier drops', () => {
+  const answers = [{ word: 'FEATHERED', isSpangram: true }, { word: 'PELICAN', isSpangram: false }];
+  const drop = {
+    schedule: { '2026-10-09': 'x-p01' },
+    puzzles: [
+      { id: 'x-p01', themeId: 'birds', grid: ['A', 'B'], answers },
+      { id: 'x-p02', themeId: 'gems', grid: ['C'], answers },
+    ],
+  };
+  assert.deepEqual(earlierUse([drop]), {
+    dailyThemeIds: ['birds'],
+    boards: { birds: [{ words: ['PELICAN'], grid: 'AB' }], gems: [{ words: ['PELICAN'], grid: 'C' }] },
+  });
+});
+
+test('building fails loudly when there are fewer fresh themes than dailies', () => {
+  assert.throws(
+    () => run({ count: 3, dailies: 3, earlier: { dailyThemeIds: ['birds', 'gems'] } }),
+    /Not enough fresh themes for the dailies: 3 needed, 2 never used/,
+  );
+  assert.throws(
+    () => planDrop({ dropId: 'x', themes: THEMES, ranks, dailies: 5 }),
+    /Not enough fresh themes/,
+  );
 });
 
 test('a theme with too few eligible answers is reported as a failure', () => {
@@ -186,7 +234,7 @@ test('parseArgs rejects non-positive-integer numeric options with usage', () => 
 test('parallel workers produce the same drop as the sequential build', async () => {
   const opts = {
     dropId: '2026-10', startDate: '2026-10-09', count: 3, dailies: 2, attempts: 60, seconds: 60,
-    themes: THEMES, ranks, existingDropThemeIds: ['gems'], dictionaryWords: ['TRIPLET', 'CARDINAL'],
+    themes: THEMES, ranks, earlier: { dailyThemeIds: ['gems'] }, dictionaryWords: ['TRIPLET', 'CARDINAL'],
   };
   const seq = await buildDropParallel(opts, { workers: 1 });
   const par = await buildDropParallel(opts, { workers: 3 });
@@ -194,7 +242,7 @@ test('parallel workers produce the same drop as the sequential build', async () 
   assert.equal(JSON.stringify(par.meta), JSON.stringify(seq.meta));
   assert.equal(par.report, seq.report);
   assert.equal(JSON.stringify(par.drop), JSON.stringify(result().drop));
-  assert.deepEqual(par.timings.map((t) => t.themeId), ['birds', 'fruits', 'trees']);
+  assert.deepEqual(par.timings.map((t) => t.themeId), ['birds', 'fruits', 'gems', 'trees']);
   assert.ok(par.wallMs >= 0);
 });
 

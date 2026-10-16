@@ -35,6 +35,8 @@ The next drop must start the day after the previous drop's last daily (for 2026-
 
 Theme answers are 5–10 letters. The builder varies the boards within a drop: each theme is given a target number of theme words (4–8, as its answers allow) and stepping-stone counts are spread over 2–5. The build report starts with the spread it achieved. Add `--out <dir>` for a trial build that leaves `drops/` alone.
 
+Themes are reused sparingly: every daily uses a theme that has never been a daily in an earlier drop (the build fails with a clear message if there are too few fresh themes), while library puzzles may reuse any earlier theme on a different board, with a word subset overlapping its earlier boards as little as possible and never an identical grid.
+
 Run `npm test` afterwards.
 
 ## Deploy
