@@ -1,0 +1,9 @@
+{
+  "id": "greek-letters",
+  "clue": "It's all Greek",
+  "spangram": "GREEKLETTERS",
+  "obscure": false,
+  "answers": ["ALPHA", "GAMMA", "THETA", "KAPPA", "LAMBDA", "SIGMA", "OMEGA", "EPSILON", "OMICRON", "UPSILON"],
+  "recognized": ["BETA", "ZETA", "IOTA", "DELTA", "BETAS", "ZETAS", "IOTAS", "RHOS", "PHIS", "CHIS", "PSIS", "TAUS", "ETAS", "DELTAS", "ALPHAS", "GAMMAS", "THETAS", "KAPPAS", "LAMBDAS", "SIGMAS", "OMEGAS", "EPSILONS", "OMICRONS", "UPSILONS", "DIGAMMA", "KOPPA", "SAMPI", "STIGMA", "ALPHABET", "ALPHABETS"],
+  "familiar": []
+}

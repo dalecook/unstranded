@@ -4309,23 +4309,23 @@
     "batch": 3
   },
   {
-    "id": "subatomic-particles",
-    "concept": "Smaller than an atom",
+    "id": "greek-letters",
+    "concept": "Letters of the Greek alphabet (closed list)",
     "subject": "science",
     "type": "plain-literal",
-    "obscure": true,
+    "obscure": false,
     "season": null,
-    "spangramIdea": "PARTICLEZOO",
+    "spangramIdea": "GREEKLETTERS",
     "sampleAnswers": [
-      "ELECTRON",
-      "PROTON",
-      "PHOTON",
-      "NEUTRINO",
-      "POSITRON",
-      "BOSON"
+      "ALPHA",
+      "GAMMA",
+      "LAMBDA",
+      "SIGMA",
+      "OMEGA",
+      "EPSILON"
     ],
     "batch": 4,
-    "replaces": "physics-terms"
+    "replaces": "subatomic-particles"
   },
   {
     "id": "lab-equipment",
