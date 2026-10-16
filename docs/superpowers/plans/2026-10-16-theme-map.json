@@ -774,22 +774,23 @@
     "batch": 11
   },
   {
-    "id": "ways-to-throw",
-    "concept": "Verbs meaning to throw",
+    "id": "ways-to-cut",
+    "concept": "Make the cut",
     "subject": "language & words",
     "type": "plain-literal",
     "obscure": false,
     "season": null,
-    "spangramIdea": "LETITFLY",
+    "spangramIdea": "CUTANDDRIED",
     "sampleAnswers": [
-      "FLING",
-      "CHUCK",
-      "HEAVE",
-      "CATAPULT",
-      "PITCH",
-      "SLING"
+      "MINCE",
+      "CARVE",
+      "SEVER",
+      "PRUNE",
+      "SHEAR",
+      "CLEAVE"
     ],
-    "batch": 11
+    "batch": 11,
+    "replaces": "ways-to-throw"
   },
   {
     "id": "ways-to-hit",
@@ -1530,22 +1531,23 @@
     "batch": 9
   },
   {
-    "id": "x-and-y-pairs",
-    "concept": "Second halves of fixed 'X and Y' pairs (salt and ___)",
+    "id": "echo-words",
+    "concept": "Words that echo themselves",
     "subject": "language & words",
     "type": "wordplay",
     "obscure": false,
     "season": null,
-    "spangramIdea": "GOTOGETHER",
+    "spangramIdea": "SAYITTWICE",
     "sampleAnswers": [
-      "PEPPER",
-      "VINEGAR",
-      "SAUCER",
-      "MORTAR",
-      "CRANNIES",
-      "BOUNDS"
+      "ZIGZAG",
+      "CHITCHAT",
+      "DINGDONG",
+      "SINGSONG",
+      "RIFFRAFF",
+      "WISHYWASHY"
     ],
-    "batch": 9
+    "batch": 9,
+    "replaces": "x-and-y-pairs"
   },
   {
     "id": "similes",
@@ -2304,22 +2306,23 @@
     "batch": 9
   },
   {
-    "id": "book-genres",
-    "concept": "Genres of fiction",
+    "id": "kinds-of-book",
+    "concept": "On the bookshelf",
     "subject": "arts/music/film/books",
     "type": "plain-literal",
     "obscure": false,
     "season": null,
     "spangramIdea": "PAGETURNERS",
     "sampleAnswers": [
-      "MYSTERY",
-      "ROMANCE",
-      "THRILLER",
-      "FANTASY",
-      "HORROR",
-      "WESTERN"
+      "NOVEL",
+      "ANTHOLOGY",
+      "ALMANAC",
+      "MEMOIR",
+      "BIOGRAPHY",
+      "DICTIONARY"
     ],
-    "batch": 3
+    "batch": 3,
+    "replaces": "book-genres"
   },
   {
     "id": "book-parts",
@@ -2970,8 +2973,8 @@
     "batch": 2
   },
   {
-    "id": "canadian-provinces",
-    "concept": "Canadian provinces and territories",
+    "id": "canadian-places",
+    "concept": "Provinces, territories and cities of Canada",
     "subject": "nature & geography",
     "type": "plain-literal",
     "obscure": true,
@@ -2982,10 +2985,11 @@
       "QUEBEC",
       "ALBERTA",
       "MANITOBA",
-      "YUKON",
-      "NUNAVUT"
+      "NUNAVUT",
+      "NOVASCOTIA"
     ],
-    "batch": 2
+    "batch": 2,
+    "replaces": "canadian-provinces"
   },
   {
     "id": "world-capitals",
@@ -3024,22 +3028,23 @@
     "batch": 4
   },
   {
-    "id": "south-american-countries",
-    "concept": "Countries of South America",
+    "id": "south-american-cities",
+    "concept": "Urban life south of Panama",
     "subject": "nature & geography",
     "type": "plain-literal",
     "obscure": false,
     "season": null,
     "spangramIdea": "SOUTHAMERICA",
     "sampleAnswers": [
-      "BRAZIL",
-      "ARGENTINA",
-      "CHILE",
-      "COLOMBIA",
-      "ECUADOR",
-      "URUGUAY"
+      "BOGOTA",
+      "CARACAS",
+      "SANTIAGO",
+      "MEDELLIN",
+      "CARTAGENA",
+      "SAOPAULO"
     ],
-    "batch": 4
+    "batch": 4,
+    "replaces": "south-american-countries"
   },
   {
     "id": "asian-countries",
@@ -4302,22 +4307,23 @@
     "batch": 3
   },
   {
-    "id": "physics-terms",
-    "concept": "Physics concepts",
+    "id": "subatomic-particles",
+    "concept": "Smaller than an atom",
     "subject": "science",
     "type": "plain-literal",
-    "obscure": false,
+    "obscure": true,
     "season": null,
-    "spangramIdea": "LAWSOFMOTION",
+    "spangramIdea": "PARTICLEZOO",
     "sampleAnswers": [
-      "GRAVITY",
-      "FRICTION",
-      "MOMENTUM",
-      "INERTIA",
-      "VELOCITY",
-      "TORQUE"
+      "ELECTRON",
+      "PROTON",
+      "PHOTON",
+      "NEUTRINO",
+      "POSITRON",
+      "BOSON"
     ],
-    "batch": 4
+    "batch": 4,
+    "replaces": "physics-terms"
   },
   {
     "id": "lab-equipment",
@@ -4410,22 +4416,23 @@
     "batch": 4
   },
   {
-    "id": "computing-terms",
-    "concept": "Computing words",
+    "id": "keyboard-keys",
+    "concept": "Keys on a computer keyboard",
     "subject": "science",
     "type": "plain-literal",
     "obscure": false,
     "season": null,
-    "spangramIdea": "BITSANDBYTES",
+    "spangramIdea": "PRESSANYKEY",
     "sampleAnswers": [
-      "BROWSER",
-      "SERVER",
-      "PASSWORD",
-      "FIREWALL",
-      "CURSOR",
-      "PIXEL"
+      "DELETE",
+      "ENTER",
+      "RETURN",
+      "INSERT",
+      "SHIFT",
+      "COMMAND"
     ],
-    "batch": 7
+    "batch": 7,
+    "replaces": "computing-terms"
   },
   {
     "id": "medical-kit",
@@ -5454,22 +5461,23 @@
     "batch": 4
   },
   {
-    "id": "story-archetypes",
-    "concept": "Stock roles in a story",
+    "id": "commedia-characters",
+    "concept": "Stock roles of the Italian stage",
     "subject": "pop culture & media",
     "type": "plain-literal",
-    "obscure": false,
+    "obscure": true,
     "season": null,
-    "spangramIdea": "ARCHETYPES",
+    "spangramIdea": "ITALIANCOMEDY",
     "sampleAnswers": [
-      "ORACLE",
-      "VILLAIN",
-      "MENTOR",
-      "TRICKSTER",
-      "ANTIHERO",
-      "NARRATOR"
+      "HARLEQUIN",
+      "PIERROT",
+      "COLUMBINE",
+      "PANTALOON",
+      "PULCINELLA",
+      "BRIGHELLA"
     ],
-    "batch": 4
+    "batch": 4,
+    "replaces": "story-archetypes"
   },
   {
     "id": "magic-users",
