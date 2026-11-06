@@ -219,9 +219,9 @@ export function boardReport(sequence, ids, dictionaryWords, themesById) {
 
 const USAGE = `Usage: build-sequence [--start YYYY-MM-DD] [--fresh] [--rebuild id,id] [--attempts N] [--seconds N] [--workers N] [--content dir] [--out dir]
   With no <out>/sequence.json, or with --fresh, builds all ${SEQUENCE_LENGTH} boards (--start required).
-  Otherwise keeps every board in place and rebuilds only themes named with --rebuild or whose
-  content changed. --start without --fresh moves the start date and, like any locked run, also
-  rechecks and rebuilds themes whose content changed.`;
+  Otherwise keeps every board in place: themes named with --rebuild get new boards, and a theme
+  whose content changed is rebuilt only if its board no longer passes. --start without --fresh
+  moves the start date and, like any locked run, also does those rechecks.`;
 
 export function parseSequenceArgs(argv) {
   const args = {
