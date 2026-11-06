@@ -36,6 +36,8 @@ Before the start date, or if `drops/sequence.json` is missing, the game falls ba
 
     npm run build:drop -- --id YYYY-MM --start YYYY-MM-DD
 
+The spangram's first and last letters always sit on opposite edges of the board (left and right, or top and bottom); the validation tests fail on any board that breaks this. If a rule change leaves published drop boards failing, `npm run repair:drop` rebuilds just those boards in place (same id and date); `--ids id,id` forces particular boards.
+
 Theme answers are 5–10 letters. The builder varies the boards within a drop: each theme is given a target number of theme words (4–8, as its answers allow) and stepping-stone counts are spread over 2–5. The build report starts with the spread it achieved. Add `--out <dir>` for a trial build that leaves `drops/` alone.
 
 Themes are reused sparingly: every daily uses a theme that has never been a daily in an earlier drop (the build fails with a clear message if there are too few fresh themes), while library puzzles may reuse any earlier theme on a different board, with a word subset overlapping its earlier boards as little as possible and never an identical grid.
