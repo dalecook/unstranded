@@ -2,8 +2,9 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   SEQUENCE_LENGTH, SET_SIZE, HOLIDAY_THEMES, contentHash, sequenceId, sequenceJobs, selectSequence,
-  assembleSequence, rebuildJobs, applyRebuild, metaFor, boardReport, parseSequenceArgs,
+  assembleSequence, toPuzzle, rebuildJobs, applyRebuild, refreshMeta, metaFor, boardReport, parseSequenceArgs,
 } from '../tools/build-sequence.mjs';
+import { searchTheme } from '../tools/build-drop.mjs';
 
 const words = (s) => s.split(' ');
 const theme = (id, i = 0, obscure = false) => ({
@@ -176,4 +177,73 @@ test('parseSequenceArgs rejects bad dates, numbers and unknown flags', () => {
   assert.throws(() => parseSequenceArgs(['--start', '10/11/2026']), /YYYY-MM-DD/);
   assert.throws(() => parseSequenceArgs(['--workers', '0']), /positive integer/);
   assert.throws(() => parseSequenceArgs(['--colour', 'blue']), /Unknown/);
+});
+
+// A real board (the fixture boards above are fake) for the revalidation tests.
+const BIRDS = {
+  id: 'birds', clue: 'Feathered friends', spangram: 'FEATHERED', obscure: false,
+  answers: words('PELICAN FLAMINGO CORMORANT PARAKEET OSTRICH PHEASANT SPARROW PENGUIN MAGPIE BUZZARD SWALLOW STARLING'),
+  recognized: words('ROBIN WREN DOVE HAWK CROW LARK KITE SWAN DUCK GOOSE EAGLE FINCH HERON STORK TERN RAVEN ALBATROSS VULTURE PIGEON'),
+};
+function realBoard() {
+  const found = searchTheme(BIRDS, 'real', { attempts: 200, seconds: 20, eligible: BIRDS.answers, target: 6 });
+  const { variant, steppingStones } = found.best;
+  const puzzle = { id: 'seq-001', ...toPuzzle({ theme: BIRDS, chosen: { variant, steppingStones, score: found.best.score } }) };
+  const sequence = { id: 'sequence', start: '2026-11-10', setSize: 6, puzzles: [puzzle] };
+  const meta = { [puzzle.id]: metaFor(BIRDS, puzzle) };
+  const ranks = new Map(BIRDS.answers.map((w) => [w, 1]));
+  return { puzzle, sequence, meta, ranks };
+}
+const jobsFor = (r, theme, names = []) => rebuildJobs({
+  sequence: r.sequence, meta: r.meta, themes: [theme], ranks: r.ranks, earlier: {}, names, attempts: 10, seconds: 5,
+});
+
+test('rebuildJobs keeps a board that still passes after a content change', () => {
+  const r = realBoard();
+  const letters = new Set(r.puzzle.grid);
+  const absent = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').find((c) => !letters.has(c));
+  assert.ok(absent, 'the test board lacks some letter');
+  const changed = { ...BIRDS, recognized: [...BIRDS.recognized, absent.repeat(6)] };
+  const { jobs, refreshed, failures } = jobsFor(r, changed);
+  assert.deepEqual(failures, []);
+  assert.deepEqual(jobs, []);
+  assert.deepEqual(refreshed, [{ id: 'seq-001', theme: changed }]);
+});
+
+test('rebuildJobs rebuilds a board that a new recognized word now invalidates', () => {
+  const r = realBoard();
+  const decoy = BIRDS.spangram.slice(0, 6);
+  const changed = { ...BIRDS, recognized: [...BIRDS.recognized, decoy] };
+  const { jobs, refreshed } = jobsFor(r, changed);
+  assert.deepEqual(jobs.map((j) => j.id), ['seq-001']);
+  assert.deepEqual(refreshed, []);
+});
+
+test('rebuildJobs rebuilds a board whose answer was dropped from the theme', () => {
+  const r = realBoard();
+  const word = r.puzzle.answers.find((a) => !a.isSpangram).word;
+  const changed = { ...BIRDS, answers: BIRDS.answers.filter((w) => w !== word) };
+  const { jobs, refreshed } = jobsFor(r, changed);
+  assert.deepEqual(jobs.map((j) => j.id), ['seq-001']);
+  assert.deepEqual(refreshed, []);
+});
+
+test('rebuildJobs always re-searches a named theme, even with unchanged content', () => {
+  const r = realBoard();
+  const { jobs, refreshed } = jobsFor(r, BIRDS, ['birds']);
+  assert.deepEqual(jobs.map((j) => j.id), ['seq-001']);
+  assert.deepEqual(refreshed, []);
+});
+
+test('refreshMeta updates the hash and checked words, keeps rebuilds, and leaves other ids alone', () => {
+  const r = realBoard();
+  const changed = { ...BIRDS, recognized: [...BIRDS.recognized, 'QQQQQQ'] };
+  const meta = { ...r.meta, 'seq-001': { ...r.meta['seq-001'], rebuilds: 2 }, 'seq-002': { themeId: 'other', rebuilds: 1 } };
+  const out = refreshMeta({ meta, sequence: r.sequence, refreshed: [{ id: 'seq-001', theme: changed }] });
+  assert.equal(out['seq-001'].contentHash, contentHash(changed));
+  assert.notEqual(out['seq-001'].contentHash, meta['seq-001'].contentHash);
+  assert.ok(out['seq-001'].checkedLong.includes('QQQQQQ'));
+  assert.equal(out['seq-001'].rebuilds, 2);
+  assert.equal(out['seq-002'], meta['seq-002']);
+  assert.equal(meta['seq-001'].contentHash, contentHash(BIRDS));
 });

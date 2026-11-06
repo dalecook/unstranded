@@ -4,7 +4,9 @@
 // A full build searches every eligible theme (holidays left out), picks the boards (themes never
 // used in a drop first, at most one obscure board per day) and orders them with arrangePass. A
 // locked rebuild keeps every board in its place and re-searches only the themes named with
-// --rebuild or whose content has changed since their board was built (meta.contentHash).
+// --rebuild or whose content has changed since their board was built (meta.contentHash) and
+// whose board no longer passes the checks.
+import { isDeepStrictEqual } from 'node:util';
 import { hashString } from '../js/rng.js';
 import { arrangePass } from '../js/sequence.js';
 import { readFile, writeFile, readdir, mkdir } from 'node:fs/promises';
@@ -13,6 +15,7 @@ import { pathToFileURL } from 'node:url';
 import os from 'node:os';
 import { eligibleAnswers, loadRanks } from './lib/familiarity.js';
 import { countWordSets, targetCounts, spreadStones, tallyLine } from './lib/variety.js';
+import { checkPuzzle } from './lib/checks.js';
 import { loadBoardBlocklist } from './lib/blocklist.js';
 import {
   planDrop, tracedDictionaryWords, earlierUse, runInWorkers, runSequential,
@@ -95,7 +98,18 @@ export function assembleSequence({ start, selected, setSize = SET_SIZE }) {
   return { sequence: { id: SEED, start, setSize, puzzles }, meta };
 }
 
-// Search jobs for a locked rebuild: named themes and themes whose content changed. Each job
+// Whether a board still stands against its theme's current content: its words are still the
+// theme's, the checks pass, and its stepping stones are unchanged. (The offensive-word check
+// depends on the blocklist, not on theme content, so it is not repeated.)
+function stillPasses(p, theme) {
+  const answers = new Set(theme.answers);
+  if (!p.answers.every((a) => (a.isSpangram ? a.word === theme.spangram : answers.has(a.word)))) return false;
+  const result = checkPuzzle(p, { answers: theme.answers, recognized: theme.recognized });
+  return result.ok && isDeepStrictEqual(result.steppingStones, p.steppingStones);
+}
+
+// Search jobs for a locked rebuild: named themes and themes whose content changed and whose
+// board no longer passes (those that still pass are returned as `refreshed`). Each job
 // keeps the board's word count and stepping-stone count, avoids its current board (and any
 // earlier drop boards), and uses a fresh seed so a named theme gets a new board.
 export function rebuildJobs({ sequence, meta, themes, ranks, earlier = {}, names = [], attempts, seconds }) {
@@ -103,6 +117,7 @@ export function rebuildJobs({ sequence, meta, themes, ranks, earlier = {}, names
   const inSequence = new Set(sequence.puzzles.map((p) => p.themeId));
   const failures = names.filter((n) => !inSequence.has(n)).map((n) => ({ id: null, themeId: n, reason: 'not in the sequence' }));
   const jobs = [];
+  const refreshed = [];
   for (const p of sequence.puzzles) {
     const theme = byId.get(p.themeId);
     if (!theme) {
@@ -110,7 +125,13 @@ export function rebuildJobs({ sequence, meta, themes, ranks, earlier = {}, names
       continue;
     }
     const m = meta[p.id];
-    if (!names.includes(theme.id) && m.contentHash === contentHash(theme)) continue;
+    if (!names.includes(theme.id)) {
+      if (m.contentHash === contentHash(theme)) continue;
+      if (stillPasses(p, theme)) {
+        refreshed.push({ id: p.id, theme });
+        continue;
+      }
+    }
     const { eligible } = eligibleAnswers(theme, ranks);
     const feasible = targetCounts(countWordSets(theme.spangram, eligible));
     if (!feasible.length) {
@@ -127,7 +148,17 @@ export function rebuildJobs({ sequence, meta, themes, ranks, earlier = {}, names
       stones: p.steppingStones.length,
     });
   }
-  return { jobs, failures };
+  return { jobs, failures, refreshed };
+}
+
+// Meta for boards kept in place whose theme content changed: new hash and checked words.
+export function refreshMeta({ meta, sequence, refreshed }) {
+  const next = { ...meta };
+  for (const { id, theme } of refreshed) {
+    const puzzle = sequence.puzzles.find((p) => p.id === id);
+    next[id] = metaFor(theme, puzzle, meta[id].rebuilds ?? 0);
+  }
+  return next;
 }
 
 export function applyRebuild({ sequence, meta, jobs, results }) {
@@ -252,7 +283,7 @@ async function main() {
     lines.push(boardReport(sequence, sequence.puzzles.map((p) => p.id), dictionaryWords, themesById));
   } else {
     const existingMeta = await readJson(metaFile);
-    const { jobs, failures } = rebuildJobs({
+    const { jobs, failures, refreshed } = rebuildJobs({
       sequence: existing, meta: existingMeta, themes, ranks, earlier,
       names: args.rebuild, attempts: args.attempts, seconds: args.seconds,
     });
@@ -264,8 +295,9 @@ async function main() {
       process.exit(1);
     }
     sequence = { ...applied.sequence, start: args.start ?? existing.start };
-    meta = applied.meta;
+    meta = refreshMeta({ meta: applied.meta, sequence, refreshed });
     lines.push(`Rebuilt ${applied.rebuilt.length} board(s); start ${sequence.start}`);
+    lines.push(`Revalidated ${refreshed.length} board(s) in place`);
     lines.push(boardReport(sequence, applied.rebuilt, dictionaryWords, themesById));
   }
 
