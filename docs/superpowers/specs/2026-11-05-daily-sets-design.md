@@ -60,7 +60,7 @@ The share card, game rules, hints, stepping stones, the bonus dictionary, stats 
   - no traceable offensive word;
   - 2–5 stepping stones;
   - 4–8 theme words.
-- **Pass 0 order:** a seeded shuffle with at most one obscure board per day's set, and board sizes and stepping-stone counts spread so no day is all small or all large boards.
+- **Pass 0 order:** a seeded shuffle with at most one obscure board per day's set (in the built sequence every day has exactly one, a deliberate "deep cut"), and board sizes and stepping-stone counts spread so no day is all small or all large boards.
 
 ## Builder
 
@@ -97,7 +97,7 @@ The share card, game rules, hints, stepping stones, the bonus dictionary, stats 
 - **`js/main.js`:**
   - **New puzzle:** serves the next unshown set board, then the free-play note, then free play.
   - **Theme label:** shows "Today n of 6" on set boards.
-  - **`?id=` links:** a link opens a board only if `isOpenable` allows it: today's set, a board whose set day has passed, or a board in the free-play pool. Otherwise it falls back to today's daily.
+  - **`?id=` links:** a link opens a board only if `isOpenable` allows it: today's set, or a board in the free-play pool. Otherwise it falls back to today's daily. A board from a past set is linkable because it is in the pool, except near a pass seam, where it can come up again in a set within 30 days; then its link falls back too, so a link never shows an upcoming set board early.
   - **Rollover:** behaves as now, and starts a new set at the new date.
 
 ## Testing
