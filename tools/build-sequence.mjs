@@ -290,14 +290,15 @@ async function main() {
     const results = jobs.length ? await run(jobs) : new Map();
     const applied = applyRebuild({ sequence: existing, meta: existingMeta, jobs, results: new Map([...results].map(([k, v]) => [k, v.result])) });
     failures.push(...applied.failures);
-    if (failures.length) {
-      console.error(['Rebuild failed; nothing written:', ...failures.map((f) => `  ${f.themeId}${f.id ? ` (${f.id})` : ''}: ${f.reason}`)].join('\n'));
-      // exitCode rather than exit(): exit() can drop stderr that hasn't been flushed to a file yet.
-      process.exitCode = 1;
-      return;
-    }
     sequence = { ...applied.sequence, start: args.start ?? existing.start };
     meta = refreshMeta({ meta: applied.meta, sequence, refreshed });
+    // Boards that rebuilt are kept even when others fail. A failed board keeps its old content
+    // hash, so the next run retries it, and the sequence validation test fails until it passes.
+    if (failures.length) {
+      lines.push('NOT REBUILT (fix these themes or rerun with more --attempts):',
+        ...failures.map((f) => `  ${f.themeId}${f.id ? ` (${f.id})` : ''}: ${f.reason}`));
+      process.exitCode = 1;
+    }
     lines.push(`Rebuilt ${applied.rebuilt.length} board(s); start ${sequence.start}`);
     lines.push(`Revalidated ${refreshed.length} board(s) in place`);
     lines.push(boardReport(sequence, applied.rebuilt, dictionaryWords, themesById));
