@@ -292,7 +292,9 @@ async function main() {
     failures.push(...applied.failures);
     if (failures.length) {
       console.error(['Rebuild failed; nothing written:', ...failures.map((f) => `  ${f.themeId}${f.id ? ` (${f.id})` : ''}: ${f.reason}`)].join('\n'));
-      process.exit(1);
+      // exitCode rather than exit(): exit() can drop stderr that hasn't been flushed to a file yet.
+      process.exitCode = 1;
+      return;
     }
     sequence = { ...applied.sequence, start: args.start ?? existing.start };
     meta = refreshMeta({ meta: applied.meta, sequence, refreshed });
@@ -309,5 +311,5 @@ async function main() {
 }
 
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
-  main().catch((err) => { console.error(err.message); process.exit(1); });
+  main().catch((err) => { console.error(err.message); process.exitCode = 1; });
 }
