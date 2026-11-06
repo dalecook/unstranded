@@ -30,13 +30,11 @@ Theme content lives in `content/themes/`. Puzzles are built ahead of time and co
 
     npm run build:sequence -- --start YYYY-MM-DD
 
-builds all 366 boards. Once the file exists, the same command keeps every board in place and rebuilds only themes whose content changed, plus any named with `--rebuild id,id`. `--start` on its own just moves the start date. Add `--fresh` to rebuild everything, or `--out <dir>` for a trial build.
+builds all 366 boards. Once the file exists, the same command keeps every board in place. When a theme's content changes, its board is checked again and rebuilt (in the same place) only if it no longer passes; add `--rebuild id,id` to force new boards. If a board can't be rebuilt, the others are still saved, the failures are listed, and the command exits with an error. Rerun with more `--attempts`, or fix the theme. `--start` on its own just moves the start date. Add `--fresh` to rebuild everything, or `--out <dir>` for a trial build.
 
 Before the start date, or if `drops/sequence.json` is missing, the game falls back to the monthly drops:
 
     npm run build:drop -- --id YYYY-MM --start YYYY-MM-DD
-
-The next drop must start the day after the previous drop's last daily (for 2026-10, that's 2026-11-07). Otherwise the date-hash fallback is used for the gap.
 
 Theme answers are 5–10 letters. The builder varies the boards within a drop: each theme is given a target number of theme words (4–8, as its answers allow) and stepping-stone counts are spread over 2–5. The build report starts with the spread it achieved. Add `--out <dir>` for a trial build that leaves `drops/` alone.
 
