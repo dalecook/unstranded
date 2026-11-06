@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   SEQUENCE_LENGTH, SET_SIZE, HOLIDAY_THEMES, contentHash, sequenceId, sequenceJobs, selectSequence,
-  assembleSequence, toPuzzle, rebuildJobs, applyRebuild, refreshMeta, metaFor, boardReport, parseSequenceArgs,
+  assembleSequence, toPuzzle, rebuildJobs, applyRebuild, refreshMeta, refreshBoards, metaFor, boardReport, parseSequenceArgs,
 } from '../tools/build-sequence.mjs';
 import { searchTheme } from '../tools/build-drop.mjs';
 
@@ -246,4 +246,33 @@ test('refreshMeta updates the hash and checked words, keeps rebuilds, and leaves
   assert.equal(out['seq-001'].rebuilds, 2);
   assert.equal(out['seq-002'], meta['seq-002']);
   assert.equal(meta['seq-001'].contentHash, contentHash(BIRDS));
+});
+
+test('rebuildJobs rebuilds a board whose theme obscure flag changed', () => {
+  const r = realBoard();
+  const changed = { ...BIRDS, obscure: true };
+  const { jobs, refreshed } = jobsFor(r, changed);
+  assert.deepEqual(jobs.map((j) => j.id), ['seq-001']);
+  assert.deepEqual(refreshed, []);
+});
+
+test('rebuildJobs reports a board with no meta entry instead of throwing', () => {
+  const r = realBoard();
+  const { jobs, failures } = rebuildJobs({
+    sequence: r.sequence, meta: {}, themes: [BIRDS], ranks: r.ranks, earlier: {}, names: [], attempts: 10, seconds: 5,
+  });
+  assert.deepEqual(jobs, []);
+  assert.deepEqual(failures, [{ id: 'seq-001', themeId: 'birds', reason: 'missing meta entry' }]);
+});
+
+test('refreshBoards updates the clue of refreshed boards and leaves the rest alone', () => {
+  const r = realBoard();
+  const other = { ...r.puzzle, id: 'seq-002', clue: 'keep me' };
+  const sequence = { ...r.sequence, puzzles: [r.puzzle, other] };
+  const changed = { ...BIRDS, clue: 'Birds of a feather' };
+  const out = refreshBoards({ sequence, refreshed: [{ id: 'seq-001', theme: changed }] });
+  assert.equal(out.puzzles[0].clue, 'Birds of a feather');
+  assert.equal(out.puzzles[0].grid, r.puzzle.grid);
+  assert.equal(out.puzzles[1], other);
+  assert.equal(sequence.puzzles[0].clue, 'Feathered friends');
 });

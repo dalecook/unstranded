@@ -3,9 +3,10 @@
 //
 // A full build searches every eligible theme (holidays left out), picks the boards (themes never
 // used in a drop first, at most one obscure board per day) and orders them with arrangePass. A
-// locked rebuild keeps every board in its place and re-searches only the themes named with
-// --rebuild or whose content has changed since their board was built (meta.contentHash) and
-// whose board no longer passes the checks.
+// locked rebuild keeps every board in its place. NAMED themes (--rebuild) are always
+// re-searched. CHANGED themes (content differs from meta.contentHash) are re-searched only if
+// their board no longer passes the checks (or their obscure flag changed); a changed theme whose
+// board still passes keeps the board and gets its clue, hash and checked words refreshed.
 import { isDeepStrictEqual } from 'node:util';
 import { hashString } from '../js/rng.js';
 import { arrangePass } from '../js/sequence.js';
@@ -99,10 +100,11 @@ export function assembleSequence({ start, selected, setSize = SET_SIZE }) {
 }
 
 // Whether a board still stands against its theme's current content: its words are still the
-// theme's, the checks pass, and its stepping stones are unchanged. (The offensive-word check
+// theme's, its obscure flag is unchanged, the checks pass, and its stepping stones are unchanged. (The offensive-word check
 // depends on the blocklist, not on theme content, so it is not repeated.)
 function stillPasses(p, theme) {
   const answers = new Set(theme.answers);
+  if (!!theme.obscure !== !!p.obscure) return false;
   if (!p.answers.every((a) => (a.isSpangram ? a.word === theme.spangram : answers.has(a.word)))) return false;
   const result = checkPuzzle(p, { answers: theme.answers, recognized: theme.recognized });
   return result.ok && isDeepStrictEqual(result.steppingStones, p.steppingStones);
@@ -125,6 +127,10 @@ export function rebuildJobs({ sequence, meta, themes, ranks, earlier = {}, names
       continue;
     }
     const m = meta[p.id];
+    if (!m) {
+      failures.push({ id: p.id, themeId: p.themeId, reason: 'missing meta entry' });
+      continue;
+    }
     if (!names.includes(theme.id)) {
       if (m.contentHash === contentHash(theme)) continue;
       if (stillPasses(p, theme)) {
@@ -159,6 +165,15 @@ export function refreshMeta({ meta, sequence, refreshed }) {
     next[id] = metaFor(theme, puzzle, meta[id].rebuilds ?? 0);
   }
   return next;
+}
+
+// The sequence with the clue of each refreshed board taken from its (changed) theme.
+export function refreshBoards({ sequence, refreshed }) {
+  const clues = new Map(refreshed.map(({ id, theme }) => [id, theme.clue]));
+  return {
+    ...sequence,
+    puzzles: sequence.puzzles.map((p) => (clues.has(p.id) ? { ...p, clue: clues.get(p.id) } : p)),
+  };
 }
 
 export function applyRebuild({ sequence, meta, jobs, results }) {
@@ -205,7 +220,8 @@ export function boardReport(sequence, ids, dictionaryWords, themesById) {
 const USAGE = `Usage: build-sequence [--start YYYY-MM-DD] [--fresh] [--rebuild id,id] [--attempts N] [--seconds N] [--workers N] [--content dir] [--out dir]
   With no <out>/sequence.json, or with --fresh, builds all ${SEQUENCE_LENGTH} boards (--start required).
   Otherwise keeps every board in place and rebuilds only themes named with --rebuild or whose
-  content changed; --start then just moves the start date.`;
+  content changed. --start without --fresh moves the start date and, like any locked run, also
+  rechecks and rebuilds themes whose content changed.`;
 
 export function parseSequenceArgs(argv) {
   const args = {
@@ -290,10 +306,12 @@ async function main() {
     const results = jobs.length ? await run(jobs) : new Map();
     const applied = applyRebuild({ sequence: existing, meta: existingMeta, jobs, results: new Map([...results].map(([k, v]) => [k, v.result])) });
     failures.push(...applied.failures);
-    sequence = { ...applied.sequence, start: args.start ?? existing.start };
+    sequence = refreshBoards({ sequence: { ...applied.sequence, start: args.start ?? existing.start }, refreshed });
     meta = refreshMeta({ meta: applied.meta, sequence, refreshed });
     // Boards that rebuilt are kept even when others fail. A failed board keeps its old content
-    // hash, so the next run retries it, and the sequence validation test fails until it passes.
+    // hash (its meta is not refreshed), so the next run retries it, and the sequence-file
+    // validation test, which compares each board's meta hash with its theme file, fails until
+    // the board is rebuilt.
     if (failures.length) {
       lines.push('NOT REBUILT (fix these themes or rerun with more --attempts):',
         ...failures.map((f) => `  ${f.themeId}${f.id ? ` (${f.id})` : ''}: ${f.reason}`));
