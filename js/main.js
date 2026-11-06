@@ -2,12 +2,14 @@ import {
   newGameState, layoutKey, submitWord, useHint, canHint, availableHints, completedAnswer, migrateState, HINT_COST,
 } from './game.js';
 import { dateKey } from './rng.js';
-import { loadDrops, dailyFor, getPuzzle, isReleased, randomPuzzle } from './drops.js';
+import { loadDrops, dailyFor, getPuzzle, canOpen, randomPuzzle } from './drops.js';
+import { loadSequence, setFor } from './sequence.js';
 import { createBoard, renderBoard } from './render.js';
 import { createSelection } from './input.js';
 import {
   loadProgress, saveProgress, loadStats, saveStats, applyStart, applyCompletion,
   displayStreak, isFirstVisit, markVisited, markPlayed, markSolved, loadPlayed, loadSolved,
+  loadSetProgress, saveSetProgress,
 } from './storage.js';
 import { buildShareText, shareText } from './share.js';
 
@@ -22,9 +24,11 @@ const MESSAGES = {
 };
 const SHAKE_ON = new Set(['already-found', 'too-short', 'not-a-word', 'crossed-answer']);
 const MESSAGE_MS = 1800;
+const FREE_PLAY_NOTE = "That's today's 6. Now it's free play.";
 
 const app = {
   drops: [],
+  seq: null,
   dictionary: null,
   puzzle: null,
   state: null,
@@ -43,7 +47,10 @@ function render() {
   const { puzzle, state } = app;
   if (!puzzle) return;
   renderBoard(app.board, { puzzle, state, selection: app.selection });
-  $('theme-label').textContent = (app.isDaily ? "TODAY'S THEME" : 'PUZZLE') + (puzzle.obscure ? ' · DEEP CUT' : '');
+  const set = setFor(app.seq, app.today);
+  const position = set ? set.findIndex((p) => p.id === puzzle.id) : -1;
+  const label = position >= 0 ? `TODAY ${position + 1} OF ${set.length}` : (app.isDaily ? "TODAY'S THEME" : 'PUZZLE');
+  $('theme-label').textContent = label + (puzzle.obscure ? ' · DEEP CUT' : '');
   $('clue').textContent = puzzle.clue;
   $('daily-btn').hidden = app.isDaily;
 
@@ -161,7 +168,7 @@ function startPuzzle(puzzle) {
   clearTimeout(resultsTimer);
   clearTimeout(messageTimer);
   app.puzzle = puzzle;
-  app.isDaily = dailyFor(app.drops, app.today)?.id === puzzle.id;
+  app.isDaily = dailyFor(app.drops, app.today, app.seq)?.id === puzzle.id;
   let state = loadProgress(puzzle.id);
   // Discard saved progress from another format or if the drop's theme or board changed underneath it.
   if (!state || state.puzzleId !== puzzle.id || state.themeId !== puzzle.themeId
@@ -174,6 +181,13 @@ function startPuzzle(puzzle) {
   app.state = state;
   // Shown counts as played, so "New puzzle" serves unseen puzzles before ones the player skipped.
   markPlayed(puzzle.id);
+  if (setFor(app.seq, app.today)?.some((p) => p.id === puzzle.id)) {
+    const progress = loadSetProgress(app.today);
+    if (!progress.shown.includes(puzzle.id)) {
+      progress.shown.push(puzzle.id);
+      saveSetProgress(progress);
+    }
+  }
   if (!state.completed && $('results-dialog').open) $('results-dialog').close();
   app.message = '';
   app.selector.clear();
@@ -181,30 +195,50 @@ function startPuzzle(puzzle) {
   if (state.completed) showResults();
 }
 
+// Today's set first, in order; then free play, announced once.
 function newPuzzle() {
-  const next = randomPuzzle(app.drops, app.today, {
+  const set = setFor(app.seq, app.today);
+  if (set) {
+    const shown = loadSetProgress(app.today).shown;
+    const next = set.find((p) => !shown.includes(p.id) && p.id !== app.puzzle?.id);
+    if (next) {
+      history.replaceState(null, '', `?id=${next.id}`);
+      startPuzzle(next);
+      return;
+    }
+  }
+  const pick = randomPuzzle(app.drops, app.today, {
     played: loadPlayed(),
     solved: loadSolved(),
     excludeId: app.puzzle?.id,
+    seq: app.seq,
   });
-  if (!next) {
+  if (!pick) {
     flashMessage("You've seen them all! More soon.");
     return;
   }
-  history.replaceState(null, '', `?id=${next.id}`);
-  startPuzzle(next);
+  history.replaceState(null, '', `?id=${pick.id}`);
+  startPuzzle(pick);
+  if (set) {
+    const progress = loadSetProgress(app.today);
+    if (!progress.freePlay) {
+      progress.freePlay = true;
+      saveSetProgress(progress);
+      flashMessage(FREE_PLAY_NOTE);
+    }
+  }
 }
 
 function playDaily() {
   history.replaceState(null, '', location.pathname);
-  startPuzzle(dailyFor(app.drops, app.today));
+  startPuzzle(dailyFor(app.drops, app.today, app.seq));
 }
 
 function checkDateRollover() {
   const key = dateKey();
   if (key === app.today) return;
   app.today = key;
-  const daily = dailyFor(app.drops, app.today);
+  const daily = dailyFor(app.drops, app.today, app.seq);
   if (app.isDaily && daily) {
     history.replaceState(null, '', location.pathname);
     startPuzzle(daily);
@@ -257,12 +291,12 @@ async function init() {
   });
 
   try {
-    app.drops = await loadDrops();
+    [app.drops, app.seq] = await Promise.all([loadDrops(), loadSequence()]);
   } catch {
     showFatal();
     return;
   }
-  const daily = dailyFor(app.drops, app.today);
+  const daily = dailyFor(app.drops, app.today, app.seq);
   if (!daily) {
     showFatal();
     return;
@@ -270,7 +304,7 @@ async function init() {
 
   const params = new URLSearchParams(location.search);
   const id = params.get('id');
-  const linked = id && isReleased(app.drops, id, app.today) ? getPuzzle(app.drops, id) : null;
+  const linked = id && canOpen(app.drops, id, app.today, app.seq) ? getPuzzle(app.drops, id, app.seq) : null;
   if (linked) {
     startPuzzle(linked);
   } else {
