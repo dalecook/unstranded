@@ -266,7 +266,7 @@ export function selectBoards(successes, count, { dailies = 0 } = {}) {
 
 // Dictionary words of 6+ letters a player could select: any self-avoiding path, self-crossing
 // included (they are not answers).
-function tracedDictionaryWords(grid, dictionaryWords, exclude) {
+export function tracedDictionaryWords(grid, dictionaryWords, exclude) {
   const counts = {};
   for (const ch of grid) counts[ch] = (counts[ch] ?? 0) + 1;
   const found = [];
