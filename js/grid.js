@@ -38,11 +38,14 @@ export function isValidPath(path) {
   return true;
 }
 
-export function touchesOppositeEdges(path) {
-  const cols = path.map(colOf);
-  const rows = path.map(rowOf);
-  return (cols.includes(0) && cols.includes(COLS - 1)) ||
-    (rows.includes(0) && rows.includes(ROWS - 1));
+// A spangram runs edge to edge: its first and last cells sit on opposite edges, left and right
+// or top and bottom, in either reading direction. Touching an edge mid-path doesn't count.
+export function spansEdgeToEdge(path) {
+  if (path.length < 2) return false;
+  const a = path[0];
+  const b = path[path.length - 1];
+  const opposite = (axis, far) => (axis(a) === 0 && axis(b) === far) || (axis(b) === 0 && axis(a) === far);
+  return opposite(colOf, COLS - 1) || opposite(rowOf, ROWS - 1);
 }
 
 export function samePath(a, b) {

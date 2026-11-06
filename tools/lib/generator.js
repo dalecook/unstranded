@@ -230,7 +230,7 @@ export function createBoardChecker({ chosen, answers = [], recognized = [], bloc
 
 // A finished board for `words` (plus the theme's spangram), or null within the step budget.
 // Each path is tried in both reading directions (random order), the spangram included: it only
-// has to touch opposite edges, not read away from a particular one. The result satisfies every
+// has to run edge to edge, not read away from a particular one. The result satisfies every
 // checkPuzzle rule and has no blocked word; callers still verify it with checkPuzzle.
 // `stats` (optional) counts pruned placements by reason; 'few-stones' counts full boards
 // rejected for having fewer than MIN_STONES stepping stones.

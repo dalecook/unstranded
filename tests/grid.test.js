@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   COLS, ROWS, CELLS, rowOf, colOf, isAdjacent, neighbors,
-  isValidPath, touchesOppositeEdges, samePath,
+  isValidPath, spansEdgeToEdge, samePath,
   diagonalKey, crossesLinks, linkSquares, pathsCross,
 } from '../js/grid.js';
 
@@ -43,10 +43,18 @@ test('isValidPath', () => {
   assert.equal(isValidPath([47, 48]), false);
 });
 
-test('touchesOppositeEdges', () => {
-  assert.equal(touchesOppositeEdges([0, 1, 2, 3, 4, 5]), true);
-  assert.equal(touchesOppositeEdges([0, 6, 12, 18, 24, 30, 36, 42]), true);
-  assert.equal(touchesOppositeEdges([0, 1, 2]), false);
+test('spansEdgeToEdge: first and last cells on opposite edges', () => {
+  assert.equal(spansEdgeToEdge([0, 1, 2, 3, 4, 5]), true);
+  assert.equal(spansEdgeToEdge([5, 4, 3, 2, 1, 0]), true);
+  assert.equal(spansEdgeToEdge([0, 6, 12, 18, 24, 30, 36, 42]), true);
+  assert.equal(spansEdgeToEdge([42, 36, 30, 24, 18, 12, 6, 0]), true);
+  assert.equal(spansEdgeToEdge([0, 1, 2]), false);
+  // Touches both side edges but ends one cell in (the BADHAIRDAY board).
+  assert.equal(spansEdgeToEdge([40, 35, 34, 27, 21, 14, 13, 6, 1, 0]), false);
+  // Reaches the far edge mid-path, then turns back in.
+  assert.equal(spansEdgeToEdge([6, 7, 8, 9, 10, 11, 16]), false);
+  // Both ends on the same edge.
+  assert.equal(spansEdgeToEdge([0, 7, 13, 19, 12, 6]), false);
 });
 
 test('samePath', () => {

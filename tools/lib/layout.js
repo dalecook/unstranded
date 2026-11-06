@@ -1,4 +1,4 @@
-import { COLS, ROWS, CELLS, neighbors, rowOf, colOf, isValidPath, touchesOppositeEdges, diagonalKey, crossesLinks, pathsCross } from '../../js/grid.js';
+import { COLS, ROWS, CELLS, neighbors, rowOf, colOf, isValidPath, spansEdgeToEdge, diagonalKey, crossesLinks, pathsCross } from '../../js/grid.js';
 import { mulberry32, hashString, shuffle, randInt } from '../../js/rng.js';
 
 export const STEP_BUDGET = 50000;
@@ -96,7 +96,8 @@ export function layoutWords(spangram, words, rand, budget = STEP_BUDGET) {
   return placed ? assignLetters(placed, rand) : null;
 }
 
-// Depth-first walk that lays the spangram (touching opposite edges) and then each word from the
+// Depth-first walk that lays the spangram (from one edge to the opposite edge: it starts on the
+// near edge and its last letter lands on the far one) and then each word from the
 // first empty cell, never crossing a diagonal link and keeping every empty region fillable.
 // `place(word, path, isSpangram, next)` decides how a geometric path becomes an answer: it calls
 // next(finalPath) for each acceptable reading (and may undo its own state after each) and returns
@@ -163,17 +164,17 @@ export function searchLayout(spangram, words, rand, budget, place, { counter = {
   for (const orientation of shuffle(orientations, rand)) {
     const axis = orientation === 'across' ? colOf : rowOf;
     const far = orientation === 'across' ? COLS - 1 : ROWS - 1;
-    const reachedFar = (path) => path.some((i) => axis(i) === far);
-    // Prune walks that can no longer reach the far edge with the letters left.
-    const prune = (path) =>
-      !reachedFar(path) && far - axis(path[path.length - 1]) > length - path.length;
+    // The spangram starts on the near edge and must end on the far one.
+    const endsFar = (path) => axis(path[path.length - 1]) === far;
+    // Prune walks whose last letter can no longer land on the far edge.
+    const prune = (path) => far - axis(path[path.length - 1]) > length - path.length;
     const starts = [];
     for (let i = 0; i < CELLS; i++) if (axis(i) === 0) starts.push(i);
 
     for (const start of shuffle(starts, rand)) {
       used[start] = true;
       const ok = extend([start], length, prune, (path) => {
-        if (!reachedFar(path) || !regionsFit(used, links, wordLengths)) return false;
+        if (!endsFar(path) || !regionsFit(used, links, wordLengths)) return false;
         return commit(spangram, path, true, () => placeRest(words));
       });
       if (ok) return placed;
@@ -207,7 +208,7 @@ export function verifyPuzzle({ grid, answers }) {
   }
   const spangrams = answers.filter((a) => a.isSpangram);
   if (pathsCross(answers.map((a) => a.path))) return false;
-  return seen.size === CELLS && spangrams.length === 1 && touchesOppositeEdges(spangrams[0].path);
+  return seen.size === CELLS && spangrams.length === 1 && spansEdgeToEdge(spangrams[0].path);
 }
 
 export function generateForTheme(theme, rand) {

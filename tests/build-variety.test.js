@@ -227,8 +227,9 @@ test('searchTheme does not try a count more often than its word sets justify', (
 test('searchTheme stops early once twelve boards cover three stepping-stone counts', () => {
   const birds = VARIED[0];
   const opts = { attempts: 3000, seconds: 600, eligible: birds.answers, target: 6 };
-  const found = searchTheme(birds, '2026-10', opts);
-  const full = searchTheme(birds, '2026-10', { ...opts, earlyStop: false });
+  // A seed whose full search reaches four stone counts, so the early stop (at three) bites.
+  const found = searchTheme(birds, '2026-12', opts);
+  const full = searchTheme(birds, '2026-12', { ...opts, earlyStop: false });
   assert.equal(full.passes, MAX_CANDIDATES);
   assert.ok(full.candidates.length >= 3, 'the fixture reaches three stone counts');
   assert.ok(found.passes >= 12 && found.passes < MAX_CANDIDATES);
