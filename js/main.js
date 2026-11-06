@@ -34,6 +34,8 @@ const app = {
   state: null,
   isDaily: false,
   today: dateKey(),
+  // Today's set progress, kept in memory so it survives blocked storage; saved best-effort.
+  setProgress: null,
   selection: [],
   message: '',
   board: null,
@@ -182,7 +184,7 @@ function startPuzzle(puzzle) {
   // Shown counts as played, so "New puzzle" serves unseen puzzles before ones the player skipped.
   markPlayed(puzzle.id);
   if (setFor(app.seq, app.today)?.some((p) => p.id === puzzle.id)) {
-    const progress = loadSetProgress(app.today);
+    const progress = app.setProgress;
     if (!progress.shown.includes(puzzle.id)) {
       progress.shown.push(puzzle.id);
       saveSetProgress(progress);
@@ -199,7 +201,7 @@ function startPuzzle(puzzle) {
 function newPuzzle() {
   const set = setFor(app.seq, app.today);
   if (set) {
-    const shown = loadSetProgress(app.today).shown;
+    const { shown } = app.setProgress;
     const next = set.find((p) => !shown.includes(p.id) && p.id !== app.puzzle?.id);
     if (next) {
       history.replaceState(null, '', `?id=${next.id}`);
@@ -220,7 +222,7 @@ function newPuzzle() {
   history.replaceState(null, '', `?id=${pick.id}`);
   startPuzzle(pick);
   if (set) {
-    const progress = loadSetProgress(app.today);
+    const progress = app.setProgress;
     if (!progress.freePlay) {
       progress.freePlay = true;
       saveSetProgress(progress);
@@ -238,6 +240,7 @@ function checkDateRollover() {
   const key = dateKey();
   if (key === app.today) return;
   app.today = key;
+  app.setProgress = loadSetProgress(app.today);
   const daily = dailyFor(app.drops, app.today, app.seq);
   if (app.isDaily && daily) {
     history.replaceState(null, '', location.pathname);
@@ -301,6 +304,8 @@ async function init() {
     showFatal();
     return;
   }
+
+  app.setProgress = loadSetProgress(app.today);
 
   const params = new URLSearchParams(location.search);
   const id = params.get('id');
