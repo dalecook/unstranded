@@ -1,10 +1,11 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
+import { passOrder, SEAM_DAYS } from '../js/sequence.js';
 import { verifyPuzzle } from '../tools/lib/layout.js';
 import { checkPuzzle } from '../tools/lib/checks.js';
 import { loadBoardBlocklist, offensiveWordsOn } from '../tools/lib/blocklist.js';
-import { HOLIDAY_THEMES, SEQUENCE_LENGTH, SET_SIZE, sequenceId } from '../tools/build-sequence.mjs';
+import { HOLIDAY_THEMES, SEQUENCE_LENGTH, SET_SIZE, sequenceId, contentHash } from '../tools/build-sequence.mjs';
 
 async function readJson(path) {
   try {
@@ -62,6 +63,40 @@ if (!seq) {
       for (const a of p.answers.filter((x) => !x.isSpangram)) {
         assert.ok(/^[A-Z]{5,10}$/.test(a.word), `${p.id}: ${a.word} must be 5-10 letters`);
       }
+    }
+  });
+
+  // A board whose theme changed without a successful rebuild keeps its old hash, so this fails
+  // until the builder has rebuilt (or revalidated) it.
+  test('every sequence board matches its current theme file', async () => {
+    const dir = new URL('../content/themes/', import.meta.url);
+    const themes = new Map();
+    for (const name of (await readdir(dir)).filter((n) => n.endsWith('.json'))) {
+      const theme = JSON.parse(await readFile(new URL(name, dir), 'utf8'));
+      themes.set(theme.id, theme);
+    }
+    for (const p of seq.puzzles) {
+      const theme = themes.get(p.themeId);
+      assert.ok(theme, `${p.id}: theme file ${p.themeId} is missing`);
+      assert.equal(meta[p.id].contentHash, contentHash(theme), `${p.id} (${p.themeId}) is stale: rebuild it`);
+      assert.equal(p.clue, theme.clue, `${p.id} clue differs from its theme`);
+      assert.equal(p.obscure, !!theme.obscure, `${p.id} obscure flag differs from its theme`);
+    }
+  });
+
+  test('passes 1 to 10 are permutations with one obscure board a day and no seam repeats', () => {
+    const sorted = (list) => list.map((p) => p.id).sort();
+    let prev = passOrder(seq, 0);
+    for (let n = 1; n <= 10; n++) {
+      const order = passOrder(seq, n);
+      assert.deepEqual(sorted(order), sorted(seq.puzzles), `pass ${n} is not a permutation`);
+      for (let d = 0; d < order.length / SET_SIZE; d++) {
+        const day = order.slice(d * SET_SIZE, (d + 1) * SET_SIZE);
+        assert.ok(day.filter((p) => p.obscure).length <= 1, `pass ${n} day ${d + 1} has two obscure boards`);
+      }
+      const tail = new Set(prev.slice(-SEAM_DAYS * SET_SIZE).map((p) => p.id));
+      for (const p of order.slice(0, SEAM_DAYS * SET_SIZE)) assert.ok(!tail.has(p.id), `pass ${n} seam: ${p.id}`);
+      prev = order;
     }
   });
 }

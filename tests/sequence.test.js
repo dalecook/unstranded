@@ -121,3 +121,8 @@ test('loadSequence returns the file, or null when it is missing or the fetch fai
   assert.equal(await loadSequence(async () => ({ ok: false, status: 404, json: async () => ({}) })), null);
   assert.equal(await loadSequence(async () => { throw new Error('offline'); }), null);
 });
+
+test('the first 12 ids of pass 1 are pinned', () => {
+  // Pinned on purpose: changing passOrder reshuffles every player's future sets.
+  assert.deepEqual(ids(passOrder(makeSeq(), 1)).slice(0, 12), ['seq-239', 'seq-151', 'seq-097', 'seq-009', 'seq-098', 'seq-215', 'seq-051', 'seq-257', 'seq-144', 'seq-148', 'seq-138', 'seq-237']);
+});
