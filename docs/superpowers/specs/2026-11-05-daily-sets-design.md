@@ -54,6 +54,7 @@ The share card, game rules, hints, stepping stones, the bonus dictionary, stats 
 - **Themes:** chosen from the 395 in `content/themes/`. Themes never used in a drop come first, then themes from the October and November drops. A reused theme gets a different board from its earlier one: as little word overlap as possible and never an identical grid, using the builder's existing reuse rule.
 - **Holiday themes** are left out of the sequence: halloween, thanksgiving, christmas, valentines-day, easter. Date-pinned specials can bring them back later; that is out of scope here. Milder seasonal themes stay in.
 - **Rules:** every board passes the same rules as drop boards:
+  - the spangram's first and last letters sit on opposite edges, left and right or top and bottom (touching an edge mid-word doesn't count);
   - exactly one non-self-crossing trace per answer;
   - no traceable on-theme non-answer word of 6+ letters;
   - no crossings;
