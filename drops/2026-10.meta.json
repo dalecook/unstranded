@@ -1356,6 +1356,9 @@
   ]
  },
  "2026-10-p17": {
+  "themeId": "cloud-types",
+  "contentHash": 3487532015,
+  "rebuilds": 1,
   "checkedLong": [
    "ALTOCUMULUS",
    "ALTOSTRATUS",
@@ -1365,8 +1368,10 @@
    "CASTELLANUS",
    "CIRROCUMULUS",
    "CIRROSTRATUS",
+   "CIRRUS",
    "CLOUDBANK",
    "CONGESTUS",
+   "CONTRAIL",
    "CUMULI",
    "CUMULONIMBUS",
    "CUMULOUS",
@@ -1381,7 +1386,6 @@
    "HUMILIS",
    "INTORTUS",
    "LACUNOSUS",
-   "LENTICULAR",
    "MACKERELSKY",
    "MAMMATUS",
    "MARESTAIL",
@@ -1399,7 +1403,7 @@
    "PYROCUMULUS",
    "RADIATUS",
    "RAINCLOUD",
-   "ROLLCLOUD",
+   "SHELFCLOUD",
    "SPISSATUS",
    "STORMCLOUD",
    "STRATOCUMULUS",
@@ -1408,11 +1412,9 @@
    "THUNDERHEAD",
    "UNCINUS",
    "UNDULATUS",
-   "VERTEBRATUS",
-   "WALLCLOUD"
+   "VERTEBRATUS"
   ],
   "stoneCandidates": [
-   "ANVIL",
    "ARCUS",
    "HAAR",
    "HAZE",
@@ -1421,6 +1423,7 @@
    "SMOG",
    "TUBA",
    "VELUM",
+   "VIRGA",
    "WISP"
   ]
  },
@@ -2648,6 +2651,9 @@
   ]
  },
  "2026-10-p34": {
+  "themeId": "named-winds",
+  "contentHash": 3447770485,
+  "rebuilds": 1,
   "checkedLong": [
    "AQUILO",
    "ARGESTES",
@@ -2663,6 +2669,7 @@
    "ETESIAN",
    "GHIBLI",
    "GREGALE",
+   "HABOOB",
    "HARMATTAN",
    "HELMWIND",
    "JETSTREAM",
@@ -2677,7 +2684,6 @@
    "MELTEMI",
    "MISTRAL",
    "MONSOON",
-   "NOREASTER",
    "NORTHER",
    "NORTHERLY",
    "PAMPERO",
@@ -2699,25 +2705,25 @@
    "SUESTADO",
    "SUNDOWNER",
    "TEHUANTEPECER",
+   "TRADEWIND",
    "TRADEWINDS",
    "TRAMONTANA",
    "TRAMONTANE",
    "WESTERLIES",
    "WESTERLY",
-   "WILLIWAW",
-   "ZEPHYR"
+   "WILLIWAW"
   ],
   "stoneCandidates": [
    "BISE",
    "BORA",
+   "BURAN",
    "FOHN",
    "GALE",
    "GUST",
    "JUGO",
    "NORTE",
    "OSTRO",
-   "PURGA",
-   "ZONDA"
+   "PURGA"
   ]
  },
  "2026-10-p35": {
