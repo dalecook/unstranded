@@ -7,9 +7,17 @@
 // --rebuild or whose content has changed since their board was built (meta.contentHash).
 import { hashString } from '../js/rng.js';
 import { arrangePass } from '../js/sequence.js';
-import { eligibleAnswers } from './lib/familiarity.js';
-import { countWordSets, targetCounts, spreadStones } from './lib/variety.js';
-import { planDrop, tracedDictionaryWords } from './build-drop.mjs';
+import { readFile, writeFile, readdir, mkdir } from 'node:fs/promises';
+import { join } from 'node:path';
+import { pathToFileURL } from 'node:url';
+import os from 'node:os';
+import { eligibleAnswers, loadRanks } from './lib/familiarity.js';
+import { countWordSets, targetCounts, spreadStones, tallyLine } from './lib/variety.js';
+import { loadBoardBlocklist } from './lib/blocklist.js';
+import {
+  planDrop, tracedDictionaryWords, earlierUse, runInWorkers, runSequential,
+  DEFAULT_ATTEMPTS, DEFAULT_SECONDS,
+} from './build-drop.mjs';
 
 export const SEQUENCE_LENGTH = 366;
 export const SET_SIZE = 6;
@@ -161,4 +169,113 @@ export function boardReport(sequence, ids, dictionaryWords, themesById) {
     if (decoys.length) lines.push(`  dictionary decoys (review): ${decoys.join(' ')}`);
   });
   return lines.join('\n');
+}
+
+const USAGE = `Usage: build-sequence [--start YYYY-MM-DD] [--fresh] [--rebuild id,id] [--attempts N] [--seconds N] [--workers N] [--content dir] [--out dir]
+  With no <out>/sequence.json, or with --fresh, builds all ${SEQUENCE_LENGTH} boards (--start required).
+  Otherwise keeps every board in place and rebuilds only themes named with --rebuild or whose
+  content changed; --start then just moves the start date.`;
+
+export function parseSequenceArgs(argv) {
+  const args = {
+    start: null, fresh: false, rebuild: [], attempts: DEFAULT_ATTEMPTS, seconds: DEFAULT_SECONDS,
+    workers: Math.max(1, os.availableParallelism() - 2), content: 'content/themes', out: 'drops',
+  };
+  const numeric = ['attempts', 'seconds', 'workers'];
+  for (let i = 0; i < argv.length; i++) {
+    const key = argv[i].replace(/^--/, '');
+    if (key === 'fresh') { args.fresh = true; continue; }
+    const value = argv[++i];
+    if (![...numeric, 'start', 'rebuild', 'content', 'out'].includes(key) || value === undefined) {
+      throw new Error(`Unknown or incomplete argument: ${argv[i - 1]}\n${USAGE}`);
+    }
+    if (numeric.includes(key)) {
+      if (!/^[1-9]\d*$/.test(value)) throw new Error(`--${key} must be a positive integer, got "${value}"\n${USAGE}`);
+      args[key] = Number(value);
+    } else if (key === 'start') {
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) throw new Error(`--start must be YYYY-MM-DD, got "${value}"`);
+      args.start = value;
+    } else if (key === 'rebuild') {
+      args.rebuild = value.split(',').map((s) => s.trim()).filter(Boolean);
+    } else {
+      args[key] = value;
+    }
+  }
+  return args;
+}
+
+async function readJson(file, fallback) {
+  try {
+    return JSON.parse(await readFile(file, 'utf8'));
+  } catch (err) {
+    if (err.code === 'ENOENT' && fallback !== undefined) return fallback;
+    throw err;
+  }
+}
+
+async function main() {
+  const args = parseSequenceArgs(process.argv.slice(2));
+  const files = (await readdir(args.content)).filter((f) => f.endsWith('.json')).sort();
+  const themes = await Promise.all(files.map((f) => readJson(join(args.content, f))));
+  const themesById = new Map(themes.map((t) => [t.id, t]));
+  const index = await readJson('drops/index.json', []);
+  const earlier = earlierUse(await Promise.all(index.map((id) => readJson(`drops/${id}.json`))));
+  const dictionaryWords = (await readFile('data/words.txt', 'utf8'))
+    .split('\n').map((w) => w.trim().toUpperCase()).filter(Boolean);
+  const ranks = await loadRanks();
+  const blockset = await loadBoardBlocklist();
+  const run = (jobs) => (args.workers > 1 ? runInWorkers : runSequential)(jobs, { blockset, workers: args.workers });
+  const file = join(args.out, 'sequence.json');
+  const metaFile = join(args.out, 'sequence.meta.json');
+  const existing = args.fresh ? null : await readJson(file, null);
+  const started = performance.now();
+  let sequence;
+  let meta;
+  const lines = [];
+
+  if (!existing) {
+    if (!args.start) throw new Error(`--start is required for a full build\n${USAGE}`);
+    const { jobs, failures, rejections } = sequenceJobs({ themes, ranks, earlier });
+    const results = await run(jobs.map((j) => ({ ...j, dropId: SEED, attempts: args.attempts, seconds: args.seconds })));
+    const successes = [];
+    for (const job of jobs) {
+      const found = results.get(job.theme.id).result;
+      if (found.failure) failures.push({ themeId: job.theme.id, reason: found.failure });
+      else successes.push({ ...job, candidates: found.candidates });
+    }
+    ({ sequence, meta } = assembleSequence({ start: args.start, selected: selectSequence(successes) }));
+    lines.push(`Sequence: ${sequence.puzzles.length} boards from ${successes.length} buildable themes, start ${sequence.start}`);
+    lines.push(`Theme words per board: ${tallyLine(sequence.puzzles.map((p) => p.answers.length - 1))}`);
+    lines.push(`Stepping stones per board: ${tallyLine(sequence.puzzles.map((p) => p.steppingStones.length))}`);
+    if (failures.length) lines.push('Skipped themes:', ...failures.map((f) => `  ${f.themeId}: ${f.reason}`));
+    if (rejections.length) lines.push('Familiarity rejections:', ...rejections.map((r) => `  ${r.themeId}: ${r.words.join(' ')}`));
+    lines.push(boardReport(sequence, sequence.puzzles.map((p) => p.id), dictionaryWords, themesById));
+  } else {
+    const existingMeta = await readJson(metaFile);
+    const { jobs, failures } = rebuildJobs({
+      sequence: existing, meta: existingMeta, themes, ranks, earlier,
+      names: args.rebuild, attempts: args.attempts, seconds: args.seconds,
+    });
+    const results = jobs.length ? await run(jobs) : new Map();
+    const applied = applyRebuild({ sequence: existing, meta: existingMeta, jobs, results: new Map([...results].map(([k, v]) => [k, v.result])) });
+    failures.push(...applied.failures);
+    if (failures.length) {
+      console.error(['Rebuild failed; nothing written:', ...failures.map((f) => `  ${f.themeId}${f.id ? ` (${f.id})` : ''}: ${f.reason}`)].join('\n'));
+      process.exit(1);
+    }
+    sequence = { ...applied.sequence, start: args.start ?? existing.start };
+    meta = applied.meta;
+    lines.push(`Rebuilt ${applied.rebuilt.length} board(s); start ${sequence.start}`);
+    lines.push(boardReport(sequence, applied.rebuilt, dictionaryWords, themesById));
+  }
+
+  lines.unshift(`Wall time ${((performance.now() - started) / 1000).toFixed(1)}s, ${args.workers} worker(s)`);
+  console.log(lines.join('\n'));
+  await mkdir(args.out, { recursive: true });
+  await writeFile(file, JSON.stringify(sequence));
+  await writeFile(metaFile, JSON.stringify(meta, null, 1));
+}
+
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+  main().catch((err) => { console.error(err.message); process.exit(1); });
 }

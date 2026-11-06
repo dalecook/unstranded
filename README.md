@@ -2,8 +2,7 @@
 
 A Strands-style word search with curated monthly puzzle drops that runs entirely in the browser.
 
-- **Daily puzzle:** the first puzzle each day is the same for everyone.
-- **More puzzles:** press **New puzzle** to play on through the released puzzles in the current collection. Every puzzle has a link (`?id=<id>`) you can share.
+- **Daily set:** everyone gets the same six puzzles each day, in the same order. After those, **New puzzle** keeps going with free play. Every puzzle has a link (`?id=<id>`) you can share.
 - Works on phones and desktops. No accounts, no tracking. Progress and stats are stored in your browser.
 
 ## Play
@@ -27,7 +26,13 @@ Uses Node 22+'s built-in test runner. No dependencies to install.
 
 ## Adding content
 
-Theme content lives in `content/themes/`. Puzzles are built ahead of time into monthly drop files under `drops/`, and the drops are committed:
+Theme content lives in `content/themes/`. Puzzles are built ahead of time and committed. The daily sets come from `drops/sequence.json`: 366 boards (one per theme, holiday themes left out), six a day in a fixed order that everyone shares, cycling every 61 days. Earlier monthly drops in `drops/` stay playable in free play.
+
+    npm run build:sequence -- --start YYYY-MM-DD
+
+builds all 366 boards. Once the file exists, the same command keeps every board in place and rebuilds only themes whose content changed, plus any named with `--rebuild id,id`. `--start` on its own just moves the start date. Add `--fresh` to rebuild everything, or `--out <dir>` for a trial build.
+
+Before the start date, or if `drops/sequence.json` is missing, the game falls back to the monthly drops:
 
     npm run build:drop -- --id YYYY-MM --start YYYY-MM-DD
 

@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   SEQUENCE_LENGTH, SET_SIZE, HOLIDAY_THEMES, contentHash, sequenceId, sequenceJobs, selectSequence,
-  assembleSequence, rebuildJobs, applyRebuild, metaFor, boardReport,
+  assembleSequence, rebuildJobs, applyRebuild, metaFor, boardReport, parseSequenceArgs,
 } from '../tools/build-sequence.mjs';
 
 const words = (s) => s.split(' ');
@@ -157,4 +157,23 @@ test('boardReport names day and position for each listed board', () => {
   const report = boardReport(sequence, [sequence.puzzles[7].id], [], byId);
   assert.match(report, /^seq-008 \[day 2, board 2\]/);
   assert.match(report, /answers: SPANGRAM/);
+});
+
+test('parseSequenceArgs reads flags, lists and numbers', () => {
+  const a = parseSequenceArgs(['--start', '2026-11-10', '--fresh', '--rebuild', 'birds,trees', '--workers', '4']);
+  assert.equal(a.start, '2026-11-10');
+  assert.equal(a.fresh, true);
+  assert.deepEqual(a.rebuild, ['birds', 'trees']);
+  assert.equal(a.workers, 4);
+  assert.equal(a.out, 'drops');
+  const b = parseSequenceArgs([]);
+  assert.equal(b.fresh, false);
+  assert.deepEqual(b.rebuild, []);
+  assert.equal(b.start, null);
+});
+
+test('parseSequenceArgs rejects bad dates, numbers and unknown flags', () => {
+  assert.throws(() => parseSequenceArgs(['--start', '10/11/2026']), /YYYY-MM-DD/);
+  assert.throws(() => parseSequenceArgs(['--workers', '0']), /positive integer/);
+  assert.throws(() => parseSequenceArgs(['--colour', 'blue']), /Unknown/);
 });

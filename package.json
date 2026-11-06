@@ -8,6 +8,7 @@
     "test": "node --test",
     "serve": "node tools/serve.mjs",
     "build:dictionary": "node tools/build-dictionary.mjs",
-    "build:drop": "node tools/build-drop.mjs"
+    "build:drop": "node tools/build-drop.mjs",
+    "build:sequence": "node tools/build-sequence.mjs"
   }
 }
