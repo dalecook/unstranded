@@ -1,4 +1,5 @@
 import { hashString } from './rng.js';
+import { hasStarted, setFor, freePlayPool, isOpenable } from './sequence.js';
 
 export async function loadDrops(fetchImpl = fetch) {
   const get = async (url) => {
@@ -31,15 +32,17 @@ export function releasedPuzzles(drops, today) {
   return drops.flatMap((drop) => drop.puzzles.filter((p) => isReleased(drops, p.id, today)));
 }
 
-export function getPuzzle(drops, id) {
+export function getPuzzle(drops, id, seq = null) {
   for (const drop of drops) {
     const puzzle = drop.puzzles.find((p) => p.id === id);
     if (puzzle) return puzzle;
   }
-  return null;
+  return seq?.puzzles.find((p) => p.id === id) ?? null;
 }
 
-export function dailyFor(drops, today) {
+// Once the sequence has started, the daily is the first board of today's set.
+export function dailyFor(drops, today, seq = null) {
+  if (hasStarted(seq, today)) return setFor(seq, today)[0];
   for (let i = drops.length - 1; i >= 0; i--) {
     const id = drops[i].schedule[today];
     if (id) return getPuzzle(drops, id);
@@ -53,14 +56,20 @@ export function dailyFor(drops, today) {
   return getPuzzle(drops, dates[0][1]);
 }
 
-export function randomPuzzle(drops, today, { played, solved, excludeId }, rand = Math.random) {
-  const daily = dailyFor(drops, today);
-  const candidates = releasedPuzzles(drops, today).filter((p) => p.id !== daily?.id && p.id !== excludeId);
+// Whether a ?id= link may open this board today.
+export function canOpen(drops, id, today, seq = null) {
+  return hasStarted(seq, today) ? isOpenable(drops, seq, id, today) : isReleased(drops, id, today);
+}
+
+export function randomPuzzle(drops, today, { played, solved, excludeId, seq = null }, rand = Math.random) {
+  const daily = dailyFor(drops, today, seq);
+  const pool = hasStarted(seq, today) ? freePlayPool(drops, seq, today) : releasedPuzzles(drops, today);
+  const candidates = pool.filter((p) => p.id !== daily?.id && p.id !== excludeId);
   const tiers = [
     candidates.filter((p) => !played.has(p.id)),
     candidates.filter((p) => played.has(p.id) && !solved.has(p.id)),
     candidates,
   ];
-  const pool = tiers.find((t) => t.length > 0);
-  return pool ? pool[Math.floor(rand() * pool.length)] : null;
+  const found = tiers.find((t) => t.length > 0);
+  return found ? found[Math.floor(rand() * found.length)] : null;
 }

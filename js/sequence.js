@@ -105,3 +105,15 @@ export function upcomingIds(seq, today, days) {
   for (let d = first; d < last; d++) for (const p of setOnDay(seq, d)) ids.add(p.id);
   return ids;
 }
+
+// Boards for free play: every drop board and every sequence board, except today's set and any
+// board in a set over the next FREE_PLAY_GAP_DAYS days, so free play never spoils a set.
+export function freePlayPool(drops, seq, today) {
+  const due = upcomingIds(seq, today, FREE_PLAY_GAP_DAYS);
+  return [...drops.flatMap((d) => d.puzzles), ...seq.puzzles].filter((p) => !due.has(p.id));
+}
+
+export function isOpenable(drops, seq, id, today) {
+  if (setFor(seq, today).some((p) => p.id === id)) return true;
+  return freePlayPool(drops, seq, today).some((p) => p.id === id);
+}
