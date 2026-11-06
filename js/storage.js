@@ -118,3 +118,17 @@ export function isFirstVisit(store = defaultStore()) {
 export function markVisited(store = defaultStore()) {
   write('visited', true, store);
 }
+
+// Which of today's set this device has shown, and whether free play has begun. One record,
+// replaced when the date changes, so a new day starts a new set.
+export function loadSetProgress(today, store = defaultStore()) {
+  const saved = read('set', null, store);
+  if (saved?.date === today && Array.isArray(saved.shown)) {
+    return { date: today, shown: saved.shown, freePlay: Boolean(saved.freePlay) };
+  }
+  return { date: today, shown: [], freePlay: false };
+}
+
+export function saveSetProgress(progress, store = defaultStore()) {
+  write('set', progress, store);
+}

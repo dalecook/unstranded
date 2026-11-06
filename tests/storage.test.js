@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {
   loadProgress, saveProgress, loadStats, saveStats, applyStart, applyCompletion,
   displayStreak, previousDateKey, isFirstVisit, markVisited,
-  markPlayed, markSolved, loadPlayed, loadSolved,
+  markPlayed, markSolved, loadPlayed, loadSolved, loadSetProgress, saveSetProgress,
 } from '../js/storage.js';
 
 class MemoryStore {
@@ -115,4 +115,21 @@ test('blocked storage never throws for played and solved', () => {
   assert.doesNotThrow(() => { markPlayed('x', throwingStore); markSolved('x', throwingStore); });
   assert.equal(loadPlayed(throwingStore).size, 0);
   assert.equal(loadSolved(throwingStore).size, 0);
+});
+
+test('set progress starts empty for a new day', () => {
+  const store = new MemoryStore();
+  assert.deepEqual(loadSetProgress('2026-11-10', store), { date: '2026-11-10', shown: [], freePlay: false });
+});
+
+test('set progress round-trips for the same day and resets on the next', () => {
+  const store = new MemoryStore();
+  saveSetProgress({ date: '2026-11-10', shown: ['seq-001', 'seq-002'], freePlay: true }, store);
+  assert.deepEqual(loadSetProgress('2026-11-10', store), { date: '2026-11-10', shown: ['seq-001', 'seq-002'], freePlay: true });
+  assert.deepEqual(loadSetProgress('2026-11-11', store), { date: '2026-11-11', shown: [], freePlay: false });
+});
+
+test('set progress survives blocked storage', () => {
+  assert.doesNotThrow(() => saveSetProgress({ date: '2026-11-10', shown: ['x'], freePlay: false }, throwingStore));
+  assert.deepEqual(loadSetProgress('2026-11-10', throwingStore), { date: '2026-11-10', shown: [], freePlay: false });
 });
